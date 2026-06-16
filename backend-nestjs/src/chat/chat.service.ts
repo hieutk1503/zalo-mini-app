@@ -13,8 +13,9 @@ export class ChatService {
       const response = await firstValueFrom(
         this.httpService.post(`${this.aiServiceUrl}/api/chat/query`, { query }),
       );
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return response.data;
-    } catch (error) {
+    } catch {
       throw new HttpException('Lỗi khi kết nối với AI Service', 500);
     }
   }

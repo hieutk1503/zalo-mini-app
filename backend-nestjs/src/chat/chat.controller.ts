@@ -7,6 +7,7 @@ export class ChatController {
 
   @Post('query')
   async queryChat(@Body('query') query: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return this.chatService.askAi(query);
   }
 }

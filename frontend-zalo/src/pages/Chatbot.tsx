@@ -24,6 +24,7 @@ export default function Chatbot() {
       const botMessage = { id: Date.now() + 1, text: response.data.answer, isBot: true };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
+      console.error(error);
       setMessages(prev => [...prev, { id: Date.now() + 1, text: "Xin lỗi, AI đang gặp sự cố kết nối. Vui lòng thử lại sau.", isBot: true }]);
     } finally {
       setIsLoading(false);

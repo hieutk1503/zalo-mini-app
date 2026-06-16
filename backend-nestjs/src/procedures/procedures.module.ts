@@ -4,6 +4,6 @@ import { ProceduresController } from './procedures.controller';
 
 @Module({
   controllers: [ProceduresController],
-  providers: [ProceduresService]
+  providers: [ProceduresService],
 })
 export class ProceduresModule {}
