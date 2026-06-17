@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { Upload, FileSpreadsheet, CheckCircle2, AlertTriangle, Download } from 'lucide-react';
 
 export default function AdminImport() {
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<any>(null);
+  const [preview, setPreview] = useState<{
+    newCount: number;
+    conflictCount: number;
+    conflicts: { 'Mã thủ tục': string; 'Tên thủ tục': string }[];
+  } | null>(null);
   const [overwrite, setOverwrite] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -150,7 +154,7 @@ export default function AdminImport() {
                         </tr>
                       </thead>
                       <tbody>
-                        {preview.conflicts.slice(0, 10).map((row: any, idx: number) => (
+                        {preview.conflicts.slice(0, 10).map((row: { 'Mã thủ tục': string; 'Tên thủ tục': string }, idx: number) => (
                           <tr key={idx} className="border-b bg-yellow-50/30">
                             <td className="px-4 py-2 font-medium text-yellow-700">{row['Mã thủ tục']}</td>
                             <td className="px-4 py-2 text-gray-600">{row['Tên thủ tục']}</td>
