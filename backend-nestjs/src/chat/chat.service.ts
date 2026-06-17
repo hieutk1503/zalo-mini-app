@@ -8,10 +8,14 @@ export class ChatService {
 
   constructor(private readonly httpService: HttpService) {}
 
-  async askAi(query: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async askAi(query: string, history?: any[]) {
     try {
       const response = await firstValueFrom(
-        this.httpService.post(`${this.aiServiceUrl}/api/chat/query`, { query }),
+        this.httpService.post(`${this.aiServiceUrl}/api/chat/query`, { 
+          query,
+          history: history || []
+        }),
       );
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return response.data;

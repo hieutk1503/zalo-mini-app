@@ -1,9 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Bot } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+type Message = { id: number; text: string; isBot: boolean; action?: { type: string, id: number } };
+
 export default function Chatbot() {
-  const [messages, setMessages] = useState([
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState<Message[]>([
     { id: 1, text: "Xin chào! Tôi là Trợ lý AI Tự Lạn Smart. Tôi có thể giúp gì cho bạn về thủ tục hành chính?", isBot: true }
   ]);
   const [input, setInput] = useState("");
@@ -28,9 +32,26 @@ export default function Chatbot() {
     
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      const response = await axios.post(`${apiUrl}/chat/query`, { query: input });
       
-      const botMessage = { id: Date.now() + 1, text: response.data.answer, isBot: true };
+      const chatHistory = messages
+        .filter(m => m.id !== 1)
+        .slice(-4)
+        .map(m => ({
+          role: m.isBot ? 'assistant' : 'user',
+          content: m.text
+        }));
+
+      const response = await axios.post(`${apiUrl}/chat/query`, { 
+        query: input,
+        history: chatHistory
+      });
+      
+      const botMessage: Message = { 
+        id: Date.now() + 1, 
+        text: response.data.answer, 
+        isBot: true,
+        action: response.data.suggested_action 
+      };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
       console.error(error);
@@ -54,6 +75,17 @@ export default function Chatbot() {
             
             <div className={`max-w-[75%] p-3.5 shadow-sm ${msg.isBot ? 'bg-white text-gray-800 rounded-2xl rounded-bl-sm border border-gray-100' : 'bg-primary text-white rounded-2xl rounded-br-sm'}`}>
               <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+              
+              {msg.action && msg.action.type === 'PROCEDURE' && (
+                <div className="mt-3 border-t border-gray-100 pt-3">
+                  <button 
+                    onClick={() => navigate(`/procedures/${msg.action!.id}`)}
+                    className="w-full bg-primary/10 hover:bg-primary/20 text-primary font-medium text-sm py-2 px-3 rounded-xl transition-colors flex items-center justify-center gap-2"
+                  >
+                    👉 Xem chi tiết & Nộp hồ sơ
+                  </button>
+                </div>
+              )}
             </div>
 
             {!msg.isBot && (
