@@ -12,6 +12,7 @@ import Documents from './pages/Documents';
 import Hotline from './pages/Hotline';
 import MapLocation from './pages/MapLocation';
 import AdminImport from './pages/AdminImport';
+import AdminLogin from './pages/AdminLogin';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="map" element={<MapLocation />} />
           <Route path="admin/import" element={<AdminImport />} />
         </Route>
+        <Route path="admin/login" element={<AdminLogin />} />
       </Routes>
     </BrowserRouter>
   );

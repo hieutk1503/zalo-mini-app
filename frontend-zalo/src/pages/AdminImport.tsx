@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import axiosAdmin from '../lib/axiosAdmin';
 import { Upload, FileSpreadsheet, CheckCircle2, AlertTriangle, Download } from 'lucide-react';
 
 export default function AdminImport() {
@@ -19,7 +19,7 @@ export default function AdminImport() {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const res = await axios.post('http://localhost:3000/procedures/import/preview', formData);
+      const res = await axiosAdmin.post('/procedures/import/preview', formData);
       setPreview(res.data);
       setSuccess(false);
     } catch (error) {
@@ -37,7 +37,7 @@ export default function AdminImport() {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('overwrite', overwrite.toString());
-      const res = await axios.post('http://localhost:3000/procedures/import/execute', formData);
+      const res = await axiosAdmin.post('/procedures/import/execute', formData);
       alert(`Thành công! Đã nhập ${res.data.successCount} thủ tục.`);
       setPreview(null);
       setFile(null);
