@@ -7,6 +7,9 @@ export declare class AppointmentsController {
         date: string;
         timeSlot: string;
         content: string;
+        fullName?: string;
+        phone?: string;
+        cccd?: string;
     }): Promise<{
         id: number;
         created_at: Date;

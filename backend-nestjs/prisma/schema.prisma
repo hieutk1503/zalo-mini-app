@@ -68,6 +68,7 @@ model Feedback {
   citizen     Citizen  @relation(fields: [citizen_id], references: [id])
   content     String
   image_urls  String?
+  location    String?
   status      String   @default("NEW")
   admin_reply String?
   created_at  DateTime @default(now())

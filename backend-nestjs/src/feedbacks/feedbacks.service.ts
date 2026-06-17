@@ -7,13 +7,14 @@ export class FeedbacksService {
 
   async createFeedback(
     citizenId: number,
-    data: { content: string; imageUrls?: string },
+    data: { content: string; imageUrls?: string; location?: string },
   ) {
     return this.prisma.feedback.create({
       data: {
         citizen_id: citizenId,
         content: data.content,
-        image_urls: data.imageUrls,
+        image_urls: data.imageUrls || null,
+        location: data.location || null,
         status: 'NEW',
       },
     });

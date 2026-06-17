@@ -1,8 +1,11 @@
 import { PrismaService } from '../prisma/prisma.service';
+type ImportRow = Record<string, unknown>;
 export declare class ProceduresService {
     private prisma;
     constructor(prisma: PrismaService);
-    findAll(q?: string): import("@prisma/client").Prisma.PrismaPromise<{
+    private normalizeSearch;
+    private getImportValue;
+    findAll(q?: string): Promise<{
         id: number;
         created_at: Date;
         code: string;
@@ -27,9 +30,10 @@ export declare class ProceduresService {
     previewImport(buffer: Buffer): Promise<{
         newCount: number;
         conflictCount: number;
-        conflicts: unknown[];
+        conflicts: ImportRow[];
     }>;
     executeImport(buffer: Buffer, overwrite: boolean): Promise<{
         successCount: number;
     }>;
 }
+export {};

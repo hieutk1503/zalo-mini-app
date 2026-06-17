@@ -17,22 +17,29 @@ let DocumentsService = class DocumentsService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    findAll(type, q) {
+    normalizeSearch(value) {
+        return (value || '')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/\u0111/g, 'd')
+            .replace(/\u0110/g, 'D')
+            .toLowerCase();
+    }
+    async findAll(type, q) {
         const where = {};
         if (type) {
             where.type = type;
         }
-        if (q) {
-            where.OR = [
-                { document_no: { contains: q, mode: 'insensitive' } },
-                { abstract: { contains: q, mode: 'insensitive' } },
-            ];
-        }
-        return this.prisma.document.findMany({
+        const documents = await this.prisma.document.findMany({
             where,
             orderBy: { created_at: 'desc' },
-            take: 20,
         });
+        if (!q)
+            return documents.slice(0, 20);
+        const normalizedQuery = this.normalizeSearch(q);
+        return documents
+            .filter((document) => this.normalizeSearch([document.document_no, document.abstract, document.type].join(' ')).includes(normalizedQuery))
+            .slice(0, 20);
     }
     findOne(id) {
         return this.prisma.document.findUnique({

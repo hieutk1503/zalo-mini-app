@@ -6,6 +6,7 @@ export declare class FeedbacksController {
     create(user: Citizen, data: {
         content: string;
         imageUrls?: string;
+        location?: string;
     }): Promise<{
         id: number;
         created_at: Date;
@@ -13,6 +14,7 @@ export declare class FeedbacksController {
         status: string;
         citizen_id: number;
         image_urls: string | null;
+        location: string | null;
         admin_reply: string | null;
     }>;
     findAll(user: Citizen): Promise<{
@@ -22,6 +24,7 @@ export declare class FeedbacksController {
         status: string;
         citizen_id: number;
         image_urls: string | null;
+        location: string | null;
         admin_reply: string | null;
     }[]>;
 }

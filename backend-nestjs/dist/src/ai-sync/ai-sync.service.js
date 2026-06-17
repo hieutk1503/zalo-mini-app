@@ -15,11 +15,12 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const axios_1 = require("@nestjs/axios");
 const rxjs_1 = require("rxjs");
+const env_1 = require("../config/env");
 let AiSyncService = AiSyncService_1 = class AiSyncService {
     prisma;
     httpService;
     logger = new common_1.Logger(AiSyncService_1.name);
-    AI_SERVICE_URL = 'http://127.0.0.1:8000';
+    AI_SERVICE_URL = env_1.env.aiServiceUrl;
     constructor(prisma, httpService) {
         this.prisma = prisma;
         this.httpService = httpService;

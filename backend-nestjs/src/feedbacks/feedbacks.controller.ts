@@ -12,7 +12,8 @@ export class FeedbacksController {
   @Post()
   async create(
     @CurrentUser() user: Citizen,
-    @Body() data: { content: string; imageUrls?: string },
+    @Body()
+    data: { content: string; imageUrls?: string; location?: string },
   ) {
     return this.feedbacksService.createFeedback(user.id, data);
   }

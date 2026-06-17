@@ -2,12 +2,17 @@ import { useState } from 'react';
 import { Calendar, Clock, ChevronLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../lib/axios';
+import { useAuthStore } from '../store/authStore';
 
 export default function Appointments() {
   const navigate = useNavigate();
+  const { fullName: savedFullName, phone: savedPhone } = useAuthStore();
   const [date, setDate] = useState('');
   const [timeSlot, setTimeSlot] = useState('');
   const [content, setContent] = useState('');
+  const [fullName, setFullName] = useState(savedFullName || '');
+  const [phone, setPhone] = useState(savedPhone || '');
+  const [cccd, setCccd] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successTicket, setSuccessTicket] = useState<string | null>(null);
 
@@ -18,14 +23,25 @@ export default function Appointments() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!date || !timeSlot || !content) return;
+    if (!date || !timeSlot || !content || !fullName || !phone || !cccd) return;
+    if (!/^\d{10}$/.test(phone)) {
+      alert('Số điện thoại cần gồm 10 chữ số.');
+      return;
+    }
+    if (!/^\d{12}$/.test(cccd)) {
+      alert('CCCD cần gồm 12 chữ số.');
+      return;
+    }
     
     setIsSubmitting(true);
     try {
       const res = await api.post('/appointments', {
         date: new Date(date).toISOString(),
         timeSlot,
-        content
+        content,
+        fullName,
+        phone,
+        cccd
       });
       setSuccessTicket(res.data.ticket_number);
     } catch (err) {
@@ -75,6 +91,45 @@ export default function Appointments() {
 
       <div className="px-4 -mt-6 relative z-20">
         <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-6 shadow-xl shadow-gray-200/50 space-y-5 border border-gray-100">
+          <div>
+            <label className="block text-sm font-bold text-gray-800 mb-2">Họ và tên</label>
+            <input
+              type="text"
+              value={fullName}
+              onChange={e => setFullName(e.target.value)}
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-gray-800 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+              placeholder="Nguyễn Văn A"
+              required
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-5">
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-2">Số điện thoại</label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-gray-800 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                placeholder="09xxxxxxxx"
+                inputMode="numeric"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-800 mb-2">Căn cước công dân</label>
+              <input
+                type="text"
+                value={cccd}
+                onChange={e => setCccd(e.target.value.replace(/\D/g, '').slice(0, 12))}
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 text-gray-800 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"
+                placeholder="12 chữ số"
+                inputMode="numeric"
+                required
+              />
+            </div>
+          </div>
           
           {/* Date Picker */}
           <div>
@@ -128,7 +183,7 @@ export default function Appointments() {
 
           <button 
             type="submit"
-            disabled={isSubmitting || !date || !timeSlot || !content}
+            disabled={isSubmitting || !date || !timeSlot || !content || !fullName || !phone || !cccd}
             className="w-full bg-gradient-to-r from-primary-dark to-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed mt-4 flex items-center justify-center gap-2"
           >
             {isSubmitting ? (

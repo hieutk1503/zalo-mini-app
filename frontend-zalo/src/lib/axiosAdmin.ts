@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { API_BASE_URL } from './config';
 
 const axiosAdmin = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: API_BASE_URL,
 });
 
 // Request interceptor: attach JWT token

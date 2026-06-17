@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Shield, LogIn, Mail, Lock, AlertCircle } from 'lucide-react';
+import axios from 'axios';
+import axiosAdmin from '../lib/axiosAdmin';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ export default function AdminLogin() {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:3000/admin-auth/login', {
+      const res = await axiosAdmin.post('/admin-auth/login', {
         email,
         password,
       });

@@ -6,22 +6,36 @@ import { Prisma } from '@prisma/client';
 export class DocumentsService {
   constructor(private prisma: PrismaService) {}
 
-  findAll(type?: string, q?: string) {
+  private normalizeSearch(value?: string | null) {
+    return (value || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\u0111/g, 'd')
+      .replace(/\u0110/g, 'D')
+      .toLowerCase();
+  }
+
+  async findAll(type?: string, q?: string) {
     const where: Prisma.DocumentWhereInput = {};
     if (type) {
       where.type = type;
     }
-    if (q) {
-      where.OR = [
-        { document_no: { contains: q, mode: 'insensitive' } },
-        { abstract: { contains: q, mode: 'insensitive' } },
-      ];
-    }
-    return this.prisma.document.findMany({
+
+    const documents = await this.prisma.document.findMany({
       where,
       orderBy: { created_at: 'desc' },
-      take: 20,
     });
+
+    if (!q) return documents.slice(0, 20);
+
+    const normalizedQuery = this.normalizeSearch(q);
+    return documents
+      .filter((document) =>
+        this.normalizeSearch(
+          [document.document_no, document.abstract, document.type].join(' '),
+        ).includes(normalizedQuery),
+      )
+      .slice(0, 20);
   }
 
   findOne(id: number) {
@@ -30,3 +44,4 @@ export class DocumentsService {
     });
   }
 }
+

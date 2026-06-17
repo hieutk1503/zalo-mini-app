@@ -5,6 +5,7 @@ export declare class FeedbacksService {
     createFeedback(citizenId: number, data: {
         content: string;
         imageUrls?: string;
+        location?: string;
     }): Promise<{
         id: number;
         created_at: Date;
@@ -12,6 +13,7 @@ export declare class FeedbacksService {
         status: string;
         citizen_id: number;
         image_urls: string | null;
+        location: string | null;
         admin_reply: string | null;
     }>;
     getMyFeedbacks(citizenId: number): Promise<{
@@ -21,6 +23,7 @@ export declare class FeedbacksService {
         status: string;
         citizen_id: number;
         image_urls: string | null;
+        location: string | null;
         admin_reply: string | null;
     }[]>;
 }

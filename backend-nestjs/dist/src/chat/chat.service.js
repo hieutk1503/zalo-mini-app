@@ -13,9 +13,10 @@ exports.ChatService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("@nestjs/axios");
 const rxjs_1 = require("rxjs");
+const env_1 = require("../config/env");
 let ChatService = class ChatService {
     httpService;
-    aiServiceUrl = 'http://127.0.0.1:8000';
+    aiServiceUrl = env_1.env.aiServiceUrl;
     constructor(httpService) {
         this.httpService = httpService;
     }

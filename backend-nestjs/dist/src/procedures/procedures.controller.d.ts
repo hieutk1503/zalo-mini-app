@@ -2,7 +2,7 @@ import { ProceduresService } from './procedures.service';
 export declare class ProceduresController {
     private readonly proceduresService;
     constructor(proceduresService: ProceduresService);
-    findAll(q?: string): import("@prisma/client").Prisma.PrismaPromise<{
+    findAll(q?: string): Promise<{
         id: number;
         created_at: Date;
         code: string;
@@ -27,7 +27,9 @@ export declare class ProceduresController {
     previewImport(file: Express.Multer.File): Promise<{
         newCount: number;
         conflictCount: number;
-        conflicts: unknown[];
+        conflicts: {
+            [x: string]: unknown;
+        }[];
     }>;
     executeImport(file: Express.Multer.File, overwriteStr: string): Promise<{
         successCount: number;

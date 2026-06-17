@@ -2,11 +2,12 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
+import { env } from '../config/env';
 
 @Injectable()
 export class AiSyncService {
   private readonly logger = new Logger(AiSyncService.name);
-  private readonly AI_SERVICE_URL = 'http://127.0.0.1:8000';
+  private readonly AI_SERVICE_URL = env.aiServiceUrl;
 
   constructor(
     private readonly prisma: PrismaService,

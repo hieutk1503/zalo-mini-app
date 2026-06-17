@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AiSyncController = void 0;
 const common_1 = require("@nestjs/common");
 const ai_sync_service_1 = require("./ai-sync.service");
+const admin_auth_guard_1 = require("../admin-auth/admin-auth.guard");
 let AiSyncController = class AiSyncController {
     aiSyncService;
     constructor(aiSyncService) {
@@ -30,6 +31,7 @@ __decorate([
 ], AiSyncController.prototype, "triggerAll", null);
 exports.AiSyncController = AiSyncController = __decorate([
     (0, common_1.Controller)('ai-sync'),
+    (0, common_1.UseGuards)(admin_auth_guard_1.AdminAuthGuard),
     __metadata("design:paramtypes", [ai_sync_service_1.AiSyncService])
 ], AiSyncController);
 //# sourceMappingURL=ai-sync.controller.js.map

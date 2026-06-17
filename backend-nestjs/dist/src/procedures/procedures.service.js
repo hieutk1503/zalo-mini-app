@@ -46,23 +46,52 @@ exports.ProceduresService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const xlsx = __importStar(require("xlsx"));
+const PROCEDURE_IMPORT_HEADERS = {
+    code: ['Mã thủ tục', 'MÃ£ thá»§ tá»¥c'],
+    title: ['Tên thủ tục', 'TÃªn thá»§ tá»¥c'],
+    description: ['Mô tả', 'MÃ´ táº£'],
+    fee: ['Lệ phí', 'Lá»‡ phÃ­'],
+    duration: ['Thời gian', 'Thá»i gian'],
+    processSteps: ['Các bước', 'CÃ¡c bÆ°á»›c'],
+};
 let ProceduresService = class ProceduresService {
     prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
-    findAll(q) {
-        if (!q) {
-            return this.prisma.administrativeProcedure.findMany({
-                orderBy: { title: 'asc' },
-            });
+    normalizeSearch(value) {
+        return (value || '')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/\u0111/g, 'd')
+            .replace(/\u0110/g, 'D')
+            .toLowerCase();
+    }
+    getImportValue(row, headers) {
+        for (const header of headers) {
+            const value = row[header];
+            if (value !== undefined && value !== null) {
+                return value.toString().trim();
+            }
         }
-        return this.prisma.administrativeProcedure.findMany({
-            where: {
-                title: { contains: q, mode: 'insensitive' },
-            },
+        return '';
+    }
+    async findAll(q) {
+        const procedures = await this.prisma.administrativeProcedure.findMany({
+            where: { is_active: true },
             orderBy: { title: 'asc' },
         });
+        if (!q)
+            return procedures;
+        const normalizedQuery = this.normalizeSearch(q);
+        return procedures.filter((procedure) => this.normalizeSearch([
+            procedure.code,
+            procedure.title,
+            procedure.description,
+            procedure.fee,
+            procedure.duration,
+            procedure.process_steps,
+        ].join(' ')).includes(normalizedQuery));
     }
     findOne(id) {
         return this.prisma.administrativeProcedure.findUnique({ where: { id } });
@@ -71,10 +100,19 @@ let ProceduresService = class ProceduresService {
         const workbook = xlsx.read(buffer, { type: 'buffer' });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const data = xlsx.utils.sheet_to_json(sheet);
-        const existingCodes = (await this.prisma.administrativeProcedure.findMany({ select: { code: true } })).map(p => p.code);
-        const conflicts = data.filter((row) => existingCodes.includes(row['Mã thủ tục']?.toString()?.trim()));
-        const newRecords = data.filter((row) => row['Mã thủ tục'] && !existingCodes.includes(row['Mã thủ tục']?.toString()?.trim()));
-        return { newCount: newRecords.length, conflictCount: conflicts.length, conflicts };
+        const existingCodes = (await this.prisma.administrativeProcedure.findMany({
+            select: { code: true },
+        })).map((procedure) => procedure.code);
+        const conflicts = data.filter((row) => existingCodes.includes(this.getImportValue(row, PROCEDURE_IMPORT_HEADERS.code)));
+        const newRecords = data.filter((row) => {
+            const code = this.getImportValue(row, PROCEDURE_IMPORT_HEADERS.code);
+            return code && !existingCodes.includes(code);
+        });
+        return {
+            newCount: newRecords.length,
+            conflictCount: conflicts.length,
+            conflicts,
+        };
     }
     async executeImport(buffer, overwrite) {
         const workbook = xlsx.read(buffer, { type: 'buffer' });
@@ -82,29 +120,33 @@ let ProceduresService = class ProceduresService {
         const data = xlsx.utils.sheet_to_json(sheet);
         let successCount = 0;
         for (const row of data) {
-            const rawCode = row['Mã thủ tục']?.toString()?.trim();
+            const rawCode = this.getImportValue(row, PROCEDURE_IMPORT_HEADERS.code);
             if (!rawCode)
                 continue;
             const payload = {
-                title: row['Tên thủ tục']?.toString() || '',
-                description: row['Mô tả']?.toString() || '',
-                fee: row['Lệ phí']?.toString() || '',
-                duration: row['Thời gian']?.toString() || '',
-                process_steps: row['Các bước']?.toString() || '',
-                is_active: true
+                title: this.getImportValue(row, PROCEDURE_IMPORT_HEADERS.title),
+                description: this.getImportValue(row, PROCEDURE_IMPORT_HEADERS.description),
+                fee: this.getImportValue(row, PROCEDURE_IMPORT_HEADERS.fee),
+                duration: this.getImportValue(row, PROCEDURE_IMPORT_HEADERS.duration),
+                process_steps: this.getImportValue(row, PROCEDURE_IMPORT_HEADERS.processSteps),
+                is_active: true,
             };
             if (overwrite) {
                 await this.prisma.administrativeProcedure.upsert({
                     where: { code: rawCode },
                     update: payload,
-                    create: { code: rawCode, ...payload }
+                    create: { code: rawCode, ...payload },
                 });
                 successCount++;
             }
             else {
-                const exists = await this.prisma.administrativeProcedure.findUnique({ where: { code: rawCode } });
+                const exists = await this.prisma.administrativeProcedure.findUnique({
+                    where: { code: rawCode },
+                });
                 if (!exists) {
-                    await this.prisma.administrativeProcedure.create({ data: { code: rawCode, ...payload } });
+                    await this.prisma.administrativeProcedure.create({
+                        data: { code: rawCode, ...payload },
+                    });
                     successCount++;
                 }
             }

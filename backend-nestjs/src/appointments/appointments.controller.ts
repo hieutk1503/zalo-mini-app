@@ -12,7 +12,15 @@ export class AppointmentsController {
   @Post()
   async create(
     @CurrentUser() user: Citizen,
-    @Body() data: { date: string; timeSlot: string; content: string },
+    @Body()
+    data: {
+      date: string;
+      timeSlot: string;
+      content: string;
+      fullName?: string;
+      phone?: string;
+      cccd?: string;
+    },
   ) {
     return this.appointmentsService.createAppointment(user.id, data);
   }

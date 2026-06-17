@@ -22,7 +22,8 @@ let FeedbacksService = class FeedbacksService {
             data: {
                 citizen_id: citizenId,
                 content: data.content,
-                image_urls: data.imageUrls,
+                image_urls: data.imageUrls || null,
+                location: data.location || null,
                 status: 'NEW',
             },
         });

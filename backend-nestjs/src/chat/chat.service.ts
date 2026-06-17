@@ -1,10 +1,11 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { env } from '../config/env';
 
 @Injectable()
 export class ChatService {
-  private aiServiceUrl = 'http://127.0.0.1:8000'; // Default to localhost
+  private aiServiceUrl = env.aiServiceUrl;
 
   constructor(private readonly httpService: HttpService) {}
 

@@ -10,6 +10,7 @@ import { NewsModule } from './news/news.module';
 import { DocumentsModule } from './documents/documents.module';
 import { AiSyncModule } from './ai-sync/ai-sync.module';
 import { AdminAuthModule } from './admin-auth/admin-auth.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AdminAuthModule } from './admin-auth/admin-auth.module';
     DocumentsModule,
     AiSyncModule,
     AdminAuthModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

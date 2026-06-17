@@ -11,12 +11,13 @@ const common_1 = require("@nestjs/common");
 const feedbacks_service_1 = require("./feedbacks.service");
 const feedbacks_controller_1 = require("./feedbacks.controller");
 const prisma_module_1 = require("../prisma/prisma.module");
+const auth_module_1 = require("../auth/auth.module");
 let FeedbacksModule = class FeedbacksModule {
 };
 exports.FeedbacksModule = FeedbacksModule;
 exports.FeedbacksModule = FeedbacksModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule],
+        imports: [prisma_module_1.PrismaModule, auth_module_1.AuthModule],
         controllers: [feedbacks_controller_1.FeedbacksController],
         providers: [feedbacks_service_1.FeedbacksService],
     })

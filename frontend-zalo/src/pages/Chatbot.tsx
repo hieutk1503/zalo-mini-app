@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, Bot } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../lib/config';
 
 type Message = { id: number; text: string; isBot: boolean; action?: { type: string, id: number } };
 
@@ -31,8 +32,6 @@ export default function Chatbot() {
     setIsLoading(true);
     
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      
       const chatHistory = messages
         .filter(m => m.id !== 1)
         .slice(-4)
@@ -41,7 +40,7 @@ export default function Chatbot() {
           content: m.text
         }));
 
-      const response = await axios.post(`${apiUrl}/chat/query`, { 
+      const response = await axios.post(`${API_BASE_URL}/chat/query`, {
         query: input,
         history: chatHistory
       });

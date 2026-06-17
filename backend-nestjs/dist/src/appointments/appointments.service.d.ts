@@ -6,6 +6,9 @@ export declare class AppointmentsService {
         date: string;
         timeSlot: string;
         content: string;
+        fullName?: string;
+        phone?: string;
+        cccd?: string;
     }): Promise<{
         id: number;
         created_at: Date;
@@ -16,6 +19,7 @@ export declare class AppointmentsService {
         status: string;
         citizen_id: number;
     }>;
+    private generateTicketNumber;
     getMyAppointments(citizenId: number): Promise<{
         id: number;
         created_at: Date;

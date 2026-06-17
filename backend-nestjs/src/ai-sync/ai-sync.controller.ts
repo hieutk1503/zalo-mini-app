@@ -1,7 +1,9 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, UseGuards } from '@nestjs/common';
 import { AiSyncService } from './ai-sync.service';
+import { AdminAuthGuard } from '../admin-auth/admin-auth.guard';
 
 @Controller('ai-sync')
+@UseGuards(AdminAuthGuard)
 export class AiSyncController {
   constructor(private readonly aiSyncService: AiSyncService) {}
 
