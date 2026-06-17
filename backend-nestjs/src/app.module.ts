@@ -4,9 +4,23 @@ import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProceduresModule } from './procedures/procedures.module';
 import { ChatModule } from './chat/chat.module';
+import { AppointmentsModule } from './appointments/appointments.module';
+import { FeedbacksModule } from './feedbacks/feedbacks.module';
+import { NewsModule } from './news/news.module';
+import { DocumentsModule } from './documents/documents.module';
+import { AiSyncModule } from './ai-sync/ai-sync.module';
 
 @Module({
-  imports: [PrismaModule, ProceduresModule, ChatModule],
+  imports: [
+    PrismaModule,
+    ProceduresModule,
+    ChatModule,
+    AppointmentsModule,
+    FeedbacksModule,
+    NewsModule,
+    DocumentsModule,
+    AiSyncModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -30,25 +30,24 @@ model Admin {
 }
 
 model AdministrativeProcedure {
-  id            Int               @id @default(autoincrement())
-  code          String            @unique
+  id            Int      @id @default(autoincrement())
+  code          String   @unique
   title         String
   description   String?
   fee           String?
   duration      String?
   process_steps String?
-  is_active     Boolean           @default(true)
-  vectors       ProcedureVector[]
-  created_at    DateTime          @default(now())
+  is_active     Boolean  @default(true)
+  created_at    DateTime @default(now())
 }
 
-model ProcedureVector {
-  id            Int                     @id @default(autoincrement())
-  procedure_id  Int
-  procedure     AdministrativeProcedure @relation(fields: [procedure_id], references: [id])
+model KnowledgeVector {
+  id            Int                    @id @default(autoincrement())
+  source_type   String
+  source_id     Int
   content_chunk String
   embedding     Unsupported("vector")?
-  created_at    DateTime                @default(now())
+  created_at    DateTime               @default(now())
 }
 
 model Appointment {

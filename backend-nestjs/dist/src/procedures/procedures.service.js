@@ -17,8 +17,18 @@ let ProceduresService = class ProceduresService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    findAll() {
-        return this.prisma.administrativeProcedure.findMany();
+    findAll(q) {
+        if (!q) {
+            return this.prisma.administrativeProcedure.findMany({
+                orderBy: { title: 'asc' },
+            });
+        }
+        return this.prisma.administrativeProcedure.findMany({
+            where: {
+                title: { contains: q, mode: 'insensitive' },
+            },
+            orderBy: { title: 'asc' },
+        });
     }
     findOne(id) {
         return this.prisma.administrativeProcedure.findUnique({ where: { id } });

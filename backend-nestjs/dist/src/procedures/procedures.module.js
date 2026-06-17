@@ -16,7 +16,7 @@ exports.ProceduresModule = ProceduresModule;
 exports.ProceduresModule = ProceduresModule = __decorate([
     (0, common_1.Module)({
         controllers: [procedures_controller_1.ProceduresController],
-        providers: [procedures_service_1.ProceduresService]
+        providers: [procedures_service_1.ProceduresService],
     })
 ], ProceduresModule);
 //# sourceMappingURL=procedures.module.js.map

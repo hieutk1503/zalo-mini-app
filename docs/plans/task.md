@@ -1,5 +1,6 @@
 | Task ID | Component / Description | Status |
 |---|---|---|
-| Task 1 | Khai báo Prisma Schema cho toàn bộ dự án | done |
-| Task 2 | Setup Database Migration và Khởi tạo Module NestJS | in_progress |
-| Task 3 | Tạo REST API Scaffold cho Thủ Tục Hành Chính (Procedures) | not_started |
+| Task 1 | Cài đặt Tailwind CSS và thư viện UI Core | done |
+| Task 2 | Thiết lập Router và Layout cơ bản | done |
+| Task 3 | Xây dựng Giao diện Trang chủ (Home Page) | done |
+| Task 4 | Xây dựng Giao diện AI Chatbot | done |

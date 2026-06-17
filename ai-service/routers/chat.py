@@ -11,18 +11,17 @@ class ChatRequest(BaseModel):
 @router.post("/query")
 def chat_with_rag(req: ChatRequest):
     try:
-        # 1. Embed câu hỏi
+        # 1. Embed query
         embed_resp = ollama.embeddings(model="nomic-embed-text", prompt=req.query)
         query_embedding = embed_resp["embedding"]
 
-        # 2. Tìm ngữ cảnh
+        # 2. Search context
         conn = get_db_connection()
         cur = conn.cursor()
-        # Tìm top 3 thủ tục gần nhất
         cur.execute(
             """
             SELECT content_chunk 
-            FROM "ProcedureVector" 
+            FROM "KnowledgeVector" 
             ORDER BY embedding <=> %s::vector 
             LIMIT 3
             """,
@@ -34,14 +33,14 @@ def chat_with_rag(req: ChatRequest):
 
         context = "\n".join([row["content_chunk"] for row in rows])
 
-        # 3. Tạo prompt cho Qwen
-        prompt = f"""Bạn là trợ lý ảo hỗ trợ Dịch vụ công Tự Lạn Smart. Dựa vào thông tin thủ tục sau:
+        # 3. Create prompt for Qwen
+        prompt = f"""Bạn là trợ lý ảo hỗ trợ Dịch vụ công Tự Lạn Smart. Dựa vào các thông tin sau đây (bao gồm thủ tục, tin tức, văn bản):
 {context}
 Hãy trả lời câu hỏi: {req.query}
-Nếu không có thông tin trong ngữ cảnh, hãy yêu cầu người dùng liên hệ trực tiếp với bộ phận một cửa.
+Nếu không có thông tin trong ngữ cảnh, hãy yêu cầu người dùng liên hệ trực tiếp bộ phận một cửa. Trả lời ngắn gọn, súc tích và dễ hiểu.
 """
 
-        # 4. Gửi cho Qwen
+        # 4. Send to Qwen
         response = ollama.chat(model='qwen2.5', messages=[
             {
                 'role': 'user',

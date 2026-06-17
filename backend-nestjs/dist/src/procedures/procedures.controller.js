@@ -20,8 +20,8 @@ let ProceduresController = class ProceduresController {
     constructor(proceduresService) {
         this.proceduresService = proceduresService;
     }
-    findAll() {
-        return this.proceduresService.findAll();
+    findAll(q) {
+        return this.proceduresService.findAll(q);
     }
     findOne(id) {
         return this.proceduresService.findOne(+id);
@@ -30,8 +30,9 @@ let ProceduresController = class ProceduresController {
 exports.ProceduresController = ProceduresController;
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProceduresController.prototype, "findAll", null);
 __decorate([
