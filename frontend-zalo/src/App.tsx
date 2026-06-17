@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout';
 import Home from './pages/Home';
 import Chatbot from './pages/Chatbot';
 import Appointments from './pages/Appointments';
@@ -13,11 +14,14 @@ import Hotline from './pages/Hotline';
 import MapLocation from './pages/MapLocation';
 import AdminImport from './pages/AdminImport';
 import AdminLogin from './pages/AdminLogin';
+import AdminFeedbacks from './pages/AdminFeedbacks';
+import AdminAppointments from './pages/AdminAppointments';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* User Routes (Mobile Layout) */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="chatbot" element={<Chatbot />} />
@@ -30,14 +34,21 @@ function App() {
           <Route path="documents" element={<Documents />} />
           <Route path="hotline" element={<Hotline />} />
           <Route path="map" element={<MapLocation />} />
-          <Route path="admin/import" element={<AdminImport />} />
         </Route>
+
+        {/* Admin Login */}
         <Route path="admin/login" element={<AdminLogin />} />
+
+        {/* Admin Routes (Desktop Layout) */}
+        <Route path="admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="/admin/feedbacks" replace />} />
+          <Route path="feedbacks" element={<AdminFeedbacks />} />
+          <Route path="appointments" element={<AdminAppointments />} />
+          <Route path="import" element={<AdminImport />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
 }
-
-
 
 export default App;

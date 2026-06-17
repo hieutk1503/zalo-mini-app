@@ -11,6 +11,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { AiSyncModule } from './ai-sync/ai-sync.module';
 import { AdminAuthModule } from './admin-auth/admin-auth.module';
 import { UploadModule } from './upload/upload.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UploadModule } from './upload/upload.module';
     AiSyncModule,
     AdminAuthModule,
     UploadModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

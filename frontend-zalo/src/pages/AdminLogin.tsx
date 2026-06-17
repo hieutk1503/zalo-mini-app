@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Shield, LogIn, Mail, Lock, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 import axiosAdmin from '../lib/axiosAdmin';
+import { useAuthStore } from '../store/authStore';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { setAdminToken } = useAuthStore();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,7 +23,7 @@ export default function AdminLogin() {
         email,
         password,
       });
-      localStorage.setItem('admin_token', res.data.access_token);
+      setAdminToken(res.data.access_token);
       localStorage.setItem('admin_user', JSON.stringify(res.data.admin));
       navigate('/admin/import');
     } catch (err: unknown) {
