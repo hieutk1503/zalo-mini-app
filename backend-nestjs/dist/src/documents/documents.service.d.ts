@@ -6,17 +6,17 @@ export declare class DocumentsService {
     findAll(type?: string, q?: string): Prisma.PrismaPromise<{
         id: number;
         created_at: Date;
+        type: string;
         abstract: string;
         document_no: string;
         file_url: string;
-        type: string;
     }[]>;
     findOne(id: number): Prisma.Prisma__DocumentClient<{
         id: number;
         created_at: Date;
+        type: string;
         abstract: string;
         document_no: string;
         file_url: string;
-        type: string;
     } | null, null, import("@prisma/client/runtime/client").DefaultArgs, Prisma.PrismaClientOptions>;
 }

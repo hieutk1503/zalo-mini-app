@@ -3,5 +3,5 @@ export declare class ChatService {
     private readonly httpService;
     private aiServiceUrl;
     constructor(httpService: HttpService);
-    askAi(query: string): Promise<any>;
+    askAi(query: string, history?: any[]): Promise<any>;
 }

@@ -14,7 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProceduresController = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
 const procedures_service_1 = require("./procedures.service");
+const admin_auth_guard_1 = require("../admin-auth/admin-auth.guard");
 let ProceduresController = class ProceduresController {
     proceduresService;
     constructor(proceduresService) {
@@ -25,6 +27,13 @@ let ProceduresController = class ProceduresController {
     }
     findOne(id) {
         return this.proceduresService.findOne(+id);
+    }
+    async previewImport(file) {
+        return this.proceduresService.previewImport(file.buffer);
+    }
+    async executeImport(file, overwriteStr) {
+        const overwrite = overwriteStr === 'true';
+        return this.proceduresService.executeImport(file.buffer, overwrite);
     }
 };
 exports.ProceduresController = ProceduresController;
@@ -42,6 +51,25 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProceduresController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Post)('import/preview'),
+    (0, common_1.UseGuards)(admin_auth_guard_1.AdminAuthGuard),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
+    __param(0, (0, common_1.UploadedFile)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProceduresController.prototype, "previewImport", null);
+__decorate([
+    (0, common_1.Post)('import/execute'),
+    (0, common_1.UseGuards)(admin_auth_guard_1.AdminAuthGuard),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file')),
+    __param(0, (0, common_1.UploadedFile)()),
+    __param(1, (0, common_1.Body)('overwrite')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], ProceduresController.prototype, "executeImport", null);
 exports.ProceduresController = ProceduresController = __decorate([
     (0, common_1.Controller)('procedures'),
     __metadata("design:paramtypes", [procedures_service_1.ProceduresService])

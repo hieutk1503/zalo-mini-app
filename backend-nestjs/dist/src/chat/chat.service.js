@@ -19,9 +19,12 @@ let ChatService = class ChatService {
     constructor(httpService) {
         this.httpService = httpService;
     }
-    async askAi(query) {
+    async askAi(query, history) {
         try {
-            const response = await (0, rxjs_1.firstValueFrom)(this.httpService.post(`${this.aiServiceUrl}/api/chat/query`, { query }));
+            const response = await (0, rxjs_1.firstValueFrom)(this.httpService.post(`${this.aiServiceUrl}/api/chat/query`, {
+                query,
+                history: history || []
+            }));
             return response.data;
         }
         catch {

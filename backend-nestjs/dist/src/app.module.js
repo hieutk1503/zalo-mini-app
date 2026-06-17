@@ -18,6 +18,7 @@ const feedbacks_module_1 = require("./feedbacks/feedbacks.module");
 const news_module_1 = require("./news/news.module");
 const documents_module_1 = require("./documents/documents.module");
 const ai_sync_module_1 = require("./ai-sync/ai-sync.module");
+const admin_auth_module_1 = require("./admin-auth/admin-auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -32,6 +33,7 @@ exports.AppModule = AppModule = __decorate([
             news_module_1.NewsModule,
             documents_module_1.DocumentsModule,
             ai_sync_module_1.AiSyncModule,
+            admin_auth_module_1.AdminAuthModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

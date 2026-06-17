@@ -4,6 +4,7 @@ export declare class ProceduresController {
     constructor(proceduresService: ProceduresService);
     findAll(q?: string): import("@prisma/client").Prisma.PrismaPromise<{
         id: number;
+        created_at: Date;
         code: string;
         title: string;
         description: string | null;
@@ -11,10 +12,10 @@ export declare class ProceduresController {
         duration: string | null;
         process_steps: string | null;
         is_active: boolean;
-        created_at: Date;
     }[]>;
     findOne(id: string): import("@prisma/client").Prisma.Prisma__AdministrativeProcedureClient<{
         id: number;
+        created_at: Date;
         code: string;
         title: string;
         description: string | null;
@@ -22,6 +23,13 @@ export declare class ProceduresController {
         duration: string | null;
         process_steps: string | null;
         is_active: boolean;
-        created_at: Date;
     } | null, null, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    previewImport(file: Express.Multer.File): Promise<{
+        newCount: number;
+        conflictCount: number;
+        conflicts: unknown[];
+    }>;
+    executeImport(file: Express.Multer.File, overwriteStr: string): Promise<{
+        successCount: number;
+    }>;
 }

@@ -12,29 +12,29 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChatController = void 0;
+exports.AdminAuthController = void 0;
 const common_1 = require("@nestjs/common");
-const chat_service_1 = require("./chat.service");
-let ChatController = class ChatController {
-    chatService;
-    constructor(chatService) {
-        this.chatService = chatService;
+const admin_auth_service_1 = require("./admin-auth.service");
+let AdminAuthController = class AdminAuthController {
+    adminAuthService;
+    constructor(adminAuthService) {
+        this.adminAuthService = adminAuthService;
     }
-    async queryChat(query, history) {
-        return this.chatService.askAi(query, history);
+    login(loginDto) {
+        return this.adminAuthService.login(loginDto.email, loginDto.password);
     }
 };
-exports.ChatController = ChatController;
+exports.AdminAuthController = AdminAuthController;
 __decorate([
-    (0, common_1.Post)('query'),
-    __param(0, (0, common_1.Body)('query')),
-    __param(1, (0, common_1.Body)('history')),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    (0, common_1.Post)('login'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Array]),
-    __metadata("design:returntype", Promise)
-], ChatController.prototype, "queryChat", null);
-exports.ChatController = ChatController = __decorate([
-    (0, common_1.Controller)('chat'),
-    __metadata("design:paramtypes", [chat_service_1.ChatService])
-], ChatController);
-//# sourceMappingURL=chat.controller.js.map
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AdminAuthController.prototype, "login", null);
+exports.AdminAuthController = AdminAuthController = __decorate([
+    (0, common_1.Controller)('admin-auth'),
+    __metadata("design:paramtypes", [admin_auth_service_1.AdminAuthService])
+], AdminAuthController);
+//# sourceMappingURL=admin-auth.controller.js.map

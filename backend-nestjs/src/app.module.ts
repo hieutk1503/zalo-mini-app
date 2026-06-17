@@ -9,6 +9,7 @@ import { FeedbacksModule } from './feedbacks/feedbacks.module';
 import { NewsModule } from './news/news.module';
 import { DocumentsModule } from './documents/documents.module';
 import { AiSyncModule } from './ai-sync/ai-sync.module';
+import { AdminAuthModule } from './admin-auth/admin-auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AiSyncModule } from './ai-sync/ai-sync.module';
     NewsModule,
     DocumentsModule,
     AiSyncModule,
+    AdminAuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

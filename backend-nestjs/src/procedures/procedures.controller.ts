@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Query, Post, UseInterceptors, UploadedFile, Body } from '@nestjs/common';
+import { Controller, Get, Param, Query, Post, UseInterceptors, UploadedFile, Body, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ProceduresService } from './procedures.service';
+import { AdminAuthGuard } from '../admin-auth/admin-auth.guard';
 
 @Controller('procedures')
 export class ProceduresController {
@@ -17,12 +18,14 @@ export class ProceduresController {
   }
 
   @Post('import/preview')
+  @UseGuards(AdminAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   async previewImport(@UploadedFile() file: Express.Multer.File) {
     return this.proceduresService.previewImport(file.buffer);
   }
 
   @Post('import/execute')
+  @UseGuards(AdminAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   async executeImport(
     @UploadedFile() file: Express.Multer.File,
