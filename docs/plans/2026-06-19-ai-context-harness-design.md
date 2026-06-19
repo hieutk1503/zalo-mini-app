@@ -3,6 +3,21 @@
 ## 1. Mục tiêu (Goals)
 Nâng cấp kiến trúc RAG hiện tại của hệ thống Tự Lạn Smart theo chuẩn **Context Harness**, giải quyết bài toán tràn token, kiểm soát an toàn nội dung, đồng thời đề xuất cách tích hợp **Dataset Distillation** và **Knowledge Distillation** để tối ưu hóa hiệu năng LLM chạy trên máy nội bộ (Local GPU).
 
+## 1.5. So sánh Kiến trúc Hiện tại và Hướng Triển khai (Context Harness)
+
+Dưới đây là bảng phân tích chi tiết sự khác biệt cốt lõi giữa hệ thống hiện tại (Naive RAG) và hệ thống dự kiến triển khai (Context Harness + Distillation).
+
+| Tiêu chí | Hệ thống Hiện tại (Naive RAG) | Hướng Triển khai Mới (Context Harness) | Lợi ích mang lại |
+| :--- | :--- | :--- | :--- |
+| **Data Processing (Xử lý dữ liệu)** | Cắt văn bản thô (PDF/Text) và đẩy thẳng vào Vector DB (`pgvector`). Dữ liệu mang nhiều nhiễu. | **Dataset Distillation:** Dùng LLM lớn tổng hợp kho tài liệu thành các cặp Q&A cực kỳ súc tích trước khi đưa vào DB. | Tăng vọt độ chính xác khi tìm kiếm. AI sẽ đọc Q&A thay vì đọc văn bản luật dài dòng. |
+| **Retrieval (Truy xuất)** | Chỉ dùng tìm kiếm Semantic (Vector Similarity) với giới hạn cứng `LIMIT 3`. | Kết hợp **Hybrid Search** (Vector + BM25) lấy Top 10, sau đó dùng Reranker lọc lại Top 3. | Khắc phục điểm mù của Vector Search khi tìm các mã số Quyết định, tên người, biển số xe. |
+| **Context Compression (Nén ngữ cảnh)** | Không có. Nối thẳng 3 văn bản dài bằng dấu `\n` rồi nhét vào Prompt. Rất tốn token. | **Context Harness:** Đi qua một bước "máy ép". Dùng thuật toán NLP hoặc LLM nhỏ tóm tắt lại 3 văn bản thành các keyword/ý chính. | Giảm 60-80% lượng token rác đưa vào Prompt. Tránh lỗi "Lost in the Middle" của LLM. |
+| **LLM Inference (Đầu máy suy luận)** | Dùng chung 1 model `qwen2.5` nặng 7B-8B parameter. Máy laptop card 6GB VRAM bị quá tải, trả lời chậm. | **Knowledge Distillation:** Fine-tune một model siêu nhẹ (VD: `Qwen-1.5B`) bằng dataset tự sinh, chuyên trả lời hành chính. | Giải phóng hoàn toàn RAM/GPU. Tốc độ sinh chữ (Inference) tăng gấp 3 đến 5 lần. |
+| **Guardrails (Kiểm soát an toàn)** | Chỉ dùng System Prompt nhắc nhở. Dễ bị tấn công Prompt Injection (bắt AI quên lệnh cũ). | **Harness Policies:** Dùng bộ lọc Regex hoặc mô hình kiểm duyệt chặn đứng mọi câu hỏi/câu trả lời không liên quan. | Đảm bảo an toàn tuyệt đối khi đưa ra phục vụ công dân (Enterprise-ready). |
+| **Bộ nhớ (Memory)** | Ném toàn bộ lịch sử chat từ Frontend lên mỗi lượt, làm phình to Prompt theo thời gian. | **Harness Memory:** Chỉ giữ lại 3-5 lượt chat gần nhất, cộng thêm biến User Profile (Zalo ID, Vị trí). | Tối ưu băng thông, đảm bảo ngữ cảnh cá nhân hóa mà không làm nghẽn mô hình. |
+
+---
+
 ## 2. Thiết kế Context Harness (Bộ điều phối ngữ cảnh)
 
 Hệ thống hiện tại đang lấy thô `LIMIT 3` vector và đưa thẳng vào Prompt. Để nâng cấp, chúng ta cần xây dựng một "Bộ não trung gian" đứng trước LLM.
