@@ -97,7 +97,7 @@ const AdminFeedbacks = () => {
                   {fb.image_urls && (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {fb.image_urls.split(',').map((url, idx) => (
-                        <img key={idx} src={`${API_URL}${url}`} alt="Feedback" className="w-32 h-32 object-cover rounded-lg border border-gray-200" />
+                        <img key={idx} src={url.startsWith('http') ? url : `${API_URL}${url}`} alt="Feedback" className="w-32 h-32 object-cover rounded-lg border border-gray-200" />
                       ))}
                     </div>
                   )}
