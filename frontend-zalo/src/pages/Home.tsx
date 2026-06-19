@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CalendarDays, FileText, MapPin, ChevronRight, Bell, Search, Library, PhoneCall, Map as MapIcon, Globe } from 'lucide-react';
+import { CalendarDays, FileText, MapPin, ChevronRight, Bell, Search, Library, PhoneCall, Map as MapIcon, Globe, Building2, Briefcase, Landmark, CalendarClock, ClipboardList } from 'lucide-react';
 import api from '../lib/axios';
 
 interface NewsItem {
@@ -31,6 +31,11 @@ export default function Home() {
     { icon: <Library size={24} className="text-indigo-500" />, label: 'Kho văn bản', path: '/documents', bg: 'bg-indigo-50' },
     { icon: <PhoneCall size={24} className="text-red-500" />, label: 'Đường dây nóng', path: '/hotline', bg: 'bg-red-50' },
     { icon: <MapIcon size={24} className="text-emerald-500" />, label: 'Bản đồ', path: '/map', bg: 'bg-emerald-50' },
+    { icon: <Building2 size={24} className="text-teal-500" />, label: 'Quy hoạch', path: '/planning', bg: 'bg-teal-50' },
+    { icon: <Briefcase size={24} className="text-orange-500" />, label: 'Dự án', path: '/investment', bg: 'bg-orange-50' },
+    { icon: <Landmark size={24} className="text-violet-500" />, label: 'Đấu thầu', path: '/bidding', bg: 'bg-violet-50' },
+    { icon: <CalendarClock size={24} className="text-fuchsia-500" />, label: 'Lịch công tác', path: '/work-schedule', bg: 'bg-fuchsia-50' },
+    { icon: <ClipboardList size={24} className="text-lime-500" />, label: 'Kho mẫu đơn', path: '/forms', bg: 'bg-lime-50' },
     { icon: <Globe size={24} className="text-cyan-500" />, label: 'Dịch vụ công', path: 'https://dichvucong.gov.vn', bg: 'bg-cyan-50', external: true },
   ];
 
