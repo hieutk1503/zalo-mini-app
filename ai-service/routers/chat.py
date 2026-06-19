@@ -115,7 +115,7 @@ async def chat_with_rag(req: ChatRequest, request: Request):
 
             # Interaction 1 (Non-streaming to check tool calls)
             response = ollama_client.chat(
-                model='qwen2.5:7b',
+                model='qwen2.5:3b',
                 messages=messages,
                 tools=tools,
                 options={"temperature": 0.1}
@@ -149,7 +149,7 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                         })
                 
                 # Interaction 2 (Streaming the final answer after tool use)
-                final_response_stream = ollama_client.chat(model='qwen2.5:7b', messages=messages, options={"temperature": 0.3}, stream=True)
+                final_response_stream = ollama_client.chat(model='qwen2.5:3b', messages=messages, options={"temperature": 0.3}, stream=True)
                 
                 full_answer = ""
                 for chunk in final_response_stream:
