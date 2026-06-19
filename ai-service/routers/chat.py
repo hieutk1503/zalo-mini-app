@@ -64,7 +64,7 @@ def chat_with_rag(req: ChatRequest):
             }
         }]
 
-        system_prompt = "Bạn là trợ lý ảo AI hỗ trợ Dịch vụ công Tự Lạn Smart. Nếu người dùng hỏi về thủ tục, hãy TỰ ĐỘNG gọi công cụ search_knowledge_base để tìm tài liệu rồi mới trả lời. Nếu không có thông tin, hãy yêu cầu người dùng liên hệ trực tiếp bộ phận một cửa. Hãy trả lời ngắn gọn, lịch sự."
+        system_prompt = "Bạn là trợ lý ảo AI hỗ trợ Dịch vụ công Tự Lạn Smart. LUÔN LUÔN TRẢ LỜI BẰNG TIẾNG VIỆT. Nếu người dùng hỏi về thủ tục hoặc quy định, hãy TỰ ĐỘNG gọi công cụ search_knowledge_base để tìm tài liệu rồi mới trả lời. Nếu không có thông tin, hãy yêu cầu người dùng liên hệ trực tiếp bộ phận một cửa. Trả lời ngắn gọn, lịch sự."
 
         messages = [{"role": "system", "content": system_prompt}]
         for msg in req.history:
@@ -75,7 +75,8 @@ def chat_with_rag(req: ChatRequest):
         response = ollama.chat(
             model='qwen2.5',
             messages=messages,
-            tools=tools
+            tools=tools,
+            options={"temperature": 0.1} # Lower temperature to prevent hallucinating other languages
         )
         
         message = response.get('message', {})
@@ -83,6 +84,24 @@ def chat_with_rag(req: ChatRequest):
         suggested_action = None
         intent = "chat"
         standard_query = ""
+
+        # Fallback parsing in case Qwen outputs raw JSON tool call inside the text content
+        content_text = message.get('content', '')
+        if not message.get('tool_calls') and content_text and '"search_knowledge_base"' in content_text:
+            import json, re
+            match = re.search(r'\{.*"name":\s*"search_knowledge_base".*\}', content_text, re.DOTALL)
+            if match:
+                try:
+                    parsed = json.loads(match.group(0))
+                    if 'arguments' in parsed and 'search_query' in parsed['arguments']:
+                        message['tool_calls'] = [{
+                            'function': {
+                                'name': 'search_knowledge_base',
+                                'arguments': parsed['arguments']
+                            }
+                        }]
+                except Exception:
+                    pass
 
         # 2. Check if Qwen decided to use a tool
         if message.get('tool_calls'):
@@ -103,11 +122,15 @@ def chat_with_rag(req: ChatRequest):
                     })
             
             # 3. Final interaction to generate the natural language answer
-            final_response = ollama.chat(model='qwen2.5', messages=messages)
+            final_response = ollama.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3})
             answer = final_response['message']['content']
         else:
             # Model didn't use any tools, it just chatted normally
             answer = message.get('content', '')
+
+        # Clean up any weird prefixes like "søker" or Russian text if the model hallucinated
+        if answer.startswith("søker"):
+            answer = answer.replace("søker", "").strip()
 
         return {
             "answer": answer, 
