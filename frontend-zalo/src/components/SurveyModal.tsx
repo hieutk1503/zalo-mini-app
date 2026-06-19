@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Box, Text, Button, Input, Icon } from 'zmp-ui';
-import api from '../lib/api';
+import api from '../lib/axios';
 
 interface Props {
   visible: boolean;

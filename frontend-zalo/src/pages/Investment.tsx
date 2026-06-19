@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Box, Text, List } from 'zmp-ui';
-import api from '../lib/api';
+import api from '../lib/axios';
 
 export default function Investment() {
   const [data, setData] = useState<any[]>([]);
