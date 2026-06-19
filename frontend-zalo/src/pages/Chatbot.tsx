@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, Bot } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-import { API_BASE_URL } from '../lib/config';
+
 
 type Message = { id: number; text: string; isBot: boolean; action?: { type: string, id: number } };
 
@@ -54,7 +54,7 @@ export default function Chatbot() {
       const decoder = new TextDecoder('utf-8');
       
       const newBotMessageId = Date.now() + 1;
-      let isFirstChunk = true;
+      
       let botResponseText = "";
 
       while (true) {

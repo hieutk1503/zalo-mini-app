@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../lib/axios';
 import { ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
