@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import chat, documents, embeddings
+from routers import chat, embeddings
 from cache_manager import init_redis_index
 
 app = FastAPI()
