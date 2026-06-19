@@ -36,12 +36,12 @@ def run_distillation():
     cur = conn.cursor()
     
     # Lấy 3 thủ tục hành chính đầu tiên để làm ví dụ
-    cur.execute('SELECT "title", "content" FROM "AdministrativeProcedure" LIMIT 3')
+    cur.execute('SELECT "title", "description", "process_steps" FROM "AdministrativeProcedure" LIMIT 3')
     procedures = cur.fetchall()
     
     for i, proc in enumerate(procedures):
         title = proc['title']
-        content = proc['content']
+        content = str(proc['description'] or '') + " " + str(proc['process_steps'] or '')
         
         print(f"--- Đang chưng cất thủ tục {i+1}: {title} ---")
         # Giới hạn nội dung đọc để tránh tràn context khi dùng model nhỏ
