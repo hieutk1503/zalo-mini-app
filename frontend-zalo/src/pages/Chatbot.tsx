@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Bot } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 import { API_BASE_URL } from '../lib/config';
 
 type Message = { id: number; text: string; isBot: boolean; action?: { type: string, id: number } };
@@ -40,18 +40,54 @@ export default function Chatbot() {
           content: m.text
         }));
 
-      const response = await axios.post(`${API_BASE_URL}/chat/query`, {
-        query: input,
-        history: chatHistory
+      const response = await fetch(`${API_BASE_URL}/chat/query`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: input, history: chatHistory })
       });
+
+      if (!response.body) throw new Error('ReadableStream not supported.');
       
-      const botMessage: Message = { 
-        id: Date.now() + 1, 
-        text: response.data.answer, 
-        isBot: true,
-        action: response.data.suggested_action 
-      };
-      setMessages(prev => [...prev, botMessage]);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      
+      const newBotMessageId = Date.now() + 1;
+      let isFirstChunk = true;
+      let botResponseText = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        const chunkStr = decoder.decode(value, { stream: true });
+        const lines = chunkStr.split('\n');
+        
+        for (const line of lines) {
+          if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+            const dataStr = line.substring(6);
+            try {
+              const data = JSON.parse(dataStr);
+              botResponseText += data.chunk;
+              
+              setMessages(prev => {
+                if (isFirstChunk) {
+                  isFirstChunk = false;
+                  setIsLoading(false);
+                  return [...prev, { id: newBotMessageId, text: botResponseText, isBot: true, action: data.action }];
+                } else {
+                  return prev.map(m => 
+                    m.id === newBotMessageId 
+                      ? { ...m, text: botResponseText, action: data.action || m.action } 
+                      : m
+                  );
+                }
+              });
+            } catch (e) {
+              console.error("Parse error", e);
+            }
+          }
+        }
+      }
     } catch (error) {
       console.error(error);
       setMessages(prev => [...prev, { id: Date.now() + 1, text: "Xin lỗi, AI đang gặp sự cố kết nối. Vui lòng thử lại sau.", isBot: true }]);

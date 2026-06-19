@@ -1,8 +1,12 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import List, Optional, Dict
 import ollama
+import json
+import uuid
 from database import get_db_connection
+from sse_starlette.sse import EventSourceResponse
+from cache_manager import get_cached_answer, set_cached_answer
 
 router = APIRouter()
 
@@ -15,7 +19,6 @@ class ChatRequest(BaseModel):
     history: Optional[List[Message]] = []
 
 def search_database(query: str):
-    # Embed query
     embed_resp = ollama.embeddings(model="nomic-embed-text", prompt=query)
     query_embedding = embed_resp["embedding"]
 
@@ -35,7 +38,6 @@ def search_database(query: str):
     conn.close()
     
     context = "\n".join([row["content_chunk"] for row in rows])
-    
     suggested_action = None
     if rows and rows[0]["source_type"] == "PROCEDURE":
         suggested_action = {"type": "PROCEDURE", "id": rows[0]["source_id"]}
@@ -43,103 +45,120 @@ def search_database(query: str):
     return context if context else "Không tìm thấy thông tin phù hợp trong cơ sở dữ liệu.", suggested_action
 
 @router.post("/query")
-def chat_with_rag(req: ChatRequest):
+async def chat_with_rag(req: ChatRequest, request: Request):
     try:
-        # Define the available tools for the model
-        tools = [{
-            "type": "function",
-            "function": {
-                "name": "search_knowledge_base",
-                "description": "Tìm kiếm các quy định, thủ tục hành chính, tin tức từ cơ sở dữ liệu dịch vụ công. LUÔN sử dụng công cụ này khi cần trả lời các câu hỏi về thủ tục, hồ sơ, giấy tờ pháp lý.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "search_query": {
-                            "type": "string",
-                            "description": "Câu truy vấn chuẩn hóa bằng tiếng Việt để tìm kiếm tài liệu."
-                        }
-                    },
-                    "required": ["search_query"]
-                }
-            }
-        }]
-
-        system_prompt = "Bạn là trợ lý ảo AI hỗ trợ Dịch vụ công Tự Lạn Smart. LUÔN LUÔN TRẢ LỜI BẰNG TIẾNG VIỆT. Nếu người dùng hỏi về thủ tục hoặc quy định, hãy TỰ ĐỘNG gọi công cụ search_knowledge_base để tìm tài liệu rồi mới trả lời. Nếu không có thông tin, hãy yêu cầu người dùng liên hệ trực tiếp bộ phận một cửa. Trả lời ngắn gọn, lịch sự."
-
-        messages = [{"role": "system", "content": system_prompt}]
-        for msg in req.history:
-            messages.append({"role": msg.role, "content": msg.content})
-        messages.append({"role": "user", "content": req.query})
-
-        # 1. First interaction with Qwen
-        response = ollama.chat(
-            model='qwen2.5',
-            messages=messages,
-            tools=tools,
-            options={"temperature": 0.1} # Lower temperature to prevent hallucinating other languages
-        )
+        # 0. Embed user's exact query to check Semantic Cache
+        embed_resp = ollama.embeddings(model="nomic-embed-text", prompt=req.query)
+        query_vector = embed_resp["embedding"]
         
-        message = response.get('message', {})
-        context = ""
-        suggested_action = None
-        intent = "chat"
-        standard_query = ""
-
-        # Fallback parsing in case Qwen outputs raw JSON tool call inside the text content
-        content_text = message.get('content', '')
-        if not message.get('tool_calls') and content_text and '"search_knowledge_base"' in content_text:
-            import json, re
-            match = re.search(r'\{.*"name":\s*"search_knowledge_base".*\}', content_text, re.DOTALL)
-            if match:
-                try:
-                    parsed = json.loads(match.group(0))
-                    if 'arguments' in parsed and 'search_query' in parsed['arguments']:
-                        message['tool_calls'] = [{
-                            'function': {
-                                'name': 'search_knowledge_base',
-                                'arguments': parsed['arguments']
-                            }
-                        }]
-                except Exception:
-                    pass
-
-        # 2. Check if Qwen decided to use a tool
-        if message.get('tool_calls'):
-            for tool_call in message['tool_calls']:
-                if tool_call['function']['name'] == 'search_knowledge_base':
-                    intent = "search"
-                    standard_query = tool_call['function']['arguments']['search_query']
-                    
-                    # Execute tool
-                    context, suggested_action = search_database(standard_query)
-                    
-                    # Add model's tool call request and the tool's output to history
-                    messages.append(message)
-                    messages.append({
-                        "role": "tool",
-                        "content": context,
-                        "name": "search_knowledge_base"
-                    })
+        cached = get_cached_answer(query_vector)
+        
+        async def event_generator():
+            # If CACHE HIT
+            if cached:
+                yield {
+                    "event": "message",
+                    "data": json.dumps({
+                        "chunk": cached["answer"],
+                        "action": cached["suggested_action"]
+                    }, ensure_ascii=False)
+                }
+                yield {"event": "done", "data": "[DONE]"}
+                return
             
-            # 3. Final interaction to generate the natural language answer
-            final_response = ollama.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3})
-            answer = final_response['message']['content']
-        else:
-            # Model didn't use any tools, it just chatted normally
-            answer = message.get('content', '')
+            # CACHE MISS - Start AI workflow
+            tools = [{
+                "type": "function",
+                "function": {
+                    "name": "search_knowledge_base",
+                    "description": "Tìm kiếm các quy định, thủ tục hành chính, tin tức từ cơ sở dữ liệu dịch vụ công. LUÔN sử dụng công cụ này khi cần trả lời các câu hỏi về thủ tục, hồ sơ, giấy tờ pháp lý.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "search_query": {
+                                "type": "string",
+                                "description": "Câu truy vấn chuẩn hóa bằng tiếng Việt để tìm kiếm tài liệu."
+                            }
+                        },
+                        "required": ["search_query"]
+                    }
+                }
+            }]
 
-        # Clean up any weird prefixes like "søker" or Russian text if the model hallucinated
-        if answer.startswith("søker"):
-            answer = answer.replace("søker", "").strip()
+            system_prompt = "Bạn là trợ lý ảo AI hỗ trợ Dịch vụ công Tự Lạn Smart. LUÔN LUÔN TRẢ LỜI BẰNG TIẾNG VIỆT. Nếu người dùng hỏi về thủ tục hoặc quy định, hãy TỰ ĐỘNG gọi công cụ search_knowledge_base để tìm tài liệu rồi mới trả lời. Nếu không có thông tin, hãy yêu cầu người dùng liên hệ trực tiếp bộ phận một cửa. Trả lời ngắn gọn, lịch sự."
 
-        return {
-            "answer": answer, 
-            "context_used": context,
-            "suggested_action": suggested_action,
-            "debug_router": {
-                "intent": intent,
-                "standard_query": standard_query
-            }
-        }
+            messages = [{"role": "system", "content": system_prompt}]
+            for msg in req.history:
+                messages.append({"role": msg.role, "content": msg.content})
+            messages.append({"role": "user", "content": req.query})
+
+            # Interaction 1 (Non-streaming to check tool calls)
+            response = ollama.chat(
+                model='qwen2.5',
+                messages=messages,
+                tools=tools,
+                options={"temperature": 0.1}
+            )
+            
+            message = response.get('message', {})
+            suggested_action = None
+            
+            content_text = message.get('content', '')
+            if not message.get('tool_calls') and content_text and '"search_knowledge_base"' in content_text:
+                import re
+                match = re.search(r'\{.*"name":\s*"search_knowledge_base".*\}', content_text, re.DOTALL)
+                if match:
+                    try:
+                        parsed = json.loads(match.group(0))
+                        if 'arguments' in parsed and 'search_query' in parsed['arguments']:
+                            message['tool_calls'] = [{'function': {'name': 'search_knowledge_base', 'arguments': parsed['arguments']}}]
+                    except Exception:
+                        pass
+
+            if message.get('tool_calls'):
+                for tool_call in message['tool_calls']:
+                    if tool_call['function']['name'] == 'search_knowledge_base':
+                        standard_query = tool_call['function']['arguments']['search_query']
+                        context, suggested_action = search_database(standard_query)
+                        messages.append(message)
+                        messages.append({
+                            "role": "tool",
+                            "content": context,
+                            "name": "search_knowledge_base"
+                        })
+                
+                # Interaction 2 (Streaming the final answer)
+                final_response_stream = ollama.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3}, stream=True)
+            else:
+                # Interaction 2 (Streaming the normal chat)
+                final_response_stream = ollama.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3}, stream=True)
+
+            full_answer = ""
+            for chunk in final_response_stream:
+                if await request.is_disconnected():
+                    break
+                
+                text_chunk = chunk['message']['content']
+                if not full_answer and text_chunk.startswith("søker"):
+                    text_chunk = text_chunk.replace("søker", "").lstrip()
+                
+                full_answer += text_chunk
+                
+                yield {
+                    "event": "message",
+                    "data": json.dumps({
+                        "chunk": text_chunk,
+                        "action": suggested_action
+                    }, ensure_ascii=False)
+                }
+            
+            # Save to Cache after streaming completes
+            if full_answer.strip():
+                query_id = str(uuid.uuid4())
+                set_cached_answer(query_id, query_vector, full_answer.strip(), suggested_action)
+                
+            yield {"event": "done", "data": "[DONE]"}
+
+        return EventSourceResponse(event_generator())
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

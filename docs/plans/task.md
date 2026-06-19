@@ -1,6 +1,6 @@
-| Task ID | Component / Description | Status |
-|---|---|---|
-| Task 1 | Cài đặt Tailwind CSS và thư viện UI Core | done |
-| Task 2 | Thiết lập Router và Layout cơ bản | done |
-| Task 3 | Xây dựng Giao diện Trang chủ (Home Page) | done |
-| Task 4 | Xây dựng Giao diện AI Chatbot | done |
+# Tasks
+- `[x]` **1. Setup Docker** | Add Redis Stack to `docker-compose.yml`.
+- `[x]` **2. Python Requirements** | Add `redis` and `sse-starlette` to `requirements.txt`.
+- `[x]` **3. Cache Manager** | Create `cache_manager.py` for Redis connection and vector search.
+- `[x]` **4. Chat Router** | Update `chat.py` to use `CacheManager` and return `StreamingResponse`.
+- `[x]` **5. React Frontend** | Refactor `Chatbot.tsx` to handle Server-Sent Events (SSE) streaming.
