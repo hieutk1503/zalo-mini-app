@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { UseGuards, Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { AdminAuthGuard } from '../admin-auth/admin-auth.guard';
 import { WorkScheduleService } from './work-schedule.service';
 import { CreateWorkScheduleDto } from './dto/create-work-schedule.dto';
 import { UpdateWorkScheduleDto } from './dto/update-work-schedule.dto';
@@ -8,6 +9,7 @@ export class WorkScheduleController {
   constructor(private readonly workScheduleService: WorkScheduleService) {}
 
   @Post()
+  @UseGuards(AdminAuthGuard)
   create(@Body() createWorkScheduleDto: CreateWorkScheduleDto) {
     return this.workScheduleService.create(createWorkScheduleDto);
   }
@@ -23,11 +25,13 @@ export class WorkScheduleController {
   }
 
   @Patch(':id')
+  @UseGuards(AdminAuthGuard)
   update(@Param('id') id: string, @Body() updateWorkScheduleDto: UpdateWorkScheduleDto) {
     return this.workScheduleService.update(+id, updateWorkScheduleDto);
   }
 
   @Delete(':id')
+  @UseGuards(AdminAuthGuard)
   remove(@Param('id') id: string) {
     return this.workScheduleService.remove(+id);
   }

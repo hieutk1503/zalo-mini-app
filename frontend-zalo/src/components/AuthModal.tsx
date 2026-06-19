@@ -51,8 +51,8 @@ export default function AuthModal() {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) return;
 
-    const randomId = `DEV-ZALO-${Math.floor(100000 + Math.random() * 900000)}`;
-    login(randomId, name.trim(), phone.trim());
+    const stableId = `DEV-ZALO-${phone.trim()}`;
+    login(stableId, name.trim(), phone.trim());
   };
 
   return (

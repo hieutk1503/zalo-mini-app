@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { UseGuards, Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { AdminAuthGuard } from '../admin-auth/admin-auth.guard';
 import { SurveyService } from './survey.service';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
@@ -13,21 +14,25 @@ export class SurveyController {
   }
 
   @Get()
+  @UseGuards(AdminAuthGuard)
   findAll() {
     return this.surveyService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(AdminAuthGuard)
   findOne(@Param('id') id: string) {
     return this.surveyService.findOne(+id);
   }
 
   @Patch(':id')
+  @UseGuards(AdminAuthGuard)
   update(@Param('id') id: string, @Body() updateSurveyDto: UpdateSurveyDto) {
     return this.surveyService.update(+id, updateSurveyDto);
   }
 
   @Delete(':id')
+  @UseGuards(AdminAuthGuard)
   remove(@Param('id') id: string) {
     return this.surveyService.remove(+id);
   }
