@@ -115,7 +115,7 @@ async def chat_with_rag(req: ChatRequest, request: Request):
 
             # Interaction 1 (Non-streaming to check tool calls)
             response = ollama_client.chat(
-                model='qwen2.5',
+                model='qwen2.5:7b',
                 messages=messages,
                 tools=tools,
                 options={"temperature": 0.1}
@@ -148,31 +148,43 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                             "name": "search_knowledge_base"
                         })
                 
-                # Interaction 2 (Streaming the final answer)
-                final_response_stream = ollama_client.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3}, stream=True)
+                # Interaction 2 (Streaming the final answer after tool use)
+                final_response_stream = ollama_client.chat(model='qwen2.5:7b', messages=messages, options={"temperature": 0.3}, stream=True)
+                
+                full_answer = ""
+                for chunk in final_response_stream:
+                    if await request.is_disconnected():
+                        break
+                    
+                    text_chunk = chunk['message']['content']
+                    if not full_answer and text_chunk.startswith("søker"):
+                        text_chunk = text_chunk.replace("søker", "").lstrip()
+                    
+                    full_answer += text_chunk
+                    
+                    yield {
+                        "event": "message",
+                        "data": json.dumps({
+                            "chunk": text_chunk,
+                            "action": suggested_action
+                        }, ensure_ascii=False)
+                    }
             else:
-                # Interaction 2 (Streaming the normal chat)
-                final_response_stream = ollama_client.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3}, stream=True)
-
-            full_answer = ""
-            for chunk in final_response_stream:
-                if await request.is_disconnected():
-                    break
+                # OPTIMIZATION: Interaction 1 already gave us the full answer!
+                # We don't need to ask Ollama to generate it a second time.
+                full_answer = message.get('content', '')
+                if full_answer.startswith("søker"):
+                    full_answer = full_answer.replace("søker", "").lstrip()
                 
-                text_chunk = chunk['message']['content']
-                if not full_answer and text_chunk.startswith("søker"):
-                    text_chunk = text_chunk.replace("søker", "").lstrip()
-                
-                full_answer += text_chunk
-                
+                # Fake streaming the already generated answer
                 yield {
                     "event": "message",
                     "data": json.dumps({
-                        "chunk": text_chunk,
+                        "chunk": full_answer,
                         "action": suggested_action
                     }, ensure_ascii=False)
                 }
-            
+
             # Save to Cache after streaming completes
             if full_answer.strip():
                 query_id = str(uuid.uuid4())
