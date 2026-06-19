@@ -33,7 +33,7 @@ export default function MapLocation() {
           </div>
           
           <a 
-            href="https://maps.app.goo.gl/2S3fV4dJ3f4V" 
+            href="https://www.google.com/maps/search/?api=1&query=21.20516401065793,106.0792196147426" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm rounded-xl transition-colors shadow-md shadow-emerald-500/20"
