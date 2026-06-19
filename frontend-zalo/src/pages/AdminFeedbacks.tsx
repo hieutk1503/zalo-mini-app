@@ -12,7 +12,7 @@ interface Citizen {
 interface Feedback {
   id: number;
   content: string;
-  image_url?: string;
+  image_urls?: string;
   location?: string;
   status: string;
   admin_reply?: string;
@@ -94,8 +94,12 @@ const AdminFeedbacks = () => {
                       📍 {fb.location}
                     </div>
                   )}
-                  {fb.image_url && (
-                    <img src={`${API_URL}${fb.image_url}`} alt="Feedback" className="mt-3 w-32 h-32 object-cover rounded-lg border border-gray-200" />
+                  {fb.image_urls && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {fb.image_urls.split(',').map((url, idx) => (
+                        <img key={idx} src={`${API_URL}${url}`} alt="Feedback" className="w-32 h-32 object-cover rounded-lg border border-gray-200" />
+                      ))}
+                    </div>
                   )}
                   {fb.admin_reply && (
                     <div className="mt-3 p-3 bg-gray-50 rounded-lg text-sm text-gray-700 border border-gray-200 border-l-4 border-l-blue-500">
