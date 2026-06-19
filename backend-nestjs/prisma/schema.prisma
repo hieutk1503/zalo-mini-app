@@ -37,8 +37,9 @@ model AdministrativeProcedure {
   fee           String?
   duration      String?
   process_steps String?
-  is_active     Boolean  @default(true)
-  created_at    DateTime @default(now())
+  is_active      Boolean        @default(true)
+  created_at     DateTime       @default(now())
+  form_templates FormTemplate[]
 }
 
 model KnowledgeVector {
@@ -89,4 +90,61 @@ model Document {
   file_url    String
   type        String
   created_at  DateTime @default(now())
+}
+
+model Planning {
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String   @db.Text
+  image      String?
+  file_url   String?
+  created_at DateTime @default(now())
+}
+
+model InvestmentProject {
+  id           Int       @id @default(autoincrement())
+  project_name String
+  description  String    @db.Text
+  status       String
+  start_date   DateTime?
+  end_date     DateTime?
+  budget       Decimal?
+  created_at   DateTime  @default(now())
+}
+
+model Bidding {
+  id                Int       @id @default(autoincrement())
+  package_name      String
+  price             Decimal?
+  start_date        DateTime?
+  end_date          DateTime?
+  requirements_file String?
+  created_at        DateTime  @default(now())
+}
+
+model WorkSchedule {
+  id         Int      @id @default(autoincrement())
+  title      String
+  event_date DateTime
+  time       String?
+  location   String?
+  attendees  String?
+  created_at DateTime @default(now())
+}
+
+model FormTemplate {
+  id           Int                      @id @default(autoincrement())
+  name         String
+  file_url     String
+  procedure_id Int?
+  procedure    AdministrativeProcedure? @relation(fields: [procedure_id], references: [id])
+  created_at   DateTime                 @default(now())
+}
+
+model Survey {
+  id           Int      @id @default(autoincrement())
+  rating       Int
+  comment      String?  @db.Text
+  user_zalo_id String?
+  created_at   DateTime @default(now())
 }
