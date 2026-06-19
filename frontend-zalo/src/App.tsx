@@ -12,6 +12,11 @@ import NewsDetail from './pages/NewsDetail';
 import Documents from './pages/Documents';
 import Hotline from './pages/Hotline';
 import MapLocation from './pages/MapLocation';
+import Planning from './pages/Planning';
+import Investment from './pages/Investment';
+import Bidding from './pages/Bidding';
+import WorkSchedule from './pages/WorkSchedule';
+import Forms from './pages/Forms';
 import AdminImport from './pages/AdminImport';
 import AdminLogin from './pages/AdminLogin';
 import AdminFeedbacks from './pages/AdminFeedbacks';
@@ -34,6 +39,11 @@ function App() {
           <Route path="documents" element={<Documents />} />
           <Route path="hotline" element={<Hotline />} />
           <Route path="map" element={<MapLocation />} />
+          <Route path="planning" element={<Planning />} />
+          <Route path="investment" element={<Investment />} />
+          <Route path="bidding" element={<Bidding />} />
+          <Route path="work-schedule" element={<WorkSchedule />} />
+          <Route path="forms" element={<Forms />} />
         </Route>
 
         {/* Admin Login */}
