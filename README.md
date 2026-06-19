@@ -109,3 +109,37 @@ Mở trình duyệt ở địa chỉ `http://localhost:5173` để trải nghi�
 ---
 
 > *Dự án này là minh chứng cho việc áp dụng AI thế hệ mới (Agentic Workflow, Local LLM, Vector Search) vào các bài toán thiết thực của chính phủ số, tối ưu hóa cả về chi phí lẫn trải nghiệm người dùng.*
+
+## 📂 Cấu Trúc Thư Mục (Directory Structure)
+
+\\	ext
+mini-app/
+├── ai-service/                # Dịch vụ AI (FastAPI + Ollama)
+│   ├── cache_manager.py       # Xử lý nhúng Vector và Redis Semantic Cache
+│   ├── database.py            # Kết nối PostgreSQL để lấy Knowledge Base
+│   ├── main.py                # Điểm vào (Entry point) của FastAPI
+│   └── routers/
+│       ├── chat.py            # API Chatbot (SSE Streaming & RAG Agent)
+│       └── embeddings.py      # API Embeddings tài liệu
+│
+├── backend-nestjs/            # Hệ thống Backend Core (NestJS)
+│   ├── prisma/                # Schema Database & Migration
+│   ├── src/
+│   │   ├── admin/             # Quản lý Admin Panel
+│   │   ├── appointments/      # Quản lý Đặt lịch hẹn
+│   │   ├── chat/              # Chuyển tiếp (Proxy) Chatbot (Cũ)
+│   │   ├── documents/         # Quản lý Tài liệu & Đồng bộ Vector
+│   │   └── feedbacks/         # Quản lý Góp ý & Phản ánh
+│   └── ...
+│
+├── frontend-zalo/             # Giao diện Zalo Mini App (React)
+│   ├── src/
+│   │   ├── components/        # UI Components dùng chung (Header, Modal)
+│   │   ├── pages/             # Các màn hình chính (Chatbot, Thủ tục, Phản ánh)
+│   │   │   ├── Chatbot.tsx    # Giao diện Chatbot (Fetch API Streaming trực tiếp)
+│   │   │   └── ...
+│   │   └── lib/               # Cấu hình API, Utility Functions
+│   └── ...
+│
+└── docker-compose.yml         # Cấu hình khởi chạy Database (Postgres & Redis Stack)
+\
