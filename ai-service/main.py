@@ -5,6 +5,14 @@ from cache_manager import init_redis_index
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(embeddings.router, prefix="/api/embeddings")
 app.include_router(chat.router, prefix="/api/chat")
 

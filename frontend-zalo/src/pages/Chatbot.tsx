@@ -40,7 +40,9 @@ export default function Chatbot() {
           content: m.text
         }));
 
-      const response = await fetch(`${API_BASE_URL}/chat/query`, {
+      // Directly call AI service for SSE Streaming
+      const AI_SERVICE_URL = 'http://localhost:8000/api';
+      const response = await fetch(`${AI_SERVICE_URL}/chat/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: input, history: chatHistory })
