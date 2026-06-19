@@ -7,6 +7,7 @@ import uuid
 from database import get_db_connection
 from sse_starlette.sse import EventSourceResponse
 from cache_manager import get_cached_answer, set_cached_answer
+from core.context_harness import compress_context, check_guardrails
 
 router = APIRouter()
 
@@ -37,7 +38,9 @@ def search_database(query: str):
     cur.close()
     conn.close()
     
-    context = "\n".join([row["content_chunk"] for row in rows])
+    raw_docs = [row["content_chunk"] for row in rows]
+    context = compress_context(query, raw_docs, max_sentences=5)
+    
     suggested_action = None
     if rows and rows[0]["source_type"] == "PROCEDURE":
         suggested_action = {"type": "PROCEDURE", "id": rows[0]["source_id"]}
@@ -47,6 +50,19 @@ def search_database(query: str):
 @router.post("/query")
 async def chat_with_rag(req: ChatRequest, request: Request):
     try:
+        # Check Guardrails first
+        if check_guardrails(req.query):
+            async def guardrail_generator():
+                yield {
+                    "event": "message",
+                    "data": json.dumps({
+                        "chunk": "Xin lỗi, tôi không thể trả lời câu hỏi có nội dung nhạy cảm hoặc không phù hợp.",
+                        "action": None
+                    }, ensure_ascii=False)
+                }
+                yield {"event": "done", "data": "[DONE]"}
+            return EventSourceResponse(guardrail_generator())
+
         # 0. Embed user's exact query to check Semantic Cache
         embed_resp = ollama.embeddings(model="nomic-embed-text", prompt=req.query)
         query_vector = embed_resp["embedding"]
