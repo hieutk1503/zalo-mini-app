@@ -72,8 +72,9 @@ export default function Chatbot() {
               botResponseText += data.chunk;
               
               setMessages(prev => {
-                if (isFirstChunk) {
-                  isFirstChunk = false;
+                const messageExists = prev.some(m => m.id === newBotMessageId);
+                
+                if (!messageExists) {
                   setIsLoading(false);
                   return [...prev, { id: newBotMessageId, text: botResponseText, isBot: true, action: data.action }];
                 } else {
