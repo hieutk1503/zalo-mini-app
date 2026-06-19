@@ -3,6 +3,7 @@ import { Calendar, Clock, ChevronLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../lib/axios';
 import { useAuthStore } from '../store/authStore';
+import SurveyModal from '../components/SurveyModal';
 
 export default function Appointments() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function Appointments() {
   const [cccd, setCccd] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successTicket, setSuccessTicket] = useState<string | null>(null);
+  const [showSurvey, setShowSurvey] = useState(false);
 
   const timeSlots = [
     '08:00 - 09:00', '09:00 - 10:00', '10:00 - 11:00', 
@@ -44,6 +46,7 @@ export default function Appointments() {
         cccd
       });
       setSuccessTicket(res.data.ticket_number);
+      setShowSurvey(true);
     } catch (err) {
       console.error(err);
       alert('Có lỗi xảy ra, vui lòng thử lại sau.');
@@ -69,6 +72,7 @@ export default function Appointments() {
         >
           Xem lịch sử hẹn
         </button>
+        <SurveyModal visible={showSurvey} onClose={() => setShowSurvey(false)} />
       </div>
     );
   }
