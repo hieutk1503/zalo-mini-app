@@ -2,14 +2,19 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import List, Optional, Dict
 import ollama
+from ollama import Client
 import json
 import uuid
+import os
 from database import get_db_connection
 from sse_starlette.sse import EventSourceResponse
 from cache_manager import get_cached_answer, set_cached_answer
 from core.context_harness import compress_context, check_guardrails
 
 router = APIRouter()
+
+OLLAMA_HOST = os.getenv('OLLAMA_HOST', 'http://localhost:11434')
+ollama_client = Client(host=OLLAMA_HOST)
 
 class Message(BaseModel):
     role: str
@@ -20,7 +25,7 @@ class ChatRequest(BaseModel):
     history: Optional[List[Message]] = []
 
 def search_database(query: str):
-    embed_resp = ollama.embeddings(model="nomic-embed-text", prompt=query)
+    embed_resp = ollama_client.embeddings(model="nomic-embed-text", prompt=query)
     query_embedding = embed_resp["embedding"]
 
     conn = get_db_connection()
@@ -64,7 +69,7 @@ async def chat_with_rag(req: ChatRequest, request: Request):
             return EventSourceResponse(guardrail_generator())
 
         # 0. Embed user's exact query to check Semantic Cache
-        embed_resp = ollama.embeddings(model="nomic-embed-text", prompt=req.query)
+        embed_resp = ollama_client.embeddings(model="nomic-embed-text", prompt=req.query)
         query_vector = embed_resp["embedding"]
         
         cached = get_cached_answer(query_vector)
@@ -109,7 +114,7 @@ async def chat_with_rag(req: ChatRequest, request: Request):
             messages.append({"role": "user", "content": req.query})
 
             # Interaction 1 (Non-streaming to check tool calls)
-            response = ollama.chat(
+            response = ollama_client.chat(
                 model='qwen2.5',
                 messages=messages,
                 tools=tools,
@@ -144,10 +149,10 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                         })
                 
                 # Interaction 2 (Streaming the final answer)
-                final_response_stream = ollama.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3}, stream=True)
+                final_response_stream = ollama_client.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3}, stream=True)
             else:
                 # Interaction 2 (Streaming the normal chat)
-                final_response_stream = ollama.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3}, stream=True)
+                final_response_stream = ollama_client.chat(model='qwen2.5', messages=messages, options={"temperature": 0.3}, stream=True)
 
             full_answer = ""
             for chunk in final_response_stream:
