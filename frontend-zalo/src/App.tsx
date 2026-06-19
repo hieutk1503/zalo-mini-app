@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { App as ZMPApp } from 'zmp-ui';
 import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import Home from './pages/Home';
@@ -24,8 +25,9 @@ import AdminAppointments from './pages/AdminAppointments';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <ZMPApp>
+      <BrowserRouter>
+        <Routes>
         {/* User Routes (Mobile Layout) */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
@@ -57,7 +59,8 @@ function App() {
           <Route path="import" element={<AdminImport />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ZMPApp>
   );
 }
 
