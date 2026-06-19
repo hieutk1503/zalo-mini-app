@@ -12,6 +12,12 @@ import { AiSyncModule } from './ai-sync/ai-sync.module';
 import { AdminAuthModule } from './admin-auth/admin-auth.module';
 import { UploadModule } from './upload/upload.module';
 import { AdminModule } from './admin/admin.module';
+import { PlanningModule } from './planning/planning.module';
+import { InvestmentModule } from './investment/investment.module';
+import { BiddingModule } from './bidding/bidding.module';
+import { WorkScheduleModule } from './work-schedule/work-schedule.module';
+import { FormTemplateModule } from './form-template/form-template.module';
+import { SurveyModule } from './survey/survey.module';
 
 @Module({
   imports: [
@@ -26,6 +32,12 @@ import { AdminModule } from './admin/admin.module';
     AdminAuthModule,
     UploadModule,
     AdminModule,
+    PlanningModule,
+    InvestmentModule,
+    BiddingModule,
+    WorkScheduleModule,
+    FormTemplateModule,
+    SurveyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
