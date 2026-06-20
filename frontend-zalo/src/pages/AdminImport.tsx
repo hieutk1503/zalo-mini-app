@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axiosAdmin from '../lib/axiosAdmin';
-import { Upload, FileSpreadsheet, CheckCircle2, AlertTriangle, Download } from 'lucide-react';
+import { Upload, FileSpreadsheet, CheckCircle2, AlertTriangle, Download, RefreshCw } from 'lucide-react';
 
 type ImportPreview = {
   newCount: number;
@@ -54,6 +54,20 @@ export default function AdminImport() {
     }
   };
 
+  const handleSyncAI = async () => {
+    if (!window.confirm('Quá trình đồng bộ dữ liệu sang AI có thể mất vài phút tùy vào số lượng thủ tục. Bạn có muốn bắt đầu?')) return;
+    setLoading(true);
+    try {
+      await axiosAdmin.post('/ai-sync/trigger-all');
+      alert('Đồng bộ dữ liệu AI thành công! Trợ lý ảo đã học được các thủ tục mới.');
+    } catch (error) {
+      console.error(error);
+      alert('Có lỗi xảy ra khi đồng bộ AI.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDownloadTemplate = () => {
     const csvContent =
       'Mã thủ tục,Tên thủ tục,Mô tả,Lệ phí,Thời gian,Các bước\n' +
@@ -85,13 +99,23 @@ export default function AdminImport() {
               Upload file Excel (.xlsx, .csv) để thêm hàng loạt thủ tục hành chính.
             </p>
           </div>
-          <button
-            onClick={handleDownloadTemplate}
-            className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-white px-3 py-2 rounded-lg text-sm transition-colors shrink-0"
-          >
-            <Download className="w-4 h-4" />
-            File mẫu
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={handleSyncAI}
+              disabled={loading}
+              className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-white px-3 py-2 rounded-lg text-sm transition-colors shrink-0 disabled:opacity-50"
+            >
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              Đồng bộ AI
+            </button>
+            <button
+              onClick={handleDownloadTemplate}
+              className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-white px-3 py-2 rounded-lg text-sm transition-colors shrink-0"
+            >
+              <Download className="w-4 h-4" />
+              File mẫu
+            </button>
+          </div>
         </div>
 
         <div className="p-6 md:p-8">

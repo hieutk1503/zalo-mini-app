@@ -20,7 +20,17 @@ export declare class AppointmentsService {
         citizen_id: number;
     }>;
     private generateTicketNumber;
-    getMyAppointments(citizenId: number): Promise<{
+    getMyAppointments(citizenId: number): Promise<({
+        citizen: {
+            id: number;
+            full_name: string | null;
+            created_at: Date;
+            phone: string | null;
+            cccd: string | null;
+            zalo_id: string;
+            avatar_url: string | null;
+        };
+    } & {
         id: number;
         created_at: Date;
         ticket_number: string;
@@ -29,5 +39,35 @@ export declare class AppointmentsService {
         content: string;
         status: string;
         citizen_id: number;
-    }[]>;
+    })[]>;
+    getAllForAdmin(): Promise<({
+        citizen: {
+            id: number;
+            full_name: string | null;
+            created_at: Date;
+            phone: string | null;
+            cccd: string | null;
+            zalo_id: string;
+            avatar_url: string | null;
+        };
+    } & {
+        id: number;
+        created_at: Date;
+        ticket_number: string;
+        appointment_date: Date;
+        time_slot: string;
+        content: string;
+        status: string;
+        citizen_id: number;
+    })[]>;
+    updateStatus(id: number, status: string): Promise<{
+        id: number;
+        created_at: Date;
+        ticket_number: string;
+        appointment_date: Date;
+        time_slot: string;
+        content: string;
+        status: string;
+        citizen_id: number;
+    }>;
 }

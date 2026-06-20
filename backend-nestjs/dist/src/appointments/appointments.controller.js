@@ -32,6 +32,7 @@ let AppointmentsController = class AppointmentsController {
 exports.AppointmentsController = AppointmentsController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(soft_auth_guard_1.SoftAuthGuard),
     __param(0, (0, current_user_decorator_1.CurrentUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -40,6 +41,7 @@ __decorate([
 ], AppointmentsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(soft_auth_guard_1.SoftAuthGuard),
     __param(0, (0, current_user_decorator_1.CurrentUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -47,7 +49,6 @@ __decorate([
 ], AppointmentsController.prototype, "findAll", null);
 exports.AppointmentsController = AppointmentsController = __decorate([
     (0, common_1.Controller)('appointments'),
-    (0, common_1.UseGuards)(soft_auth_guard_1.SoftAuthGuard),
     __metadata("design:paramtypes", [appointments_service_1.AppointmentsService])
 ], AppointmentsController);
 //# sourceMappingURL=appointments.controller.js.map

@@ -37,11 +37,24 @@ export default function Planning() {
             <p className="text-gray-500">Chưa có dữ liệu.</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {data.map((item: any) => (
-              <div key={item.id} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-2">
-                <h3 className="text-sm font-bold text-gray-800 leading-snug">{item.title || item.project_name || item.package_name || item.name}</h3>
-                <span className="text-xs text-gray-500">{new Date(item.created_at).toLocaleDateString('vi-VN')}</span>
+              <div key={item.id} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-3">
+                <h3 className="text-base font-bold text-gray-800 leading-snug">{item.title}</h3>
+                <span className="text-xs font-medium text-primary bg-primary/10 w-fit px-2 py-1 rounded-md">
+                  {new Date(item.created_at).toLocaleDateString('vi-VN')}
+                </span>
+                {item.image && (
+                  <img src={item.image} alt="" className="w-full h-40 object-cover rounded-xl mt-2 border border-gray-100" />
+                )}
+                {item.content && (
+                  <p className="text-sm text-gray-600 leading-relaxed">{item.content}</p>
+                )}
+                {item.file_url && (
+                  <a href={item.file_url} target="_blank" rel="noreferrer" className="mt-2 text-sm font-semibold text-blue-600 bg-blue-50 px-4 py-2 rounded-xl text-center hover:bg-blue-100 transition-colors">
+                    Xem / Tải tài liệu đính kèm
+                  </a>
+                )}
               </div>
             ))}
           </div>

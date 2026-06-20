@@ -20,4 +20,28 @@ export declare class DocumentsService {
         abstract: string;
         file_url: string;
     } | null, null, import("@prisma/client/runtime/client").DefaultArgs, Prisma.PrismaClientOptions>;
+    create(data: any): Prisma.Prisma__DocumentClient<{
+        id: number;
+        created_at: Date;
+        type: string;
+        document_no: string;
+        abstract: string;
+        file_url: string;
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, Prisma.PrismaClientOptions>;
+    update(id: number, data: any): Prisma.Prisma__DocumentClient<{
+        id: number;
+        created_at: Date;
+        type: string;
+        document_no: string;
+        abstract: string;
+        file_url: string;
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, Prisma.PrismaClientOptions>;
+    remove(id: number): Prisma.Prisma__DocumentClient<{
+        id: number;
+        created_at: Date;
+        type: string;
+        document_no: string;
+        abstract: string;
+        file_url: string;
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, Prisma.PrismaClientOptions>;
 }

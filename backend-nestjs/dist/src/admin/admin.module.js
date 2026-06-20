@@ -8,10 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminModule = void 0;
 const common_1 = require("@nestjs/common");
-const admin_feedbacks_controller_1 = require("./admin-feedbacks.controller");
 const admin_feedbacks_service_1 = require("./admin-feedbacks.service");
-const admin_appointments_controller_1 = require("./admin-appointments.controller");
+const admin_feedbacks_controller_1 = require("./admin-feedbacks.controller");
 const admin_appointments_service_1 = require("./admin-appointments.service");
+const admin_appointments_controller_1 = require("./admin-appointments.controller");
+const admin_citizens_service_1 = require("./admin-citizens.service");
+const admin_citizens_controller_1 = require("./admin-citizens.controller");
+const admin_dashboard_service_1 = require("./admin-dashboard.service");
+const admin_dashboard_controller_1 = require("./admin-dashboard.controller");
 const prisma_module_1 = require("../prisma/prisma.module");
 const admin_auth_module_1 = require("../admin-auth/admin-auth.module");
 let AdminModule = class AdminModule {
@@ -20,8 +24,18 @@ exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
         imports: [prisma_module_1.PrismaModule, admin_auth_module_1.AdminAuthModule],
-        controllers: [admin_feedbacks_controller_1.AdminFeedbacksController, admin_appointments_controller_1.AdminAppointmentsController],
-        providers: [admin_feedbacks_service_1.AdminFeedbacksService, admin_appointments_service_1.AdminAppointmentsService]
+        controllers: [
+            admin_feedbacks_controller_1.AdminFeedbacksController,
+            admin_appointments_controller_1.AdminAppointmentsController,
+            admin_citizens_controller_1.AdminCitizensController,
+            admin_dashboard_controller_1.AdminDashboardController
+        ],
+        providers: [
+            admin_feedbacks_service_1.AdminFeedbacksService,
+            admin_appointments_service_1.AdminAppointmentsService,
+            admin_citizens_service_1.AdminCitizensService,
+            admin_dashboard_service_1.AdminDashboardService
+        ],
     })
 ], AdminModule);
 //# sourceMappingURL=admin.module.js.map

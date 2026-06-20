@@ -1,15 +1,16 @@
-import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Param, Body, UseGuards } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { SoftAuthGuard } from '../auth/soft-auth.guard';
+import { AdminAuthGuard } from '../admin-auth/admin-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import type { Citizen } from '@prisma/client';
 
 @Controller('appointments')
-@UseGuards(SoftAuthGuard)
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
   @Post()
+  @UseGuards(SoftAuthGuard)
   async create(
     @CurrentUser() user: Citizen,
     @Body()
@@ -26,7 +27,9 @@ export class AppointmentsController {
   }
 
   @Get()
+  @UseGuards(SoftAuthGuard)
   async findAll(@CurrentUser() user: Citizen) {
     return this.appointmentsService.getMyAppointments(user.id);
   }
+
 }

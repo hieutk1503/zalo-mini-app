@@ -56,6 +56,19 @@ let AppointmentsService = class AppointmentsService {
         return this.prisma.appointment.findMany({
             where: { citizen_id: citizenId },
             orderBy: { created_at: 'desc' },
+            include: { citizen: true },
+        });
+    }
+    async getAllForAdmin() {
+        return this.prisma.appointment.findMany({
+            orderBy: { created_at: 'desc' },
+            include: { citizen: true },
+        });
+    }
+    async updateStatus(id, status) {
+        return this.prisma.appointment.update({
+            where: { id },
+            data: { status },
         });
     }
 };

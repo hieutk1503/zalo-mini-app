@@ -8,12 +8,39 @@ export class NewsService {
   findAll() {
     return this.prisma.news.findMany({
       orderBy: { published_at: 'desc' },
-      take: 10,
+      take: 20,
     });
   }
 
   findOne(id: number) {
     return this.prisma.news.findUnique({
+      where: { id },
+    });
+  }
+
+  create(data: any) {
+    return this.prisma.news.create({
+      data: {
+        title: data.title,
+        content: data.content,
+        thumbnail: data.thumbnail,
+      },
+    });
+  }
+
+  update(id: number, data: any) {
+    return this.prisma.news.update({
+      where: { id },
+      data: {
+        title: data.title,
+        content: data.content,
+        thumbnail: data.thumbnail,
+      },
+    });
+  }
+
+  remove(id: number) {
+    return this.prisma.news.delete({
       where: { id },
     });
   }

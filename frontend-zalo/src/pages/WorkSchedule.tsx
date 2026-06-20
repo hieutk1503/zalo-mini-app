@@ -40,8 +40,15 @@ export default function WorkSchedule() {
           <div className="space-y-3">
             {data.map((item: any) => (
               <div key={item.id} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-2">
-                <h3 className="text-sm font-bold text-gray-800 leading-snug">{item.title || item.project_name || item.package_name || item.name}</h3>
-                <span className="text-xs text-gray-500">{new Date(item.created_at).toLocaleDateString('vi-VN')}</span>
+                <div className="flex justify-between items-start">
+                  <h3 className="text-sm font-bold text-blue-700 leading-snug">{new Date(item.event_date).toLocaleDateString('vi-VN')}</h3>
+                  {item.time && <span className="text-xs font-semibold bg-blue-50 text-blue-600 px-2 py-1 rounded-md">{item.time}</span>}
+                </div>
+                <h4 className="text-sm font-bold text-gray-800 leading-snug">{item.title}</h4>
+                <div className="text-xs text-gray-600 space-y-1 mt-1">
+                  {item.location && <p><span className="font-semibold text-gray-500">Địa điểm:</span> {item.location}</p>}
+                  {item.attendees && <p><span className="font-semibold text-gray-500">Thành phần:</span> {item.attendees}</p>}
+                </div>
               </div>
             ))}
           </div>

@@ -94,7 +94,25 @@ let ProceduresService = class ProceduresService {
         ].join(' ')).includes(normalizedQuery));
     }
     findOne(id) {
-        return this.prisma.administrativeProcedure.findUnique({ where: { id } });
+        return this.prisma.administrativeProcedure.findUnique({
+            where: { id },
+        });
+    }
+    create(data) {
+        return this.prisma.administrativeProcedure.create({
+            data,
+        });
+    }
+    update(id, data) {
+        return this.prisma.administrativeProcedure.update({
+            where: { id },
+            data,
+        });
+    }
+    remove(id) {
+        return this.prisma.administrativeProcedure.delete({
+            where: { id },
+        });
     }
     async previewImport(buffer) {
         const workbook = xlsx.read(buffer, { type: 'buffer' });

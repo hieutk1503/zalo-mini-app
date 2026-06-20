@@ -37,11 +37,35 @@ export default function Investment() {
             <p className="text-gray-500">Chưa có dữ liệu.</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {data.map((item: any) => (
-              <div key={item.id} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-2">
-                <h3 className="text-sm font-bold text-gray-800 leading-snug">{item.title || item.project_name || item.package_name || item.name}</h3>
-                <span className="text-xs text-gray-500">{new Date(item.created_at).toLocaleDateString('vi-VN')}</span>
+              <div key={item.id} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-3">
+                <h3 className="text-base font-bold text-gray-800 leading-snug">{item.project_name}</h3>
+                <div className="flex items-center gap-2">
+                  <span className={`px-2 py-1 text-xs font-semibold rounded-md ${
+                    item.status.includes('Hoàn thành') ? 'bg-green-100 text-green-700' :
+                    item.status.includes('Tạm dừng') ? 'bg-red-100 text-red-700' :
+                    'bg-blue-100 text-blue-700'
+                  }`}>
+                    {item.status}
+                  </span>
+                  {item.budget && (
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-1 rounded-md">
+                      Vốn: {item.budget.toLocaleString()} Tỷ VNĐ
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+                {(item.start_date || item.end_date) && (
+                  <div className="text-xs text-gray-500 font-medium bg-gray-50 p-2 rounded-lg border border-gray-100 flex gap-2">
+                    <span className="text-primary font-bold">Tiến độ:</span>
+                    <span>
+                      {item.start_date ? new Date(item.start_date).toLocaleDateString('vi-VN') : '...'} 
+                      {' - '} 
+                      {item.end_date ? new Date(item.end_date).toLocaleDateString('vi-VN') : 'Dự kiến'}
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
           </div>

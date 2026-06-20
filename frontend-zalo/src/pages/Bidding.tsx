@@ -37,11 +37,33 @@ export default function Bidding() {
             <p className="text-gray-500">Chưa có dữ liệu.</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {data.map((item: any) => (
-              <div key={item.id} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-2">
-                <h3 className="text-sm font-bold text-gray-800 leading-snug">{item.title || item.project_name || item.package_name || item.name}</h3>
-                <span className="text-xs text-gray-500">{new Date(item.created_at).toLocaleDateString('vi-VN')}</span>
+              <div key={item.id} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-3">
+                <h3 className="text-base font-bold text-gray-800 leading-snug">{item.package_name}</h3>
+                
+                <div className="flex flex-col gap-1 text-sm text-gray-600">
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500">Giá trị gói thầu:</span>
+                    <span className="font-semibold text-gray-900">{item.price ? item.price.toLocaleString() + ' VNĐ' : 'Đang cập nhật'}</span>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-gray-500">Thời gian nhận hồ sơ:</span>
+                    <span className="font-medium text-gray-800">
+                      {item.start_date ? new Date(item.start_date).toLocaleDateString('vi-VN') : '...'} 
+                      {' - '} 
+                      {item.end_date ? new Date(item.end_date).toLocaleDateString('vi-VN') : '...'}
+                    </span>
+                  </div>
+                </div>
+
+                {item.requirements_file && (
+                  <div className="mt-2 pt-3 border-t border-gray-100">
+                    <a href={item.requirements_file} target="_blank" rel="noreferrer" className="text-sm font-semibold text-primary bg-primary/10 px-4 py-2 rounded-xl text-center hover:bg-primary/20 transition-colors inline-block w-full">
+                      Tải Hồ Sơ Mời Thầu
+                    </a>
+                  </div>
+                )}
               </div>
             ))}
           </div>

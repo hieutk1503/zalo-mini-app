@@ -133,7 +133,7 @@ export default function Chatbot() {
       )}
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto space-y-5 p-4 pb-24 no-scrollbar">
+      <div className="flex-1 overflow-y-auto space-y-5 p-4 no-scrollbar">
         {messages.map(msg => (
           <div key={msg.id} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'} items-end gap-2`}>
             {msg.isBot && (
@@ -180,9 +180,9 @@ export default function Chatbot() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Floating Input Area */}
-      <div className="absolute bottom-20 left-0 w-full px-4">
-        <div className="glass-panel p-2 rounded-full flex items-center gap-2 shadow-lg shadow-gray-200/50 border border-white">
+      {/* Input Area */}
+      <div className="p-3 bg-white border-t border-gray-100">
+        <div className="bg-gray-50 p-1.5 rounded-full flex items-center gap-2 border border-gray-200 shadow-inner">
           <input 
             type="text" 
             value={input}
@@ -195,7 +195,7 @@ export default function Chatbot() {
           <button 
             onClick={handleSend} 
             disabled={isLoading || !input.trim()}
-            className={`p-2.5 rounded-full transition-all flex items-center justify-center ${input.trim() && !isLoading ? 'bg-primary text-white hover:scale-105 shadow-md shadow-primary/30' : 'bg-gray-100 text-gray-400'}`}>
+            className={`p-2.5 rounded-full transition-all flex items-center justify-center ${input.trim() && !isLoading ? 'bg-primary text-white hover:scale-105 shadow-md shadow-primary/30' : 'bg-gray-200 text-gray-400'}`}>
             <Send size={18} className={input.trim() && !isLoading ? 'translate-x-0.5' : ''} />
           </button>
         </div>

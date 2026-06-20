@@ -43,5 +43,22 @@ export class DocumentsService {
       where: { id },
     });
   }
+
+  create(data: any) {
+    return this.prisma.document.create({ data });
+  }
+
+  update(id: number, data: any) {
+    return this.prisma.document.update({
+      where: { id },
+      data,
+    });
+  }
+
+  remove(id: number) {
+    return this.prisma.document.delete({
+      where: { id },
+    });
+  }
 }
 

@@ -16,4 +16,25 @@ export declare class NewsService {
         thumbnail: string | null;
         published_at: Date;
     } | null, null, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    create(data: any): import("@prisma/client").Prisma.Prisma__NewsClient<{
+        id: number;
+        title: string;
+        content: string;
+        thumbnail: string | null;
+        published_at: Date;
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    update(id: number, data: any): import("@prisma/client").Prisma.Prisma__NewsClient<{
+        id: number;
+        title: string;
+        content: string;
+        thumbnail: string | null;
+        published_at: Date;
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    remove(id: number): import("@prisma/client").Prisma.Prisma__NewsClient<{
+        id: number;
+        title: string;
+        content: string;
+        thumbnail: string | null;
+        published_at: Date;
+    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
 }

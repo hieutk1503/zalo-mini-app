@@ -21,6 +21,12 @@ const ai_sync_module_1 = require("./ai-sync/ai-sync.module");
 const admin_auth_module_1 = require("./admin-auth/admin-auth.module");
 const upload_module_1 = require("./upload/upload.module");
 const admin_module_1 = require("./admin/admin.module");
+const planning_module_1 = require("./planning/planning.module");
+const investment_module_1 = require("./investment/investment.module");
+const bidding_module_1 = require("./bidding/bidding.module");
+const work_schedule_module_1 = require("./work-schedule/work-schedule.module");
+const form_template_module_1 = require("./form-template/form-template.module");
+const survey_module_1 = require("./survey/survey.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -38,6 +44,12 @@ exports.AppModule = AppModule = __decorate([
             admin_auth_module_1.AdminAuthModule,
             upload_module_1.UploadModule,
             admin_module_1.AdminModule,
+            planning_module_1.PlanningModule,
+            investment_module_1.InvestmentModule,
+            bidding_module_1.BiddingModule,
+            work_schedule_module_1.WorkScheduleModule,
+            form_template_module_1.FormTemplateModule,
+            survey_module_1.SurveyModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

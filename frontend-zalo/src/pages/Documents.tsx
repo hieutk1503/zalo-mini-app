@@ -14,7 +14,7 @@ interface DocumentItem {
 
 export default function Documents() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'DANG_UY' | 'HDND'>('DANG_UY');
+  const [activeTab, setActiveTab] = useState<string>('Tất cả');
   const [searchQuery, setSearchQuery] = useState('');
   const [documents, setDocuments] = useState<DocumentItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,10 @@ export default function Documents() {
       setIsLoading(true);
       try {
         const res = await api.get('/documents', {
-          params: { type: activeTab, q: searchQuery }
+          params: { 
+            type: activeTab === 'Tất cả' ? undefined : activeTab, 
+            q: searchQuery 
+          }
         });
         setDocuments(res.data);
       } catch (err) {
@@ -56,27 +59,20 @@ export default function Documents() {
 
       <div className="px-4 -mt-8 relative z-20 space-y-4">
         {/* Tabs */}
-        <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-gray-100">
-          <button
-            onClick={() => setActiveTab('DANG_UY')}
-            className={`flex-1 py-2.5 text-sm font-bold rounded-xl transition-all ${
-              activeTab === 'DANG_UY'
-                ? 'bg-indigo-50 text-indigo-600 shadow-sm'
-                : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            Đảng uỷ
-          </button>
-          <button
-            onClick={() => setActiveTab('HDND')}
-            className={`flex-1 py-2.5 text-sm font-bold rounded-xl transition-all ${
-              activeTab === 'HDND'
-                ? 'bg-indigo-50 text-indigo-600 shadow-sm'
-                : 'text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            HĐND
-          </button>
+        <div className="flex bg-white rounded-2xl p-1.5 shadow-sm border border-gray-100 overflow-x-auto hide-scrollbar">
+          {['Tất cả', 'Quyết định', 'Nghị định', 'Thông tư'].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-none px-4 py-2.5 text-sm font-bold rounded-xl transition-all whitespace-nowrap ${
+                activeTab === tab
+                  ? 'bg-indigo-50 text-indigo-600 shadow-sm'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
         </div>
 
         {/* Search Bar */}

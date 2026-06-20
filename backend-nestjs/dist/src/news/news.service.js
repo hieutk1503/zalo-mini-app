@@ -20,11 +20,35 @@ let NewsService = class NewsService {
     findAll() {
         return this.prisma.news.findMany({
             orderBy: { published_at: 'desc' },
-            take: 10,
+            take: 20,
         });
     }
     findOne(id) {
         return this.prisma.news.findUnique({
+            where: { id },
+        });
+    }
+    create(data) {
+        return this.prisma.news.create({
+            data: {
+                title: data.title,
+                content: data.content,
+                thumbnail: data.thumbnail,
+            },
+        });
+    }
+    update(id, data) {
+        return this.prisma.news.update({
+            where: { id },
+            data: {
+                title: data.title,
+                content: data.content,
+                thumbnail: data.thumbnail,
+            },
+        });
+    }
+    remove(id) {
+        return this.prisma.news.delete({
             where: { id },
         });
     }

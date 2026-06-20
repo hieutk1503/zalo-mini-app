@@ -39,9 +39,23 @@ export default function Forms() {
         ) : (
           <div className="space-y-3">
             {data.map((item: any) => (
-              <div key={item.id} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-2">
-                <h3 className="text-sm font-bold text-gray-800 leading-snug">{item.title || item.project_name || item.package_name || item.name}</h3>
-                <span className="text-xs text-gray-500">{new Date(item.created_at).toLocaleDateString('vi-VN')}</span>
+              <div key={item.id} className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-3">
+                <h3 className="text-sm font-bold text-gray-800 leading-snug">{item.name}</h3>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-gray-400 font-medium">
+                    {new Date(item.created_at).toLocaleDateString('vi-VN')}
+                  </span>
+                  {item.file_url && (
+                    <a 
+                      href={item.file_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors"
+                    >
+                      Tải về
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>

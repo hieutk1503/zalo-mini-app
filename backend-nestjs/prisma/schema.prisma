@@ -15,9 +15,9 @@ model Citizen {
   phone        String?
   cccd         String?
   avatar_url   String?
+  created_at   DateTime      @default(now())
   appointments Appointment[]
   feedbacks    Feedback[]
-  created_at   DateTime      @default(now())
 }
 
 model Admin {
@@ -30,13 +30,13 @@ model Admin {
 }
 
 model AdministrativeProcedure {
-  id            Int      @id @default(autoincrement())
-  code          String   @unique
-  title         String
-  description   String?
-  fee           String?
-  duration      String?
-  process_steps String?
+  id             Int            @id @default(autoincrement())
+  code           String         @unique
+  title          String
+  description    String?
+  fee            String?
+  duration       String?
+  process_steps  String?
   is_active      Boolean        @default(true)
   created_at     DateTime       @default(now())
   form_templates FormTemplate[]
@@ -55,24 +55,24 @@ model Appointment {
   id               Int      @id @default(autoincrement())
   ticket_number    String   @unique
   citizen_id       Int
-  citizen          Citizen  @relation(fields: [citizen_id], references: [id])
   appointment_date DateTime
   time_slot        String
   content          String
   status           String   @default("PENDING")
   created_at       DateTime @default(now())
+  citizen          Citizen  @relation(fields: [citizen_id], references: [id])
 }
 
 model Feedback {
   id          Int      @id @default(autoincrement())
   citizen_id  Int
-  citizen     Citizen  @relation(fields: [citizen_id], references: [id])
   content     String
   image_urls  String?
-  location    String?
   status      String   @default("NEW")
   admin_reply String?
   created_at  DateTime @default(now())
+  location    String?
+  citizen     Citizen  @relation(fields: [citizen_id], references: [id])
 }
 
 model News {
@@ -95,7 +95,7 @@ model Document {
 model Planning {
   id         Int      @id @default(autoincrement())
   title      String
-  content    String   @db.Text
+  content    String
   image      String?
   file_url   String?
   created_at DateTime @default(now())
@@ -104,7 +104,7 @@ model Planning {
 model InvestmentProject {
   id           Int       @id @default(autoincrement())
   project_name String
-  description  String    @db.Text
+  description  String
   status       String
   start_date   DateTime?
   end_date     DateTime?
@@ -137,14 +137,14 @@ model FormTemplate {
   name         String
   file_url     String
   procedure_id Int?
-  procedure    AdministrativeProcedure? @relation(fields: [procedure_id], references: [id])
   created_at   DateTime                 @default(now())
+  procedure    AdministrativeProcedure? @relation(fields: [procedure_id], references: [id])
 }
 
 model Survey {
   id           Int      @id @default(autoincrement())
   rating       Int
-  comment      String?  @db.Text
+  comment      String?
   user_zalo_id String?
   created_at   DateTime @default(now())
 }

@@ -17,6 +17,7 @@ export default function ProcedureDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [proc, setProc] = useState<ProcedureDetail | null>(null);
+  const [forms, setForms] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -24,6 +25,8 @@ export default function ProcedureDetail() {
       try {
         const res = await api.get(`/procedures/${id}`);
         setProc(res.data);
+        const formsRes = await api.get('/form-template');
+        setForms(formsRes.data.filter((f: any) => f.procedure_id === Number(id)));
       } catch (err) {
         console.error(err);
       } finally {
@@ -114,13 +117,27 @@ export default function ProcedureDetail() {
           )}
         </div>
 
+        {/* Mẫu đơn đính kèm */}
+        {forms.length > 0 && (
+          <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 space-y-4">
+            <h3 className="text-sm font-bold text-gray-800 flex items-center gap-2">
+              <Download size={16} className="text-amber-500" /> Biểu mẫu đính kèm
+            </h3>
+            <div className="space-y-2">
+              {forms.map(form => (
+                <a key={form.id} href={form.file_url} target="_blank" className="block p-3 bg-amber-50 rounded-xl border border-amber-100 hover:bg-amber-100 transition-colors">
+                  <div className="text-sm font-bold text-amber-900">{form.name}</div>
+                  <div className="text-[10px] text-amber-600 mt-1">Nhấn để tải về</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Actions */}
         <div className="flex gap-3 pt-2">
-          <button className="flex-1 bg-white border-2 border-amber-500 text-amber-600 font-bold py-3.5 rounded-xl shadow-sm hover:bg-amber-50 transition-all flex items-center justify-center gap-2">
-            <Download size={18} /> Tải mẫu đơn
-          </button>
           <Link to="/chatbot" className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-            <MessageCircle size={18} /> Hỏi AI
+            <MessageCircle size={18} /> Hỏi AI về thủ tục này
           </Link>
         </div>
       </div>

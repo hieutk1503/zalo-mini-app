@@ -11,11 +11,10 @@ interface Citizen {
 
 interface Appointment {
   id: number;
-  procedure_id: number;
   appointment_date: string;
   time_slot: string;
+  content: string;
   status: string;
-  notes?: string;
   created_at: string;
   citizen: Citizen;
 }
@@ -74,8 +73,7 @@ const AdminAppointments = () => {
             <tr className="bg-gray-50 text-gray-600 text-sm">
               <th className="p-4 border-b">Người dân</th>
               <th className="p-4 border-b">Thời gian hẹn</th>
-              <th className="p-4 border-b">Mã thủ tục</th>
-              <th className="p-4 border-b">Ghi chú</th>
+              <th className="p-4 border-b">Nội dung / Ghi chú</th>
               <th className="p-4 border-b">Trạng thái</th>
               <th className="p-4 border-b">Thao tác</th>
             </tr>
@@ -93,11 +91,8 @@ const AdminAppointments = () => {
                     {new Date(app.appointment_date).toLocaleDateString('vi-VN')}
                   </div>
                 </td>
-                <td className="p-4 align-middle">
-                  <span className="text-sm font-mono bg-gray-100 px-2 py-1 rounded">#{app.procedure_id}</span>
-                </td>
                 <td className="p-4 align-middle max-w-xs text-sm text-gray-700">
-                  {app.notes || <span className="text-gray-400 italic">Không có</span>}
+                  {app.content || <span className="text-gray-400 italic">Không có</span>}
                 </td>
                 <td className="p-4 align-middle">
                   <span className={`inline-flex px-2.5 py-1 text-xs font-medium rounded-full ${

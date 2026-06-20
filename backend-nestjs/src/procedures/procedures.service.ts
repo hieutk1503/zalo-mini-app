@@ -60,7 +60,28 @@ export class ProceduresService {
   }
 
   findOne(id: number) {
-    return this.prisma.administrativeProcedure.findUnique({ where: { id } });
+    return this.prisma.administrativeProcedure.findUnique({
+      where: { id },
+    });
+  }
+
+  create(data: any) {
+    return this.prisma.administrativeProcedure.create({
+      data,
+    });
+  }
+
+  update(id: number, data: any) {
+    return this.prisma.administrativeProcedure.update({
+      where: { id },
+      data,
+    });
+  }
+
+  remove(id: number) {
+    return this.prisma.administrativeProcedure.delete({
+      where: { id },
+    });
   }
 
   async previewImport(buffer: Buffer) {

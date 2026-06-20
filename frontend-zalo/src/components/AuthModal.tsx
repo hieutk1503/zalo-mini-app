@@ -96,7 +96,7 @@ export default function AuthModal() {
             type="submit"
             className="w-full bg-gradient-to-r from-primary-dark to-primary text-white font-bold py-3.5 rounded-xl shadow-lg shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all mt-2"
           >
-            Bắt đầu sử dụng (Dev)
+            Bắt đầu sử dụng
           </button>
         </form>
       </div>

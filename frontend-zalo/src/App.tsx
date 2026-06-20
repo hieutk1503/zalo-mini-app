@@ -22,6 +22,18 @@ import AdminLogin from './pages/AdminLogin';
 import AdminFeedbacks from './pages/AdminFeedbacks';
 import AdminAppointments from './pages/AdminAppointments';
 
+import AdminNews from './pages/AdminNews';
+import AdminPlanning from './pages/AdminPlanning';
+import AdminInvestment from './pages/AdminInvestment';
+import AdminBidding from './pages/AdminBidding';
+import AdminDocuments from './pages/AdminDocuments';
+import AdminProcedures from './pages/AdminProcedures';
+import AdminFormTemplates from './pages/AdminFormTemplates';
+import AdminWorkSchedule from './pages/AdminWorkSchedule';
+
+import AdminDashboard from './pages/AdminDashboard';
+import AdminCitizens from './pages/AdminCitizens';
+
 function App() {
   return (
     <BrowserRouter>
@@ -51,9 +63,19 @@ function App() {
 
         {/* Admin Routes (Desktop Layout) */}
         <Route path="admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="/admin/feedbacks" replace />} />
+          <Route index element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="citizens" element={<AdminCitizens />} />
           <Route path="feedbacks" element={<AdminFeedbacks />} />
           <Route path="appointments" element={<AdminAppointments />} />
+          <Route path="news" element={<AdminNews />} />
+          <Route path="planning" element={<AdminPlanning />} />
+          <Route path="investment" element={<AdminInvestment />} />
+          <Route path="bidding" element={<AdminBidding />} />
+          <Route path="documents" element={<AdminDocuments />} />
+          <Route path="procedures" element={<AdminProcedures />} />
+          <Route path="form-templates" element={<AdminFormTemplates />} />
+          <Route path="work-schedule" element={<AdminWorkSchedule />} />
           <Route path="import" element={<AdminImport />} />
         </Route>
       </Routes>

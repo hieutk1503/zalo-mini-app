@@ -1,4 +1,5 @@
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
+import { LayoutDashboard, Users, MessageSquare, Calendar, FileText, Map, Building2, Briefcase, FileArchive, FileSignature } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useEffect } from 'react';
 
@@ -19,8 +20,18 @@ const AdminLayout = () => {
   };
 
   const navItems = [
-    { name: 'Quản lý Phản ánh', path: '/admin/feedbacks' },
-    { name: 'Quản lý Lịch hẹn', path: '/admin/appointments' },
+    { icon: <LayoutDashboard size={20} />, name: 'Tổng quan', path: '/admin/dashboard' },
+    { icon: <Users size={20} />, name: 'Người dân', path: '/admin/citizens' },
+    { icon: <MessageSquare size={20} />, name: 'Phản ánh', path: '/admin/feedbacks' },
+    { icon: <Calendar size={20} />, name: 'Lịch hẹn', path: '/admin/appointments' },
+    { icon: <FileText size={20} />, name: 'Tin tức', path: '/admin/news' },
+    { icon: <Map size={20} />, name: 'Quy hoạch', path: '/admin/planning' },
+    { icon: <Building2 size={20} />, name: 'Dự án Đầu tư', path: '/admin/investment' },
+    { icon: <Briefcase size={20} />, name: 'Đấu thầu', path: '/admin/bidding' },
+    { icon: <FileArchive size={20} />, name: 'Văn bản', path: '/admin/documents' },
+    { icon: <FileSignature size={20} />, name: 'Thủ tục HC', path: '/admin/procedures' },
+    { icon: <FileText size={20} />, name: 'Kho Mẫu đơn', path: '/admin/form-templates' },
+    { icon: <Calendar size={20} />, name: 'Lịch Công tác', path: '/admin/work-schedule' },
     { name: 'Nhập Thủ tục (Excel)', path: '/admin/import' },
   ];
 
@@ -29,7 +40,7 @@ const AdminLayout = () => {
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex">
         <div className="h-16 flex items-center px-6 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-blue-600">Tử Lan Smart</h1>
+          <h1 className="text-xl font-bold text-blue-600">Tự Lạn Smart</h1>
           <span className="ml-2 text-xs font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded-full">ADMIN</span>
         </div>
         <nav className="flex-1 py-4">
@@ -38,11 +49,10 @@ const AdminLayout = () => {
               <li key={item.path}>
                 <Link
                   to={item.path}
-                  className={`block px-6 py-3 text-sm font-medium transition-colors ${
-                    location.pathname.startsWith(item.path)
+                  className={`block px-6 py-3 text-sm font-medium transition-colors ${location.pathname.startsWith(item.path)
                       ? 'text-blue-700 bg-blue-50 border-r-4 border-blue-600'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
+                    }`}
                 >
                   {item.name}
                 </Link>

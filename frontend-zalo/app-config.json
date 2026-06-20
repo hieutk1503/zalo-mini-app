@@ -1,0 +1,22 @@
+{
+  "appId": "123456789",
+  "app": {
+    "title": "Tự Lạn Smart",
+    "headerTitle": "Tự Lạn Smart",
+    "headerColor": "#0369a1",
+    "textColor": "white",
+    "statusBar": "normal",
+    "actionbar": {
+      "title": "Tự Lạn Smart",
+      "color": "#0369a1",
+      "textColor": "white",
+      "background": "#0369a1"
+    }
+  },
+  "debug": {
+    "syncRequests": false
+  },
+  "listPages": [
+    "/index"
+  ]
+}

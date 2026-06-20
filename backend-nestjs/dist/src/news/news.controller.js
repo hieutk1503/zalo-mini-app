@@ -15,10 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NewsController = void 0;
 const common_1 = require("@nestjs/common");
 const news_service_1 = require("./news.service");
+const admin_auth_guard_1 = require("../admin-auth/admin-auth.guard");
 let NewsController = class NewsController {
     newsService;
     constructor(newsService) {
         this.newsService = newsService;
+    }
+    create(createData) {
+        return this.newsService.create(createData);
     }
     findAll() {
         return this.newsService.findAll();
@@ -26,8 +30,22 @@ let NewsController = class NewsController {
     findOne(id) {
         return this.newsService.findOne(+id);
     }
+    update(id, updateData) {
+        return this.newsService.update(+id, updateData);
+    }
+    remove(id) {
+        return this.newsService.remove(+id);
+    }
 };
 exports.NewsController = NewsController;
+__decorate([
+    (0, common_1.Post)(),
+    (0, common_1.UseGuards)(admin_auth_guard_1.AdminAuthGuard),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], NewsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -41,6 +59,23 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    (0, common_1.UseGuards)(admin_auth_guard_1.AdminAuthGuard),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], NewsController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    (0, common_1.UseGuards)(admin_auth_guard_1.AdminAuthGuard),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], NewsController.prototype, "remove", null);
 exports.NewsController = NewsController = __decorate([
     (0, common_1.Controller)('news'),
     __metadata("design:paramtypes", [news_service_1.NewsService])

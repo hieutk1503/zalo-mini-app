@@ -46,6 +46,20 @@ let DocumentsService = class DocumentsService {
             where: { id },
         });
     }
+    create(data) {
+        return this.prisma.document.create({ data });
+    }
+    update(id, data) {
+        return this.prisma.document.update({
+            where: { id },
+            data,
+        });
+    }
+    remove(id) {
+        return this.prisma.document.delete({
+            where: { id },
+        });
+    }
 };
 exports.DocumentsService = DocumentsService;
 exports.DocumentsService = DocumentsService = __decorate([
