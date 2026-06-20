@@ -8,9 +8,22 @@ type Message = { id: number; text: string; isBot: boolean; action?: { type: stri
 
 export default function Chatbot() {
   const navigate = useNavigate();
-  const [messages, setMessages] = useState<Message[]>([
-    { id: 1, text: "Xin chào! Tôi là Trợ lý AI Tự Lạn Smart. Tôi có thể giúp gì cho bạn về thủ tục hành chính?", isBot: true }
-  ]);
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const saved = localStorage.getItem('chatHistory');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {}
+    }
+    return [
+      { id: 1, text: "Xin chào! Tôi là Trợ lý AI Tự Lạn Smart. Tôi có thể giúp gì cho bạn về thủ tục hành chính?", isBot: true }
+    ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('chatHistory', JSON.stringify(messages));
+  }, [messages]);
+
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -99,8 +112,26 @@ export default function Chatbot() {
     }
   };
 
+  const handleClearHistory = () => {
+    if (window.confirm("Bạn có chắc chắn muốn xóa lịch sử trò chuyện?")) {
+      const defaultMessage = [{ id: 1, text: "Xin chào! Tôi là Trợ lý AI Tự Lạn Smart. Tôi có thể giúp gì cho bạn về thủ tục hành chính?", isBot: true }];
+      setMessages(defaultMessage);
+      localStorage.setItem('chatHistory', JSON.stringify(defaultMessage));
+    }
+  };
+
   return (
-    <div className="flex flex-col h-full bg-gray-50/50 rounded-2xl overflow-hidden shadow-inner">
+    <div className="flex flex-col h-full bg-gray-50/50 rounded-2xl overflow-hidden shadow-inner relative">
+      {/* Clear History Button */}
+      {messages.length > 1 && (
+        <button 
+          onClick={handleClearHistory}
+          className="absolute top-2 right-2 z-10 bg-white/80 backdrop-blur text-xs text-gray-500 hover:text-red-500 px-3 py-1.5 rounded-full shadow-sm border border-gray-100 transition-colors"
+        >
+          Xóa lịch sử
+        </button>
+      )}
+
       {/* Chat Area */}
       <div className="flex-1 overflow-y-auto space-y-5 p-4 pb-24 no-scrollbar">
         {messages.map(msg => (
