@@ -87,52 +87,105 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                 yield {"event": "done", "data": "[DONE]"}
                 return
             
-            # CACHE MISS - Optimized Single Streaming Workflow
-            # 1. Always search database first
-            context, suggested_action = search_database(req.query)
-            
+            # CACHE MISS - HYBRID STREAMING WITH TOOL CALLS
+            tools = [{
+                'type': 'function',
+                'function': {
+                    'name': 'search_database',
+                    'description': 'Gọi hàm này khi người dùng hỏi về thủ tục hành chính, pháp luật, hồ sơ, giấy tờ, hoặc quy định.',
+                    'parameters': {
+                        'type': 'object',
+                        'properties': {
+                            'query': {
+                                'type': 'string',
+                                'description': 'Câu truy vấn để tìm kiếm trong cơ sở dữ liệu',
+                            },
+                        },
+                        'required': ['query'],
+                    },
+                },
+            }]
+
             system_prompt = (
                 "Bạn là trợ lý ảo AI hỗ trợ Dịch vụ công Tự Lạn Smart. "
                 "CHỈ THỰC HIỆN TRẢ LỜI BẰNG TIẾNG VIỆT (VIETNAMESE). "
                 "TUYỆT ĐỐI KHÔNG SỬ DỤNG TIẾNG TRUNG QUỐC (CHINESE), TIẾNG ANH (ENGLISH) HOẶC BẤT KỲ NGÔN NGỮ NÀO KHÁC.\n"
-                "Trả lời ngắn gọn, lịch sự và chính xác. Nếu có thông tin tham khảo sau đây, hãy dựa vào đó để trả lời:\n"
-                f"THÔNG TIN THAM KHẢO:\n{context}"
+                "Trả lời ngắn gọn, lịch sự và chính xác. Nếu người dùng hỏi về thủ tục hành chính, hãy dùng công cụ search_database."
             )
 
             messages = [{"role": "system", "content": system_prompt}]
             for msg in req.history:
                 messages.append({"role": msg.role, "content": msg.content})
             
-            # Củng cố yêu cầu tiếng Việt ở ngay câu hỏi cuối cùng
-            user_query_enforced = f"{req.query}\n\n[LƯU Ý QUAN TRỌNG: Bạn BẮT BUỘC phải trả lời bằng ngôn ngữ Tiếng Việt (Vietnamese). TUYỆT ĐỐI KHÔNG dùng chữ Hán (Chinese) hay bất kỳ ngôn ngữ nào khác.]"
+            user_query_enforced = f"{req.query}\n\n[LƯU Ý QUAN TRỌNG: BẮT BUỘC trả lời bằng Tiếng Việt (Vietnamese).]"
             messages.append({"role": "user", "content": user_query_enforced})
 
-            # 2. Stream immediately
-            final_response_stream = ollama_client.chat(
+            import asyncio
+
+            # LẦN 1: GỌI ẨN (stream=False)
+            response = ollama_client.chat(
                 model='qwen2.5:3b', 
                 messages=messages, 
+                tools=tools,
                 options={"temperature": 0.1}, 
-                stream=True
+                stream=False
             )
             
+            tool_calls = response.get('message', {}).get('tool_calls', [])
+            suggested_action = None
             full_answer = ""
-            for chunk in final_response_stream:
-                if await request.is_disconnected():
-                    break
+            
+            if tool_calls:
+                print(f"[Tool Call Triggered] {tool_calls}")
+                # NHÁNH 1: CÓ GỌI DATABASE (RAG)
+                for tool in tool_calls:
+                    if tool['function']['name'] == 'search_database':
+                        search_query = tool['function']['arguments'].get('query', req.query)
+                        context, suggested_action = search_database(search_query)
+                        
+                        messages.append(response['message'])
+                        messages.append({
+                            'role': 'tool',
+                            'content': f"THÔNG TIN THAM KHẢO:\n{context}"
+                        })
+                        break
+                        
+                # LẦN 2: GỌI STREAM (stream=True)
+                final_response_stream = ollama_client.chat(
+                    model='qwen2.5:3b', 
+                    messages=messages, 
+                    options={"temperature": 0.1}, 
+                    stream=True
+                )
                 
-                text_chunk = chunk['message']['content']
-                if not full_answer and text_chunk.startswith("søker"):
-                    text_chunk = text_chunk.replace("søker", "").lstrip()
-                
-                full_answer += text_chunk
-                
-                yield {
-                    "event": "message",
-                    "data": json.dumps({
-                        "chunk": text_chunk,
-                        "action": suggested_action
-                    }, ensure_ascii=False)
-                }
+                for chunk in final_response_stream:
+                    if await request.is_disconnected():
+                        break
+                    text_chunk = chunk['message']['content']
+                    if not full_answer and text_chunk.startswith("søker"):
+                        text_chunk = text_chunk.replace("søker", "").lstrip()
+                    full_answer += text_chunk
+                    yield {
+                        "event": "message",
+                        "data": json.dumps({"chunk": text_chunk, "action": suggested_action}, ensure_ascii=False)
+                    }
+            else:
+                print("[Fake Streaming]")
+                # NHÁNH 2: FAKE STREAM (Giao tiếp thường)
+                full_answer = response.get('message', {}).get('content', '')
+                if not full_answer and response.get('message', {}).get('content', '').startswith("søker"):
+                    full_answer = full_answer.replace("søker", "").lstrip()
+                if full_answer:
+                    import re
+                    words = re.findall(r'\S+|\s+', full_answer)
+                    for word in words:
+                        if await request.is_disconnected():
+                            break
+                        yield {
+                            "event": "message",
+                            "data": json.dumps({"chunk": word, "action": None}, ensure_ascii=False)
+                        }
+                        await asyncio.sleep(0.02)
 
             # Save to Cache after streaming completes
             if full_answer.strip():
