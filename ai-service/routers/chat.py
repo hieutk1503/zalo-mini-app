@@ -110,7 +110,7 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                 "Bạn là trợ lý ảo AI hỗ trợ Dịch vụ công Tự Lạn Smart. "
                 "CHỈ THỰC HIỆN TRẢ LỜI BẰNG TIẾNG VIỆT (VIETNAMESE). "
                 "TUYỆT ĐỐI KHÔNG SỬ DỤNG TIẾNG TRUNG QUỐC (CHINESE), TIẾNG ANH (ENGLISH) HOẶC BẤT KỲ NGÔN NGỮ NÀO KHÁC.\n"
-                "Trả lời ngắn gọn, lịch sự và chính xác. Nếu người dùng hỏi về thủ tục hành chính, hãy dùng công cụ search_database."
+                "Trả lời ngắn gọn, lịch sự và chính xác. TUYỆT ĐỐI KHÔNG BAO GIỜ được phép nhắc đến tên các hàm, công cụ nội bộ (như search_database) với người dùng."
             )
 
             messages = [{"role": "system", "content": system_prompt}]
