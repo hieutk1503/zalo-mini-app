@@ -114,6 +114,11 @@ async def chat_with_rag(req: ChatRequest, request: Request):
             )
 
             messages = [{"role": "system", "content": system_prompt}]
+            
+            # 1. Thêm Few-Shot Prompting (Ví dụ định hướng)
+            messages.append({"role": "user", "content": "Làm giấy khai sinh ở đâu?"})
+            messages.append({"role": "assistant", "content": "Bạn có thể đến UBND xã/phường hoặc Phòng Tư pháp quận/huyện nơi cư trú để làm thủ tục nhé."})
+            
             for msg in req.history:
                 messages.append({"role": msg.role, "content": msg.content})
             
@@ -162,6 +167,11 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                     if await request.is_disconnected():
                         break
                     text_chunk = chunk['message']['content']
+                    
+                    # 2a. Lọc tiếng Trung
+                    import re
+                    text_chunk = re.sub(r'[\u4e00-\u9fff]+', '', text_chunk)
+                    
                     if not full_answer and text_chunk.startswith("søker"):
                         text_chunk = text_chunk.replace("søker", "").lstrip()
                     full_answer += text_chunk
@@ -173,10 +183,19 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                 print("[Fake Streaming]")
                 # NHÁNH 2: FAKE STREAM (Giao tiếp thường)
                 full_answer = response.get('message', {}).get('content', '')
+                
+                # 2b. Lọc tiếng Trung
+                import re
+                full_answer = re.sub(r'[\u4e00-\u9fff]+', '', full_answer)
+                
+                # 2c. Chống lộ Backend Keywords
+                lower_ans = full_answer.lower()
+                if any(kw in lower_ans for kw in ["search_database", "hàm", "công cụ", "tool"]):
+                    full_answer = "Xin lỗi, tôi chưa hiểu rõ ý bạn. Bạn có thể cung cấp thêm thông tin chi tiết về thủ tục bạn muốn hỏi được không?"
+
                 if not full_answer and response.get('message', {}).get('content', '').startswith("søker"):
                     full_answer = full_answer.replace("søker", "").lstrip()
                 if full_answer:
-                    import re
                     words = re.findall(r'\S+|\s+', full_answer)
                     for word in words:
                         if await request.is_disconnected():
