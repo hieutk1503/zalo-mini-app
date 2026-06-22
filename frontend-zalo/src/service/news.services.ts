@@ -24,12 +24,23 @@ export const getNewsArticles = async (
     params: GetNewsParams = {},
 ): Promise<NewsArticles> => {
     const { organizationId, page = 0, limit = 10, ...rest } = params;
-    return request<NewsArticles>(
+    const response = await request<any>(
         "GET",
         API.NEWS,
         { page, pageSize: limit, ...rest },
         withOrgHeader(organizationId),
     );
+    // If response is an array (from NestJS), wrap it
+    if (Array.isArray(response)) {
+        return {
+            articles: response,
+            total: response.length,
+            page: page,
+            currentPageSize: response.length
+        };
+    }
+    // Fallback if it matches NewsArticles
+    return response as NewsArticles;
 };
 
 export const getNewsArticleDetail = async (params: {

@@ -58,7 +58,13 @@ export async function request<T>(
         ...requestOptions,
     });
 
-    const resData = (await response.json()) as ResData<T>;
+    const resData = (await response.json()) as any;
+    
+    // Nếu BE trả về trực tiếp mảng (NestJS) hoặc không có field 'err'/'data'
+    if (Array.isArray(resData) || (resData && typeof resData === 'object' && !('err' in resData) && !('data' in resData))) {
+        return resData as T;
+    }
+
     if (resData.err === UNAUTHORIZED && retryCount === 0 && useAuth && token) {
         try {
             const accessToken = await getToken();
@@ -69,9 +75,9 @@ export async function request<T>(
             throw new Error((err as any).message);
         }
     }
-    if (resData.err || !resData.data) {
+    if (resData.err || resData.data === undefined) {
         // eslint-disable-next-line no-throw-literal
         throw { code: resData.err, message: resData.message };
     }
-    return resData.data;
+    return resData.data as T;
 }
