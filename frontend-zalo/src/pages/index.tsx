@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { AnimationRoutes, ZMPRouter } from "zmp-ui";
+import { AnimationRoutes, ZMPRouter, Page } from "zmp-ui";
 
 import {
     FeedbackPage,
@@ -87,6 +87,15 @@ import {
     AdminWorkSchedule
 } from "./Admin";
 
+// Wrapper for legacy admin pages to render correctly inside ZMP Router
+const AdminWrapper = ({ children }: { children: React.ReactNode }) => (
+    <Page className="bg-[#f3f4f6] h-full w-full overflow-y-auto">
+        <div className="p-4 sm:p-6 w-full max-w-[1200px] mx-auto min-h-full">
+            {children}
+        </div>
+    </Page>
+);
+
 const Routes: React.FC = () => (
     <ZMPRouter>
         <AnimationRoutes>
@@ -130,7 +139,7 @@ const Routes: React.FC = () => (
             <Route path="/location" element={<LocationPage />} />
             <Route path="/work-schedule" element={<WorkSchedulePage />} />
             <Route path="/survey" element={<SurveyPage />} />
-            <Route path="/chatbot" element={<ChatbotPage />} />
+            <Route path="/chatbot" element={<AdminWrapper><ChatbotPage /></AdminWrapper>} />
             <Route path="/planning" element={<PlanningPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/:id" element={<ProjectDetailPage />} />
@@ -234,20 +243,20 @@ const Routes: React.FC = () => (
             <Route path="/events/:id" element={<EventDetailPage />} />
 
             {/* Admin Routes */}
-            <Route path="/admin" element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/news" element={<AdminNews />} />
-            <Route path="/admin/appointments" element={<AdminAppointments />} />
-            <Route path="/admin/bidding" element={<AdminBidding />} />
-            <Route path="/admin/citizens" element={<AdminCitizens />} />
-            <Route path="/admin/documents" element={<AdminDocuments />} />
-            <Route path="/admin/feedbacks" element={<AdminFeedbacks />} />
-            <Route path="/admin/form-templates" element={<AdminFormTemplates />} />
-            <Route path="/admin/import" element={<AdminImport />} />
-            <Route path="/admin/investment" element={<AdminInvestment />} />
-            <Route path="/admin/planning" element={<AdminPlanning />} />
-            <Route path="/admin/procedures" element={<AdminProcedures />} />
-            <Route path="/admin/work-schedule" element={<AdminWorkSchedule />} />
+            <Route path="/admin" element={<AdminWrapper><AdminLogin /></AdminWrapper>} />
+            <Route path="/admin/dashboard" element={<AdminWrapper><AdminDashboard /></AdminWrapper>} />
+            <Route path="/admin/news" element={<AdminWrapper><AdminNews /></AdminWrapper>} />
+            <Route path="/admin/appointments" element={<AdminWrapper><AdminAppointments /></AdminWrapper>} />
+            <Route path="/admin/bidding" element={<AdminWrapper><AdminBidding /></AdminWrapper>} />
+            <Route path="/admin/citizens" element={<AdminWrapper><AdminCitizens /></AdminWrapper>} />
+            <Route path="/admin/documents" element={<AdminWrapper><AdminDocuments /></AdminWrapper>} />
+            <Route path="/admin/feedbacks" element={<AdminWrapper><AdminFeedbacks /></AdminWrapper>} />
+            <Route path="/admin/form-templates" element={<AdminWrapper><AdminFormTemplates /></AdminWrapper>} />
+            <Route path="/admin/import" element={<AdminWrapper><AdminImport /></AdminWrapper>} />
+            <Route path="/admin/investment" element={<AdminWrapper><AdminInvestment /></AdminWrapper>} />
+            <Route path="/admin/planning" element={<AdminWrapper><AdminPlanning /></AdminWrapper>} />
+            <Route path="/admin/procedures" element={<AdminWrapper><AdminProcedures /></AdminWrapper>} />
+            <Route path="/admin/work-schedule" element={<AdminWrapper><AdminWorkSchedule /></AdminWrapper>} />
         </AnimationRoutes>
     </ZMPRouter>
 );
