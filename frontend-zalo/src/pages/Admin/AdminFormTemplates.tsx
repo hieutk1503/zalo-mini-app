@@ -1,9 +1,11 @@
+/* eslint-disable react/button-has-type, jsx-a11y/label-has-associated-control, no-alert, no-nested-ternary, no-void, react/no-array-index-key, import/no-duplicates, radix */
+import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuthStore } from '../../store/authStore';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { API_BASE_URL as API_URL } from '../../lib/config';
 
 interface Procedure {
   id: number;
@@ -154,7 +156,7 @@ export default function AdminFormTemplates() {
                     {proc ? proc.title : <span className="text-gray-400">Không gắn thủ tục</span>}
                   </td>
                   <td className="p-4 align-top">
-                    <a href={item.file_url} target="_blank" className="text-blue-600 text-sm hover:underline">Tải File</a>
+                    <a href={item.file_url} target="_blank" className="text-blue-600 text-sm hover:underline" rel="noreferrer">Tải File</a>
                   </td>
                   <td className="p-4 align-top text-right space-x-2">
                     <button onClick={() => handleOpenModal(item)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">

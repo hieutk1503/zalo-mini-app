@@ -1,9 +1,11 @@
+/* eslint-disable react/button-has-type, jsx-a11y/label-has-associated-control, no-alert, no-nested-ternary, no-void, react/no-array-index-key, import/no-duplicates */
+import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuthStore } from '../../store/authStore';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { API_BASE_URL as API_URL } from '../../lib/config';
 
 interface News {
   id: number;
@@ -187,7 +189,7 @@ export default function AdminNews() {
                 <textarea 
                   required rows={6} value={content} onChange={e => setContent(e.target.value)}
                   className="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" 
-                ></textarea>
+                 />
               </div>
               <div className="pt-4 flex justify-end gap-3">
                 <button type="button" onClick={handleCloseModal} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">

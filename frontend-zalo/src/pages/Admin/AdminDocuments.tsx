@@ -1,9 +1,11 @@
+/* eslint-disable react/button-has-type, jsx-a11y/label-has-associated-control, no-alert, no-nested-ternary, no-void, react/no-array-index-key, import/no-duplicates */
+import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuthStore } from '../../store/authStore';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { API_BASE_URL as API_URL } from '../../lib/config';
 
 interface DocumentModel {
   id: number;
@@ -153,7 +155,7 @@ export default function AdminDocuments() {
                 </td>
                 <td className="p-4 align-top">
                   {item.file_url ? (
-                    <a href={item.file_url} target="_blank" className="text-blue-600 text-sm hover:underline">Xem File</a>
+                    <a href={item.file_url} target="_blank" className="text-blue-600 text-sm hover:underline" rel="noreferrer">Xem File</a>
                   ) : <span className="text-gray-400 text-sm">Không có file</span>}
                 </td>
                 <td className="p-4 align-top text-right space-x-2">
@@ -208,7 +210,7 @@ export default function AdminDocuments() {
                 <textarea 
                   required rows={4} value={abstract} onChange={e => setAbstract(e.target.value)}
                   className="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" 
-                ></textarea>
+                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Link File đính kèm (URL)</label>

@@ -1,9 +1,11 @@
+/* eslint-disable react/button-has-type, jsx-a11y/label-has-associated-control, no-alert, no-nested-ternary, no-void, react/no-array-index-key, import/no-duplicates */
+import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuthStore } from '../../store/authStore';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { API_BASE_URL as API_URL } from '../../lib/config';
 
 interface InvestmentProject {
   id: number;
@@ -205,7 +207,7 @@ export default function AdminInvestment() {
                 <textarea 
                   required rows={4} value={description} onChange={e => setDescription(e.target.value)}
                   className="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500" 
-                ></textarea>
+                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>

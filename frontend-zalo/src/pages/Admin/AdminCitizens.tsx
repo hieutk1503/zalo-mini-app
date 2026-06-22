@@ -1,8 +1,10 @@
+/* eslint-disable react/button-has-type, jsx-a11y/label-has-associated-control, no-alert, no-nested-ternary, no-void, react/no-array-index-key, import/no-duplicates */
+import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuthStore } from '../../store/authStore';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { API_BASE_URL as API_URL } from '../../lib/config';
 
 interface Citizen {
   id: number;

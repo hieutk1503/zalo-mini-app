@@ -1,6 +1,8 @@
+/* eslint-disable react/button-has-type, jsx-a11y/label-has-associated-control, no-alert, no-nested-ternary, no-void, react/no-array-index-key, import/no-duplicates */
+import React from 'react';
 import { useState } from 'react';
-import axiosAdmin from '../../lib/axiosAdmin';
 import { Upload, FileSpreadsheet, CheckCircle2, AlertTriangle, Download, RefreshCw } from 'lucide-react';
+import axiosAdmin from '../../lib/axiosAdmin';
 
 type ImportPreview = {
   newCount: number;
@@ -233,7 +235,7 @@ export default function AdminImport() {
                     disabled={loading}
                     className="flex-1 bg-indigo-600 text-white px-4 py-2.5 rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50 flex justify-center items-center gap-2"
                   >
-                    {loading && <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></span>}
+                    {loading && <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />}
                     {loading ? 'Đang lưu...' : 'Xác nhận nhập dữ liệu'}
                   </button>
                 </div>

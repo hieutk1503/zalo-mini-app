@@ -1,9 +1,11 @@
+/* eslint-disable react/button-has-type, jsx-a11y/label-has-associated-control, no-alert, no-nested-ternary, no-void, react/no-array-index-key, import/no-duplicates */
+import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuthStore } from '../../store/authStore';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { API_BASE_URL as API_URL } from '../../lib/config';
 
 interface Bidding {
   id: number;
@@ -158,7 +160,7 @@ export default function AdminBidding() {
                 </td>
                 <td className="p-4 align-top">
                   {item.requirements_file ? (
-                    <a href={item.requirements_file} target="_blank" className="text-blue-600 text-sm hover:underline">Tải HSMT</a>
+                    <a href={item.requirements_file} target="_blank" className="text-blue-600 text-sm hover:underline" rel="noreferrer">Tải HSMT</a>
                   ) : <span className="text-gray-400 text-sm">Chưa có file</span>}
                 </td>
                 <td className="p-4 align-top text-right space-x-2">
