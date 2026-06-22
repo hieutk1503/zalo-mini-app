@@ -87,37 +87,25 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                 yield {"event": "done", "data": "[DONE]"}
                 return
             
-            # CACHE MISS - HYBRID STREAMING WITH TOOL CALLS
-            tools = [{
-                'type': 'function',
-                'function': {
-                    'name': 'search_database',
-                    'description': 'Gọi hàm này khi người dùng hỏi về thủ tục hành chính, pháp luật, hồ sơ, giấy tờ, hoặc quy định.',
-                    'parameters': {
-                        'type': 'object',
-                        'properties': {
-                            'query': {
-                                'type': 'string',
-                                'description': 'Câu truy vấn để tìm kiếm trong cơ sở dữ liệu',
-                            },
-                        },
-                        'required': ['query'],
-                    },
-                },
-            }]
+            # CACHE MISS - NAIVE RAG
+            context, suggested_action = search_database(req.query)
 
             system_prompt = (
                 "Bạn là trợ lý ảo AI hỗ trợ Dịch vụ công Tự Lạn Smart. "
                 "CHỈ THỰC HIỆN TRẢ LỜI BẰNG TIẾNG VIỆT (VIETNAMESE). "
-                "TUYỆT ĐỐI KHÔNG SỬ DỤNG TIẾNG TRUNG QUỐC (CHINESE), TIẾNG ANH (ENGLISH) HOẶC BẤT KỲ NGÔN NGỮ NÀO KHÁC.\n"
-                "Trả lời ngắn gọn, lịch sự và chính xác. TUYỆT ĐỐI KHÔNG BAO GIỜ được phép nhắc đến tên các hàm, công cụ nội bộ (như search_database) với người dùng."
+                "TUYỆT ĐỐI KHÔNG SỬ DỤNG TIẾNG TRUNG QUỐC (CHINESE), TIẾNG INDONESIA (INDONESIAN), TIẾNG ANH (ENGLISH) HOẶC BẤT KỲ NGÔN NGỮ NÀO KHÁC.\n"
+                "Nếu không có thông tin, hãy trả lời chính xác bằng Tiếng Việt: 'Tôi chưa có thông tin về vấn đề này'. "
+                "Trả lời ngắn gọn, lịch sự và chính xác."
             )
 
             messages = [{"role": "system", "content": system_prompt}]
             
-            # 1. Thêm Few-Shot Prompting (Ví dụ định hướng)
-            messages.append({"role": "user", "content": "Làm giấy khai sinh ở đâu?"})
-            messages.append({"role": "assistant", "content": "Bạn có thể đến UBND xã/phường hoặc Phòng Tư pháp quận/huyện nơi cư trú để làm thủ tục nhé."})
+            # Thêm thông tin RAG nếu tìm thấy
+            if context and context != "Không tìm thấy thông tin phù hợp trong cơ sở dữ liệu.":
+                messages.append({
+                    "role": "system", 
+                    "content": f"THÔNG TIN THAM KHẢO TỪ HỆ THỐNG:\n{context}\n\nHãy dựa vào THÔNG TIN THAM KHẢO trên để trả lời người dùng. Nếu thông tin trên không liên quan, hãy nói 'Tôi chưa có thông tin'."
+                })
             
             for msg in req.history:
                 messages.append({"role": msg.role, "content": msg.content})
@@ -126,36 +114,11 @@ async def chat_with_rag(req: ChatRequest, request: Request):
             messages.append({"role": "user", "content": user_query_enforced})
 
             import asyncio
+            import re
 
-            # LẦN 1: GỌI ẨN (stream=False)
-            response = ollama_client.chat(
-                model='qwen2.5:3b', 
-                messages=messages, 
-                tools=tools,
-                options={"temperature": 0.1}, 
-                stream=False
-            )
-            
-            tool_calls = response.get('message', {}).get('tool_calls', [])
-            suggested_action = None
             full_answer = ""
-            
-            if tool_calls:
-                print(f"[Tool Call Triggered] {tool_calls}")
-                # NHÁNH 1: CÓ GỌI DATABASE (RAG)
-                for tool in tool_calls:
-                    if tool['function']['name'] == 'search_database':
-                        search_query = tool['function']['arguments'].get('query', req.query)
-                        context, suggested_action = search_database(search_query)
-                        
-                        messages.append(response['message'])
-                        messages.append({
-                            'role': 'tool',
-                            'content': f"THÔNG TIN THAM KHẢO:\n{context}"
-                        })
-                        break
-                        
-                # LẦN 2: GỌI STREAM (stream=True)
+            try:
+                # GỌI STREAM
                 final_response_stream = ollama_client.chat(
                     model='qwen2.5:3b', 
                     messages=messages, 
@@ -168,8 +131,7 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                         break
                     text_chunk = chunk['message']['content']
                     
-                    # 2a. Lọc tiếng Trung
-                    import re
+                    # Lọc tiếng Trung
                     text_chunk = re.sub(r'[\u4e00-\u9fff]+', '', text_chunk)
                     
                     if not full_answer and text_chunk.startswith("søker"):
@@ -179,32 +141,8 @@ async def chat_with_rag(req: ChatRequest, request: Request):
                         "event": "message",
                         "data": json.dumps({"chunk": text_chunk, "action": suggested_action}, ensure_ascii=False)
                     }
-            else:
-                print("[Fake Streaming]")
-                # NHÁNH 2: FAKE STREAM (Giao tiếp thường)
-                full_answer = response.get('message', {}).get('content', '')
-                
-                # 2b. Lọc tiếng Trung
-                import re
-                full_answer = re.sub(r'[\u4e00-\u9fff]+', '', full_answer)
-                
-                # 2c. Chống lộ Backend Keywords
-                lower_ans = full_answer.lower()
-                if any(kw in lower_ans for kw in ["search_database", "hàm", "công cụ", "tool"]):
-                    full_answer = "Xin lỗi, tôi chưa hiểu rõ ý bạn. Bạn có thể cung cấp thêm thông tin chi tiết về thủ tục bạn muốn hỏi được không?"
-
-                if not full_answer and response.get('message', {}).get('content', '').startswith("søker"):
-                    full_answer = full_answer.replace("søker", "").lstrip()
-                if full_answer:
-                    words = re.findall(r'\S+|\s+', full_answer)
-                    for word in words:
-                        if await request.is_disconnected():
-                            break
-                        yield {
-                            "event": "message",
-                            "data": json.dumps({"chunk": word, "action": None}, ensure_ascii=False)
-                        }
-                        await asyncio.sleep(0.02)
+            except Exception as stream_err:
+                print(f"Streaming error: {stream_err}")
 
             # Save to Cache after streaming completes
             if full_answer.strip():
