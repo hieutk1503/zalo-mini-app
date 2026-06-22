@@ -19,11 +19,15 @@ import { WorkScheduleModule } from './work-schedule/work-schedule.module';
 import { FormTemplateModule } from './form-template/form-template.module';
 import { SurveyModule } from './survey/survey.module';
 import { OrganizationModule } from './organization/organization.module';
+import { WeatherModule } from './weather/weather.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
     PrismaModule,
     OrganizationModule,
+    WeatherModule,
+    EventsModule,
     ProceduresModule,
     ChatModule,
     AppointmentsModule,
