@@ -32,14 +32,26 @@ export const getNewsArticles = async (
     );
     // If response is an array (from NestJS), wrap it
     if (Array.isArray(response)) {
+        const mappedArticles = response.map((a: any) => ({
+            ...a,
+            thumbnailUrl: a.thumbnail || a.thumbnailUrl,
+            publishedAt: a.published_at || a.publishedAt,
+        }));
         return {
-            articles: response,
-            total: response.length,
+            articles: mappedArticles,
+            total: mappedArticles.length,
             page: page,
-            currentPageSize: response.length
+            currentPageSize: mappedArticles.length
         };
     }
     // Fallback if it matches NewsArticles
+    if (response && response.articles) {
+        response.articles = response.articles.map((a: any) => ({
+            ...a,
+            thumbnailUrl: a.thumbnail || a.thumbnailUrl,
+            publishedAt: a.published_at || a.publishedAt,
+        }));
+    }
     return response as NewsArticles;
 };
 
@@ -48,7 +60,13 @@ export const getNewsArticleDetail = async (params: {
     organizationId?: string;
 }): Promise<NewsArticle | null> => {
     const url = generatePath(API.NEWS_DETAIL, { id: params.id });
-    return request<NewsArticle>("GET", url, {}, withOrgHeader(params.organizationId));
+    const response = await request<any>("GET", url, {}, withOrgHeader(params.organizationId));
+    if (!response) return null;
+    return {
+        ...response,
+        thumbnailUrl: response.thumbnail || response.thumbnailUrl,
+        publishedAt: response.published_at || response.publishedAt,
+    } as NewsArticle;
 };
 
 export const getNewsComments = async (params: {

@@ -58,6 +58,10 @@ export async function request<T>(
         ...requestOptions,
     });
 
+    if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+    }
+
     const resData = (await response.json()) as any;
     
     // Nếu BE trả về trực tiếp mảng (NestJS) hoặc không có field 'err'/'data'
