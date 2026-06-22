@@ -34,7 +34,7 @@ export class AiSyncService {
     });
     for (const proc of procedures) {
       const chunk = `[Thủ tục: ${proc.code}] ${proc.title} - ${proc.description || ''} - Lệ phí: ${proc.fee || 'Không'} - Thời gian: ${proc.duration || 'Không'}`;
-      await this.sendToAi('PROCEDURE', proc.id, chunk);
+      await this.syncItem('PROCEDURE', proc.id, chunk);
     }
 
     // 3. Đồng bộ Tin tức
@@ -42,21 +42,21 @@ export class AiSyncService {
     for (const item of news) {
       // Bỏ tag HTML đơn giản (nếu có) để AI đọc text thuần tốt hơn, hoặc gửi nguyên HTML
       const chunk = `[Tin tức: ${item.title}] Nội dung: ${item.content}`;
-      await this.sendToAi('NEWS', item.id, chunk);
+      await this.syncItem('NEWS', item.id, chunk);
     }
 
     // 4. Đồng bộ Văn bản
     const docs = await this.prisma.document.findMany();
     for (const doc of docs) {
       const chunk = `[Văn bản: ${doc.document_no}] Trích yếu: ${doc.abstract}`;
-      await this.sendToAi('DOCUMENT', doc.id, chunk);
+      await this.syncItem('DOCUMENT', doc.id, chunk);
     }
 
     this.logger.log('Hoàn thành đồng bộ toàn bộ dữ liệu.');
     return { status: 'success', message: 'Sync completed successfully' };
   }
 
-  private async sendToAi(
+  public async syncItem(
     sourceType: string,
     sourceId: number,
     contentChunk: string,
@@ -72,6 +72,17 @@ export class AiSyncService {
       this.logger.debug(`Synced ${sourceType} ID ${sourceId}`);
     } catch (error) {
       this.logger.error(`Lỗi khi sync ${sourceType} ID ${sourceId}`, error);
+    }
+  }
+
+  public async deleteItem(sourceType: string, sourceId: number) {
+    try {
+      await lastValueFrom(
+        this.httpService.delete(`${this.AI_SERVICE_URL}/api/embeddings/sync/${sourceType}/${sourceId}`),
+      );
+      this.logger.debug(`Deleted AI vector for ${sourceType} ID ${sourceId}`);
+    } catch (error) {
+      this.logger.error(`Lỗi khi delete ${sourceType} ID ${sourceId}`, error);
     }
   }
 }
