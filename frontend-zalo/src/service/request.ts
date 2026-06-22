@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { UNAUTHORIZED } from "@constants";
 import { BASE_URL } from "@constants/common";
 import { ResData } from "@dts";
@@ -63,9 +64,15 @@ export async function request<T>(
     }
 
     const resData = (await response.json()) as any;
-    
+
     // Nếu BE trả về trực tiếp mảng (NestJS) hoặc không có field 'err'/'data'
-    if (Array.isArray(resData) || (resData && typeof resData === 'object' && !('err' in resData) && !('data' in resData))) {
+    if (
+        Array.isArray(resData) ||
+        (resData &&
+            typeof resData === "object" &&
+            !("err" in resData) &&
+            !("data" in resData))
+    ) {
         return resData as T;
     }
 

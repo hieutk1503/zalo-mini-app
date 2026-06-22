@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 /**
  * Service API thật cho Tin tức nội bộ.
  * Cùng chữ ký với news.services.mock để adapter hoán đổi theo môi trường.
@@ -41,7 +42,7 @@ export const getNewsArticles = async (
             articles: mappedArticles,
             total: mappedArticles.length,
             page: page,
-            currentPageSize: mappedArticles.length
+            currentPageSize: mappedArticles.length,
         };
     }
     // Fallback if it matches NewsArticles
@@ -60,7 +61,12 @@ export const getNewsArticleDetail = async (params: {
     organizationId?: string;
 }): Promise<NewsArticle | null> => {
     const url = generatePath(API.NEWS_DETAIL, { id: params.id });
-    const response = await request<any>("GET", url, {}, withOrgHeader(params.organizationId));
+    const response = await request<any>(
+        "GET",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
     if (!response) return null;
     return {
         ...response,
