@@ -1,0 +1,192 @@
+{
+    "reflections": [
+        {
+            "id": "pa-001",
+            "code": "PA-2024-001",
+            "title": "Đèn chiếu sáng ngõ 3 bị hỏng",
+            "typeName": "Điện - nước - chiếu sáng",
+            "content": "Đèn chiếu sáng tại ngõ 3, Tổ dân phố 2 đã hỏng hơn một tuần, buổi tối rất tối và mất an toàn. Đề nghị sửa chữa.",
+            "senderName": "Lê Thị Hoa",
+            "phone": "0912000444",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "location": "Ngõ 3, Tổ dân phố 2",
+            "imageUrls": [],
+            "status": "pending",
+            "createdAt": "2024-06-08",
+            "logs": [
+                {
+                    "id": "l-001",
+                    "action": "create",
+                    "byName": "Lê Thị Hoa",
+                    "at": "2024-06-08"
+                }
+            ]
+        },
+        {
+            "id": "pa-002",
+            "code": "PA-2024-002",
+            "title": "Tụ tập gây mất trật tự về đêm",
+            "typeName": "An ninh trật tự",
+            "content": "Một nhóm thanh niên thường tụ tập gây ồn ào sau 23h tại khu vực sân chơi Tổ dân phố 1.",
+            "senderName": "Nguyễn Văn An",
+            "phone": "0901234567",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "location": "Sân chơi Tổ dân phố 1",
+            "status": "processing",
+            "handlingUnit": "Tổ trưởng Tổ dân phố 1",
+            "createdAt": "2024-06-06",
+            "logs": [
+                {
+                    "id": "l-010",
+                    "action": "create",
+                    "byName": "Nguyễn Văn An",
+                    "at": "2024-06-06"
+                },
+                {
+                    "id": "l-011",
+                    "action": "receive",
+                    "byName": "Tổ trưởng Tổ dân phố 1",
+                    "note": "Đã tiếp nhận, sẽ theo dõi khu vực.",
+                    "at": "2024-06-07"
+                }
+            ]
+        },
+        {
+            "id": "pa-003",
+            "code": "PA-2024-003",
+            "title": "Lấn chiếm vỉa hè để kinh doanh",
+            "typeName": "Hạ tầng - giao thông",
+            "content": "Một số hộ kinh doanh bày bán hàng lấn chiếm vỉa hè đường Lê Lợi gây cản trở người đi bộ.",
+            "senderName": "Phạm Văn Dũng",
+            "phone": "0988555000",
+            "neighborhoodGroup": "Tổ dân phố 3",
+            "location": "Đường Lê Lợi",
+            "status": "forwarded",
+            "handlingUnit": "UBND phường",
+            "createdAt": "2024-06-03",
+            "logs": [
+                {
+                    "id": "l-020",
+                    "action": "create",
+                    "byName": "Phạm Văn Dũng",
+                    "at": "2024-06-03"
+                },
+                {
+                    "id": "l-021",
+                    "action": "receive",
+                    "byName": "Tổ trưởng Tổ dân phố 3",
+                    "at": "2024-06-04"
+                },
+                {
+                    "id": "l-022",
+                    "action": "forward",
+                    "byName": "Tổ trưởng Tổ dân phố 3",
+                    "toUnit": "UBND phường",
+                    "note": "Vượt thẩm quyền tổ, đề nghị phường xử lý.",
+                    "at": "2024-06-05"
+                }
+            ]
+        },
+        {
+            "id": "pa-004",
+            "code": "PA-2024-004",
+            "title": "Rác thải chưa được thu gom đúng giờ",
+            "typeName": "Môi trường - vệ sinh",
+            "content": "Điểm tập kết rác tại Tổ dân phố 2 thường xuyên bị thu gom muộn, gây mùi hôi.",
+            "senderName": "Hoàng Thị Mai",
+            "phone": "0933666999",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "status": "completed",
+            "handlingUnit": "Môi trường - Đô thị",
+            "createdAt": "2024-05-28",
+            "logs": [
+                {
+                    "id": "l-030",
+                    "action": "create",
+                    "byName": "Hoàng Thị Mai",
+                    "at": "2024-05-28"
+                },
+                {
+                    "id": "l-031",
+                    "action": "receive",
+                    "byName": "Tổ trưởng Tổ dân phố 2",
+                    "at": "2024-05-29"
+                },
+                {
+                    "id": "l-032",
+                    "action": "complete",
+                    "byName": "Tổ trưởng Tổ dân phố 2",
+                    "note": "Đã làm việc với đơn vị thu gom, điều chỉnh lịch lấy rác.",
+                    "at": "2024-05-31"
+                }
+            ]
+        },
+        {
+            "id": "pa-005",
+            "code": "PA-2024-005",
+            "title": "Đề nghị lắp thêm camera an ninh",
+            "typeName": "An ninh trật tự",
+            "content": "Khu vực đầu ngõ Tổ dân phố 1 nên lắp thêm camera để tăng cường an ninh.",
+            "senderName": "Trần Thị Bình",
+            "phone": "0907654321",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "status": "pending",
+            "createdAt": "2024-06-10",
+            "logs": [
+                {
+                    "id": "l-040",
+                    "action": "create",
+                    "byName": "Trần Thị Bình",
+                    "at": "2024-06-10"
+                }
+            ]
+        }
+    ],
+    "notifications": [
+        {
+            "id": "tb-001",
+            "title": "Lịch cắt điện luân phiên ngày 15/06",
+            "content": "Thông báo lịch cắt điện luân phiên tại các Tổ dân phố 1, 2, 3 từ 8h00 đến 11h00 ngày 15/06 để bảo trì lưới điện. Đề nghị bà con chủ động sắp xếp.",
+            "level": "important",
+            "neighborhoodGroup": "Toàn phường",
+            "sentAt": "2024-06-12",
+            "read": false
+        },
+        {
+            "id": "tb-002",
+            "title": "Khẩn: Cảnh báo mưa lớn và ngập úng",
+            "content": "Dự báo có mưa lớn diện rộng trong 24h tới, nguy cơ ngập úng tại khu vực trũng. Đề nghị bà con di chuyển phương tiện và tài sản đến nơi an toàn.",
+            "level": "urgent",
+            "neighborhoodGroup": "Toàn phường",
+            "sentAt": "2024-06-11",
+            "read": false
+        },
+        {
+            "id": "tb-003",
+            "title": "Mời họp tổ dân phố quý II",
+            "content": "Kính mời đại diện các hộ gia đình tham dự họp tổ dân phố quý II vào 19h30 ngày 18/06 tại Nhà văn hóa khu phố.",
+            "level": "normal",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "sentAt": "2024-06-09",
+            "read": true
+        },
+        {
+            "id": "tb-004",
+            "title": "Triển khai tiêm phòng dại cho vật nuôi",
+            "content": "Đợt tiêm phòng dại cho chó, mèo sẽ diễn ra ngày 20/06 tại trụ sở khu phố. Đề nghị các hộ có vật nuôi đăng ký với tổ trưởng.",
+            "level": "normal",
+            "neighborhoodGroup": "Toàn phường",
+            "sentAt": "2024-06-05",
+            "read": true
+        },
+        {
+            "id": "tb-005",
+            "title": "Thu phí vệ sinh môi trường tháng 6",
+            "content": "Thông báo thu phí vệ sinh môi trường tháng 6. Đề nghị các hộ hoàn thành trước ngày 25/06.",
+            "level": "normal",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "sentAt": "2024-06-04",
+            "read": true
+        }
+    ]
+}

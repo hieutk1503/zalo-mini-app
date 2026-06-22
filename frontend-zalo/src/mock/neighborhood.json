@@ -1,0 +1,125 @@
+{
+    "meetings": [
+        {
+            "id": "mt-001",
+            "title": "Họp tổ dân phố quý II/2024",
+            "content": "Đánh giá hoạt động quý II, triển khai kế hoạch quý III, bàn về vệ sinh môi trường và an ninh trật tự khu phố.",
+            "startTime": "2024-06-18T19:30",
+            "endTime": "2024-06-18T21:00",
+            "location": "Nhà văn hóa Tổ dân phố 1",
+            "chairperson": "Tổ trưởng Nguyễn Văn An",
+            "status": "scheduled",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "myConfirmStatus": "pending",
+            "participantCount": 3,
+            "participants": [
+                {
+                    "id": "mp-001",
+                    "name": "Nguyễn Văn An",
+                    "confirmStatus": "confirmed"
+                },
+                {
+                    "id": "mp-002",
+                    "name": "Trần Thị Bình",
+                    "confirmStatus": "pending"
+                },
+                {
+                    "id": "mp-003",
+                    "name": "Lê Thị Hoa",
+                    "confirmStatus": "declined",
+                    "reason": "Bận công tác xa"
+                }
+            ],
+            "documents": [
+                { "id": "md-001", "name": "Báo cáo quý II.pdf" }
+            ],
+            "createdAt": "2024-06-10"
+        },
+        {
+            "id": "mt-002",
+            "title": "Họp triển khai phòng chống mưa bão",
+            "content": "Phổ biến phương án phòng chống mưa bão, phân công lực lượng xung kích và rà soát khu vực nguy cơ ngập úng.",
+            "startTime": "2024-06-12T08:00",
+            "location": "Trụ sở khu phố",
+            "chairperson": "Tổ trưởng Phạm Văn Dũng",
+            "status": "finished",
+            "neighborhoodGroup": "Tổ dân phố 3",
+            "myConfirmStatus": "confirmed",
+            "participantCount": 2,
+            "participants": [
+                {
+                    "id": "mp-010",
+                    "name": "Phạm Văn Dũng",
+                    "confirmStatus": "confirmed"
+                },
+                {
+                    "id": "mp-011",
+                    "name": "Hoàng Thị Mai",
+                    "confirmStatus": "confirmed"
+                }
+            ],
+            "conclusion": "Thống nhất phương án phòng chống bão; phân công 5 thành viên tổ xung kích trực 24/24 khi có cảnh báo.",
+            "createdAt": "2024-06-08"
+        },
+        {
+            "id": "mt-003",
+            "title": "Họp bình xét gia đình văn hóa 2024",
+            "content": "Bình xét và đề nghị công nhận danh hiệu Gia đình văn hóa năm 2024 cho các hộ trong tổ.",
+            "startTime": "2024-06-25T19:00",
+            "location": "Nhà văn hóa Tổ dân phố 2",
+            "chairperson": "Tổ trưởng Tổ dân phố 2",
+            "status": "scheduled",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "myConfirmStatus": "pending",
+            "participantCount": 1,
+            "participants": [
+                {
+                    "id": "mp-020",
+                    "name": "Lê Thị Hoa",
+                    "confirmStatus": "pending"
+                }
+            ],
+            "createdAt": "2024-06-11"
+        }
+    ],
+    "groups": [
+        {
+            "id": "gr-001",
+            "name": "Tổ tự quản an ninh TDP 1",
+            "description": "Nhóm phối hợp tuần tra, giữ gìn an ninh trật tự khu phố vào buổi tối.",
+            "topic": "An ninh trật tự",
+            "status": "active",
+            "creatorName": "Nguyễn Văn An",
+            "createdAt": "2024-03-01",
+            "members": [
+                { "id": "gm-001", "name": "Nguyễn Văn An", "role": "Nhóm trưởng" },
+                { "id": "gm-002", "name": "Trần Thị Bình" }
+            ]
+        },
+        {
+            "id": "gr-002",
+            "name": "CLB Văn nghệ khu phố",
+            "description": "Tập luyện văn nghệ, biểu diễn trong các dịp lễ hội của phường.",
+            "topic": "Văn nghệ - thể thao",
+            "status": "active",
+            "creatorName": "Lê Thị Hoa",
+            "createdAt": "2024-04-12",
+            "members": [
+                { "id": "gm-010", "name": "Lê Thị Hoa", "role": "Chủ nhiệm" },
+                { "id": "gm-011", "name": "Hoàng Thị Mai" }
+            ]
+        },
+        {
+            "id": "gr-003",
+            "name": "Nhóm vệ sinh môi trường TDP 3",
+            "description": "Tổ chức dọn vệ sinh định kỳ, phân loại rác tại khu dân cư.",
+            "topic": "Vệ sinh môi trường",
+            "status": "inactive",
+            "creatorName": "Phạm Văn Dũng",
+            "createdAt": "2024-02-20",
+            "members": [
+                { "id": "gm-020", "name": "Phạm Văn Dũng", "role": "Nhóm trưởng" }
+            ]
+        }
+    ]
+}

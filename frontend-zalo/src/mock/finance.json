@@ -1,0 +1,120 @@
+{
+    "incomeCampaigns": [
+        {
+            "id": "in-001",
+            "name": "Quỹ vệ sinh môi trường Quý II/2024",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "feeType": "Quỹ vệ sinh môi trường",
+            "description": "Đóng góp quỹ vệ sinh môi trường quý II năm 2024.",
+            "amountPerHousehold": 60000,
+            "startDate": "2024-06-01",
+            "endDate": "2024-06-30",
+            "status": "active",
+            "createdAt": "2024-06-01",
+            "households": [
+                {
+                    "id": "hp-001",
+                    "householdName": "Lê Thị Hoa",
+                    "amountDue": 60000,
+                    "amountPaid": 60000,
+                    "paidDate": "2024-06-05",
+                    "status": "paid"
+                },
+                {
+                    "id": "hp-002",
+                    "householdName": "Hoàng Thị Mai",
+                    "amountDue": 60000,
+                    "amountPaid": 0,
+                    "status": "unpaid"
+                },
+                {
+                    "id": "hp-003",
+                    "householdName": "Nguyễn Văn Khoa",
+                    "amountDue": 60000,
+                    "amountPaid": 30000,
+                    "paidDate": "2024-06-08",
+                    "status": "partial"
+                },
+                {
+                    "id": "hp-004",
+                    "householdName": "Trần Văn Lực (hộ chính sách)",
+                    "amountDue": 60000,
+                    "amountPaid": 0,
+                    "status": "exempt",
+                    "note": "Hộ chính sách - miễn"
+                }
+            ]
+        },
+        {
+            "id": "in-002",
+            "name": "Quỹ an ninh quốc phòng 2024",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "feeType": "Quỹ an ninh quốc phòng",
+            "description": "Đóng góp quỹ an ninh quốc phòng năm 2024.",
+            "amountPerHousehold": 100000,
+            "startDate": "2024-03-01",
+            "endDate": "2024-04-30",
+            "status": "closed",
+            "createdAt": "2024-03-01",
+            "households": [
+                {
+                    "id": "hp-010",
+                    "householdName": "Nguyễn Văn An",
+                    "amountDue": 100000,
+                    "amountPaid": 100000,
+                    "paidDate": "2024-03-10",
+                    "status": "paid"
+                },
+                {
+                    "id": "hp-011",
+                    "householdName": "Trần Thị Bình",
+                    "amountDue": 100000,
+                    "amountPaid": 100000,
+                    "paidDate": "2024-03-12",
+                    "status": "paid"
+                }
+            ]
+        }
+    ],
+    "expenses": [
+        {
+            "id": "ex-001",
+            "name": "Mua dụng cụ vệ sinh khu phố",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "purpose": "Mua chổi, túi rác, găng tay phục vụ tổng vệ sinh định kỳ.",
+            "amount": 850000,
+            "expenseDate": "2024-06-07",
+            "performerName": "Lê Thị Hoa",
+            "fundSource": "Quỹ vệ sinh môi trường",
+            "status": "approved",
+            "createdAt": "2024-06-07",
+            "attachments": [{ "id": "at-001", "name": "Hóa đơn mua hàng.pdf" }]
+        },
+        {
+            "id": "ex-002",
+            "name": "Trang trí khu phố dịp lễ",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "purpose": "Mua cờ, băng rôn trang trí dịp lễ 30/4 - 1/5.",
+            "amount": 1200000,
+            "expenseDate": "2024-04-25",
+            "performerName": "Nguyễn Văn An",
+            "fundSource": "Quỹ hoạt động khu phố",
+            "status": "approved",
+            "createdAt": "2024-04-25",
+            "attachments": []
+        },
+        {
+            "id": "ex-003",
+            "name": "Hỗ trợ hộ khó khăn",
+            "neighborhoodGroup": "Tổ dân phố 3",
+            "purpose": "Hỗ trợ một hộ có hoàn cảnh khó khăn trong khu phố.",
+            "amount": 500000,
+            "expenseDate": "2024-06-10",
+            "performerName": "Phạm Văn Dũng",
+            "fundSource": "Quỹ hoạt động khu phố",
+            "status": "recorded",
+            "createdAt": "2024-06-10",
+            "attachments": []
+        }
+    ]
+}

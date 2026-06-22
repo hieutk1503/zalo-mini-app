@@ -1,0 +1,76 @@
+{
+    "serviceLinks": [
+        {
+            "id": "sl-001",
+            "group": "Dịch vụ công",
+            "title": "Cổng Dịch vụ công Quốc gia",
+            "description": "Nộp hồ sơ, tra cứu thủ tục hành chính trực tuyến",
+            "webUrl": "https://dichvucong.gov.vn",
+            "order": 1,
+            "enabled": true
+        },
+        {
+            "id": "sl-002",
+            "group": "Dịch vụ công",
+            "title": "Cổng Dịch vụ công tỉnh/thành phố",
+            "description": "Dịch vụ công trực tuyến cấp tỉnh/thành phố",
+            "webUrl": "https://dichvucong.gov.vn",
+            "order": 2,
+            "enabled": true
+        },
+        {
+            "id": "sl-010",
+            "group": "Định danh & thuế",
+            "title": "VNeID - Định danh điện tử",
+            "description": "Tài khoản định danh điện tử quốc gia",
+            "webUrl": "https://vneid.gov.vn",
+            "order": 1,
+            "enabled": true
+        },
+        {
+            "id": "sl-011",
+            "group": "Định danh & thuế",
+            "title": "eTax Mobile",
+            "description": "Tra cứu, nộp thuế cá nhân",
+            "webUrl": "https://etaxmobile.gdt.gov.vn",
+            "order": 2,
+            "enabled": true
+        },
+        {
+            "id": "sl-012",
+            "group": "Định danh & thuế",
+            "title": "VssID - Bảo hiểm xã hội số",
+            "description": "Tra cứu quá trình tham gia BHXH, BHYT",
+            "webUrl": "https://baohiemxahoi.gov.vn",
+            "order": 3,
+            "enabled": true
+        },
+        {
+            "id": "sl-020",
+            "group": "Thông tin & liên hệ",
+            "title": "Cổng thông tin điện tử phường",
+            "description": "Tin tức, thông báo chính thức của phường",
+            "webUrl": "https://example.gov.vn",
+            "order": 1,
+            "enabled": true
+        },
+        {
+            "id": "sl-021",
+            "group": "Thông tin & liên hệ",
+            "title": "Fanpage Facebook phường",
+            "description": "Trang Facebook chính thức của phường",
+            "webUrl": "https://facebook.com",
+            "order": 2,
+            "enabled": true
+        },
+        {
+            "id": "sl-022",
+            "group": "Thông tin & liên hệ",
+            "title": "Zalo OA phường",
+            "description": "Official Account Zalo của phường",
+            "webUrl": "https://zalo.me",
+            "order": 3,
+            "enabled": true
+        }
+    ]
+}
