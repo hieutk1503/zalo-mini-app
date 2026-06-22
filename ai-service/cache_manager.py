@@ -89,3 +89,18 @@ def set_cached_answer(query_id: str, vector: list[float], answer: str, suggested
         print(f"💾 Saved to Semantic Cache: {query_id}")
     except Exception as e:
         print(f"Redis save error: {e}")
+
+def clear_semantic_cache():
+    """
+    Xóa toàn bộ semantic cache khi có dữ liệu mới được cập nhật
+    để tránh trường hợp user hỏi lại câu cũ nhưng nhận được câu trả lời cũ (ví dụ: 'tôi không biết').
+    """
+    if not client:
+        return
+    try:
+        keys = client.keys("cache:*")
+        if keys:
+            client.delete(*keys)
+            print(f"🧹 Cleared {len(keys)} entries from Semantic Cache")
+    except Exception as e:
+        print(f"Redis clear cache error: {e}")

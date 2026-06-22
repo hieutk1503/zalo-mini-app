@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import ollama
 from database import get_db_connection
+from cache_manager import clear_semantic_cache
 
 router = APIRouter()
 
@@ -39,6 +40,9 @@ def sync_vector(req: SyncRequest):
         cur.close()
         conn.close()
         
+        # Clear semantic cache since knowledge changed
+        clear_semantic_cache()
+        
         return {"status": "success", "message": "Vector stored successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -55,6 +59,10 @@ def delete_vector(source_type: str, source_id: int):
         conn.commit()
         cur.close()
         conn.close()
+        
+        # Clear semantic cache since knowledge changed
+        clear_semantic_cache()
+        
         return {"status": "success", "message": f"Deleted vector for {source_type} {source_id}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -68,6 +76,10 @@ def clear_vectors():
         conn.commit()
         cur.close()
         conn.close()
+        
+        # Clear semantic cache since knowledge changed
+        clear_semantic_cache()
+        
         return {"status": "success", "message": "All vectors cleared"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
