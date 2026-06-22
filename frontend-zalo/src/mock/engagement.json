@@ -1,0 +1,181 @@
+{
+    "surveys": [
+        {
+            "id": "sv-001",
+            "title": "Khảo sát nhu cầu sinh hoạt cộng đồng 2024",
+            "description": "Thu thập ý kiến cư dân về các hoạt động, tiện ích cần ưu tiên trong khu phố.",
+            "startTime": "2024-06-01",
+            "endTime": "2024-06-30",
+            "status": "active",
+            "participated": false,
+            "allowRetake": false,
+            "showResult": true,
+            "participantCount": 42,
+            "questions": [
+                {
+                    "id": "sq-001",
+                    "order": 1,
+                    "content": "Bạn quan tâm nhất đến hoạt động nào của khu phố?",
+                    "type": "single_choice",
+                    "required": true,
+                    "options": [
+                        "Văn nghệ - thể thao",
+                        "Vệ sinh môi trường",
+                        "An ninh trật tự",
+                        "Khuyến học"
+                    ]
+                },
+                {
+                    "id": "sq-002",
+                    "order": 2,
+                    "content": "Những tiện ích nào nên được đầu tư thêm? (chọn nhiều)",
+                    "type": "multiple_choice",
+                    "required": true,
+                    "options": [
+                        "Sân chơi trẻ em",
+                        "Đèn chiếu sáng",
+                        "Camera an ninh",
+                        "Khu tập thể dục"
+                    ]
+                },
+                {
+                    "id": "sq-003",
+                    "order": 3,
+                    "content": "Mức độ hài lòng với hoạt động khu phố hiện nay?",
+                    "type": "rating",
+                    "required": true
+                },
+                {
+                    "id": "sq-004",
+                    "order": 4,
+                    "content": "Góp ý thêm của bạn",
+                    "type": "text",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "id": "sv-002",
+            "title": "Khảo sát chất lượng thu gom rác thải",
+            "description": "Đánh giá tần suất và chất lượng thu gom rác tại các tổ dân phố.",
+            "startTime": "2024-05-01",
+            "endTime": "2024-05-20",
+            "status": "closed",
+            "participated": true,
+            "allowRetake": false,
+            "showResult": true,
+            "participantCount": 67,
+            "questions": [
+                {
+                    "id": "sq-010",
+                    "order": 1,
+                    "content": "Tần suất thu gom rác hiện tại có phù hợp không?",
+                    "type": "single_choice",
+                    "required": true,
+                    "options": ["Phù hợp", "Cần tăng tần suất", "Cần giảm"]
+                },
+                {
+                    "id": "sq-011",
+                    "order": 2,
+                    "content": "Mức độ hài lòng chung",
+                    "type": "rating",
+                    "required": true
+                }
+            ]
+        }
+    ],
+    "contests": [
+        {
+            "id": "ct-001",
+            "title": "Tìm hiểu pháp luật về an toàn giao thông",
+            "description": "Cuộc thi trắc nghiệm kiến thức ATGT dành cho cư dân khu phố.",
+            "startTime": "2024-06-05",
+            "endTime": "2024-06-30",
+            "status": "active",
+            "durationMinutes": 15,
+            "maxAttempts": 2,
+            "participated": false,
+            "participantCount": 35,
+            "questions": [
+                {
+                    "id": "cq-001",
+                    "order": 1,
+                    "content": "Khi đèn tín hiệu màu vàng bật sáng, người tham gia giao thông phải làm gì?",
+                    "points": 10,
+                    "options": [
+                        { "id": "o1", "content": "Tăng tốc vượt qua" },
+                        { "id": "o2", "content": "Dừng lại trước vạch dừng" },
+                        { "id": "o3", "content": "Rẽ phải tùy ý" },
+                        { "id": "o4", "content": "Bấm còi liên tục" }
+                    ],
+                    "correctOptionIds": ["o2"]
+                },
+                {
+                    "id": "cq-002",
+                    "order": 2,
+                    "content": "Độ tuổi tối thiểu được điều khiển xe máy dưới 50cc?",
+                    "points": 10,
+                    "options": [
+                        { "id": "o1", "content": "14 tuổi" },
+                        { "id": "o2", "content": "16 tuổi" },
+                        { "id": "o3", "content": "18 tuổi" },
+                        { "id": "o4", "content": "20 tuổi" }
+                    ],
+                    "correctOptionIds": ["o2"]
+                },
+                {
+                    "id": "cq-003",
+                    "order": 3,
+                    "content": "Hành vi nào sau đây bị nghiêm cấm? (chọn nhiều)",
+                    "points": 10,
+                    "multiple": true,
+                    "options": [
+                        { "id": "o1", "content": "Sử dụng rượu bia khi lái xe" },
+                        { "id": "o2", "content": "Đội mũ bảo hiểm" },
+                        { "id": "o3", "content": "Vượt đèn đỏ" },
+                        { "id": "o4", "content": "Đi đúng làn đường" }
+                    ],
+                    "correctOptionIds": ["o1", "o3"]
+                }
+            ]
+        },
+        {
+            "id": "ct-002",
+            "title": "Tìm hiểu lịch sử - truyền thống địa phương",
+            "description": "Cuộc thi kiến thức về lịch sử và truyền thống của phường.",
+            "startTime": "2024-04-01",
+            "endTime": "2024-04-30",
+            "status": "closed",
+            "durationMinutes": 20,
+            "maxAttempts": 1,
+            "participated": true,
+            "participantCount": 58,
+            "questions": [
+                {
+                    "id": "cq-010",
+                    "order": 1,
+                    "content": "Ngày truyền thống của phường được tổ chức vào tháng mấy?",
+                    "points": 10,
+                    "options": [
+                        { "id": "o1", "content": "Tháng 3" },
+                        { "id": "o2", "content": "Tháng 8" },
+                        { "id": "o3", "content": "Tháng 10" },
+                        { "id": "o4", "content": "Tháng 12" }
+                    ],
+                    "correctOptionIds": ["o3"]
+                }
+            ]
+        }
+    ],
+    "rankings": {
+        "ct-001": [
+            { "rank": 1, "name": "Nguyễn Văn An", "score": 30 },
+            { "rank": 2, "name": "Trần Thị Bình", "score": 20 },
+            { "rank": 3, "name": "Lê Thị Hoa", "score": 20 }
+        ],
+        "ct-002": [
+            { "rank": 1, "name": "Phạm Văn Dũng", "score": 10 },
+            { "rank": 2, "name": "Hoàng Thị Mai", "score": 10 }
+        ]
+    }
+}

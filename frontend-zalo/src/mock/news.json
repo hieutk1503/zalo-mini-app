@@ -1,0 +1,71 @@
+{
+    "articles": [
+        {
+            "id": "nw-001",
+            "title": "Ra quân tổng vệ sinh môi trường hưởng ứng Ngày Môi trường",
+            "summary": "Khu phố tổ chức ra quân tổng vệ sinh, thu gom rác và phát quang bụi rậm sáng Chủ nhật.",
+            "content": "Sáng Chủ nhật vừa qua, Ban điều hành khu phố cùng đông đảo bà con nhân dân đã ra quân tổng vệ sinh môi trường hưởng ứng Ngày Môi trường thế giới.\n\nCác tổ dân phố đã thu gom rác thải, phát quang bụi rậm, khơi thông cống rãnh và trồng thêm cây xanh tại khu vực sân chơi chung. Hoạt động thu hút hơn 120 lượt người tham gia.\n\nBan điều hành khu phố trân trọng cảm ơn sự chung tay của bà con và mong tiếp tục duy trì nền nếp giữ gìn vệ sinh chung.",
+            "category": "Hoạt động khu phố",
+            "publishedAt": "2024-06-09",
+            "viewCount": 156,
+            "commentCount": 2,
+            "allowComment": true
+        },
+        {
+            "id": "nw-002",
+            "title": "Thông báo lịch tiếp công dân định kỳ tháng 6",
+            "summary": "Lãnh đạo phường tiếp công dân định kỳ vào sáng thứ Năm hằng tuần tại trụ sở UBND phường.",
+            "content": "UBND phường thông báo lịch tiếp công dân định kỳ tháng 6/2024:\n\n- Thời gian: sáng thứ Năm hằng tuần (8h00 - 11h00).\n- Địa điểm: Phòng tiếp công dân, trụ sở UBND phường.\n- Thành phần: Lãnh đạo UBND phường và các bộ phận chuyên môn liên quan.\n\nĐề nghị bà con mang theo giấy tờ tùy thân và hồ sơ liên quan khi đến liên hệ.",
+            "category": "Thông báo",
+            "publishedAt": "2024-06-03",
+            "viewCount": 233,
+            "commentCount": 1,
+            "allowComment": true
+        },
+        {
+            "id": "nw-003",
+            "title": "Trao quà cho các hộ gia đình chính sách",
+            "summary": "Khu phố phối hợp tổ chức trao 15 suất quà cho các hộ gia đình chính sách, hộ có hoàn cảnh khó khăn.",
+            "content": "Nhân dịp kỷ niệm các ngày lễ lớn, khu phố đã phối hợp với các đoàn thể tổ chức trao 15 suất quà cho các hộ gia đình chính sách và hộ có hoàn cảnh khó khăn trên địa bàn.\n\nMỗi suất quà trị giá 500.000 đồng cùng nhu yếu phẩm thiết yếu. Đây là hoạt động thường niên thể hiện tinh thần tương thân tương ái của cộng đồng dân cư.",
+            "category": "An sinh xã hội",
+            "publishedAt": "2024-05-28",
+            "viewCount": 98,
+            "commentCount": 0,
+            "allowComment": true
+        },
+        {
+            "id": "nw-004",
+            "title": "Hướng dẫn đăng ký tài khoản định danh điện tử mức 2",
+            "summary": "Công an phường hỗ trợ bà con đăng ký, kích hoạt tài khoản định danh điện tử VNeID mức 2.",
+            "content": "Nhằm đẩy mạnh chuyển đổi số, Công an phường tổ chức hỗ trợ bà con đăng ký và kích hoạt tài khoản định danh điện tử VNeID mức 2.\n\nBà con khi đến làm thủ tục cần mang theo: CCCD gắn chip, số điện thoại chính chủ. Thời gian hỗ trợ trong giờ hành chính các ngày trong tuần tại trụ sở Công an phường.",
+            "category": "Chính sách",
+            "publishedAt": "2024-05-20",
+            "viewCount": 187,
+            "commentCount": 0,
+            "allowComment": false
+        }
+    ],
+    "comments": [
+        {
+            "id": "cm-001",
+            "articleId": "nw-001",
+            "authorName": "Nguyễn Văn An",
+            "content": "Hoạt động rất ý nghĩa, mong khu phố duy trì hằng tháng.",
+            "createdAt": "2024-06-09"
+        },
+        {
+            "id": "cm-002",
+            "articleId": "nw-001",
+            "authorName": "Trần Thị Bình",
+            "content": "Cảm ơn ban điều hành đã tổ chức chu đáo.",
+            "createdAt": "2024-06-10"
+        },
+        {
+            "id": "cm-003",
+            "articleId": "nw-002",
+            "authorName": "Lê Thị Hoa",
+            "content": "Cho hỏi có tiếp công dân ngoài giờ hành chính không ạ?",
+            "createdAt": "2024-06-04"
+        }
+    ]
+}

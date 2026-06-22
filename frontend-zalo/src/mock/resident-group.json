@@ -1,0 +1,289 @@
+{
+    "residents": [
+        {
+            "id": "res-001",
+            "fullName": "Nguyễn Văn An",
+            "citizenId": "001085000111",
+            "citizenIdIssueDate": "2021-05-10",
+            "citizenIdIssuePlace": "Cục Cảnh sát QLHC về TTXH",
+            "dob": "1985-03-12",
+            "gender": "male",
+            "ethnicity": "Kinh",
+            "religion": "Không",
+            "nationality": "Việt Nam",
+            "phone": "0901234567",
+            "email": "an.nguyen@example.com",
+            "permanentAddress": "Số 12, đường Hoa Lư, Tổ dân phố 1",
+            "currentAddress": "Số 12, đường Hoa Lư, Tổ dân phố 1",
+            "residenceType": "permanent",
+            "householdId": "hk-001",
+            "householdCode": "HK-001",
+            "relationToHead": "Chủ hộ",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "status": "approved",
+            "note": "",
+            "unionInfos": [
+                {
+                    "id": "u-001",
+                    "organization": "Chi bộ Tổ dân phố 1",
+                    "role": "Đảng viên",
+                    "joinDate": "2010-02-03"
+                }
+            ],
+            "rewards": [
+                {
+                    "id": "rw-001",
+                    "title": "Gia đình văn hóa tiêu biểu",
+                    "level": "Phường",
+                    "decisionNo": "45/QĐ-UBND",
+                    "decisionDate": "2023-12-20"
+                }
+            ],
+            "createdAt": "2024-01-15"
+        },
+        {
+            "id": "res-002",
+            "fullName": "Trần Thị Bình",
+            "citizenId": "001187000222",
+            "dob": "1987-07-25",
+            "gender": "female",
+            "ethnicity": "Kinh",
+            "nationality": "Việt Nam",
+            "phone": "0907654321",
+            "permanentAddress": "Số 12, đường Hoa Lư, Tổ dân phố 1",
+            "currentAddress": "Số 12, đường Hoa Lư, Tổ dân phố 1",
+            "residenceType": "permanent",
+            "householdId": "hk-001",
+            "householdCode": "HK-001",
+            "relationToHead": "Vợ",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "status": "approved",
+            "createdAt": "2024-01-15"
+        },
+        {
+            "id": "res-003",
+            "fullName": "Nguyễn Văn Cường",
+            "citizenId": "001210000333",
+            "dob": "2010-09-02",
+            "gender": "male",
+            "ethnicity": "Kinh",
+            "nationality": "Việt Nam",
+            "permanentAddress": "Số 12, đường Hoa Lư, Tổ dân phố 1",
+            "currentAddress": "Số 12, đường Hoa Lư, Tổ dân phố 1",
+            "residenceType": "permanent",
+            "householdId": "hk-001",
+            "householdCode": "HK-001",
+            "relationToHead": "Con",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "status": "pending",
+            "note": "Cập nhật nơi học tập, chờ tổ trưởng duyệt",
+            "createdAt": "2024-06-01"
+        },
+        {
+            "id": "res-004",
+            "fullName": "Lê Thị Hoa",
+            "citizenId": "001190000444",
+            "citizenIdIssueDate": "2022-03-01",
+            "dob": "1990-11-18",
+            "gender": "female",
+            "ethnicity": "Kinh",
+            "nationality": "Việt Nam",
+            "phone": "0912000444",
+            "permanentAddress": "Quận Hoàn Kiếm, Hà Nội",
+            "currentAddress": "Số 5, ngõ 3, Tổ dân phố 2",
+            "residenceType": "temporary",
+            "householdId": "hk-002",
+            "householdCode": "HK-002",
+            "relationToHead": "Chủ hộ",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "status": "approved",
+            "createdAt": "2024-02-20"
+        },
+        {
+            "id": "res-005",
+            "fullName": "Phạm Văn Dũng",
+            "citizenId": "001182000555",
+            "dob": "1982-01-30",
+            "gender": "male",
+            "ethnicity": "Kinh",
+            "nationality": "Việt Nam",
+            "phone": "0988555000",
+            "permanentAddress": "Số 27, đường Lê Lợi, Tổ dân phố 3",
+            "currentAddress": "Số 27, đường Lê Lợi, Tổ dân phố 3",
+            "residenceType": "permanent",
+            "householdId": "hk-003",
+            "householdCode": "HK-003",
+            "relationToHead": "Chủ hộ",
+            "neighborhoodGroup": "Tổ dân phố 3",
+            "status": "pending",
+            "note": "Đăng ký cư dân mới, chờ duyệt",
+            "createdAt": "2024-06-05"
+        },
+        {
+            "id": "res-006",
+            "fullName": "Hoàng Thị Mai",
+            "citizenId": "001195000666",
+            "dob": "1995-05-09",
+            "gender": "female",
+            "ethnicity": "Kinh",
+            "nationality": "Việt Nam",
+            "phone": "0933666999",
+            "currentAddress": "Số 8, ngõ 10, Tổ dân phố 2",
+            "residenceType": "temporary",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "status": "rejected",
+            "rejectReason": "Thông tin CCCD chưa khớp, đề nghị bổ sung ảnh giấy tờ.",
+            "createdAt": "2024-05-28"
+        }
+    ],
+    "households": [
+        {
+            "id": "hk-001",
+            "code": "HK-001",
+            "headResidentId": "res-001",
+            "headName": "Nguyễn Văn An",
+            "houseNumber": "12 Hoa Lư",
+            "addressDetail": "Số 12, đường Hoa Lư, Tổ dân phố 1",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "householdType": "permanent",
+            "residenceBook": "HK0123456",
+            "residenceStatus": "Đang ở",
+            "status": "approved",
+            "members": [
+                {
+                    "id": "m-001",
+                    "residentId": "res-001",
+                    "fullName": "Nguyễn Văn An",
+                    "citizenId": "001085000111",
+                    "dob": "1985-03-12",
+                    "gender": "male",
+                    "relationToHead": "Chủ hộ",
+                    "phone": "0901234567",
+                    "residenceType": "permanent",
+                    "status": "approved"
+                },
+                {
+                    "id": "m-002",
+                    "residentId": "res-002",
+                    "fullName": "Trần Thị Bình",
+                    "citizenId": "001187000222",
+                    "dob": "1987-07-25",
+                    "gender": "female",
+                    "relationToHead": "Vợ",
+                    "residenceType": "permanent",
+                    "status": "approved"
+                },
+                {
+                    "id": "m-003",
+                    "residentId": "res-003",
+                    "fullName": "Nguyễn Văn Cường",
+                    "citizenId": "001210000333",
+                    "dob": "2010-09-02",
+                    "gender": "male",
+                    "relationToHead": "Con",
+                    "residenceType": "permanent",
+                    "status": "pending"
+                }
+            ],
+            "cultureTitles": [
+                {
+                    "id": "ct-001",
+                    "year": 2023,
+                    "title": "Gia đình văn hóa",
+                    "decisionNo": "120/QĐ-UBND",
+                    "recognizedDate": "2023-12-25"
+                }
+            ],
+            "createdAt": "2024-01-15"
+        },
+        {
+            "id": "hk-002",
+            "code": "HK-002",
+            "headResidentId": "res-004",
+            "headName": "Lê Thị Hoa",
+            "houseNumber": "5 ngõ 3",
+            "addressDetail": "Số 5, ngõ 3, Tổ dân phố 2",
+            "neighborhoodGroup": "Tổ dân phố 2",
+            "householdType": "rental",
+            "residenceStatus": "Đang ở",
+            "status": "approved",
+            "members": [
+                {
+                    "id": "m-004",
+                    "residentId": "res-004",
+                    "fullName": "Lê Thị Hoa",
+                    "citizenId": "001190000444",
+                    "dob": "1990-11-18",
+                    "gender": "female",
+                    "relationToHead": "Chủ hộ",
+                    "phone": "0912000444",
+                    "residenceType": "temporary",
+                    "status": "approved"
+                }
+            ],
+            "createdAt": "2024-02-20"
+        },
+        {
+            "id": "hk-003",
+            "code": "HK-003",
+            "headResidentId": "res-005",
+            "headName": "Phạm Văn Dũng",
+            "houseNumber": "27 Lê Lợi",
+            "addressDetail": "Số 27, đường Lê Lợi, Tổ dân phố 3",
+            "neighborhoodGroup": "Tổ dân phố 3",
+            "householdType": "permanent",
+            "status": "pending",
+            "note": "Đăng ký hộ mới, chờ tổ trưởng duyệt",
+            "members": [
+                {
+                    "id": "m-005",
+                    "residentId": "res-005",
+                    "fullName": "Phạm Văn Dũng",
+                    "citizenId": "001182000555",
+                    "dob": "1982-01-30",
+                    "gender": "male",
+                    "relationToHead": "Chủ hộ",
+                    "phone": "0988555000",
+                    "residenceType": "permanent",
+                    "status": "pending"
+                }
+            ],
+            "createdAt": "2024-06-05"
+        }
+    ],
+    "approvalRequests": [
+        {
+            "id": "ar-001",
+            "targetType": "resident",
+            "targetId": "res-003",
+            "targetName": "Nguyễn Văn Cường",
+            "requesterName": "Nguyễn Văn An",
+            "neighborhoodGroup": "Tổ dân phố 1",
+            "summary": "Cập nhật thông tin nơi học tập cho thành viên hộ",
+            "submittedAt": "2024-06-01",
+            "status": "pending"
+        },
+        {
+            "id": "ar-002",
+            "targetType": "resident",
+            "targetId": "res-005",
+            "targetName": "Phạm Văn Dũng",
+            "requesterName": "Phạm Văn Dũng",
+            "neighborhoodGroup": "Tổ dân phố 3",
+            "summary": "Đăng ký cư dân mới kèm ảnh CCCD",
+            "submittedAt": "2024-06-05",
+            "status": "pending"
+        },
+        {
+            "id": "ar-003",
+            "targetType": "household",
+            "targetId": "hk-003",
+            "targetName": "Hộ Phạm Văn Dũng",
+            "requesterName": "Phạm Văn Dũng",
+            "neighborhoodGroup": "Tổ dân phố 3",
+            "summary": "Đăng ký hộ dân mới tại Tổ dân phố 3",
+            "submittedAt": "2024-06-05",
+            "status": "pending"
+        }
+    ]
+}
