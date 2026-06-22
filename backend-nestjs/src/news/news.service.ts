@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { AiSyncService } from '../ai-sync/ai-sync.service';
 
 @Injectable()
 export class NewsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private aiSyncService: AiSyncService,
+  ) {}
 
   findAll() {
     return this.prisma.news.findMany({
@@ -18,18 +22,24 @@ export class NewsService {
     });
   }
 
-  create(data: any) {
-    return this.prisma.news.create({
+  async create(data: any) {
+    const news = await this.prisma.news.create({
       data: {
         title: data.title,
         content: data.content,
         thumbnail: data.thumbnail,
       },
     });
+    
+    // Sync to AI in background
+    const chunk = `[Tin tức: ${news.title}] Nội dung: ${news.content}`;
+    this.aiSyncService.syncItem('NEWS', news.id, chunk);
+    
+    return news;
   }
 
-  update(id: number, data: any) {
-    return this.prisma.news.update({
+  async update(id: number, data: any) {
+    const news = await this.prisma.news.update({
       where: { id },
       data: {
         title: data.title,
@@ -37,11 +47,22 @@ export class NewsService {
         thumbnail: data.thumbnail,
       },
     });
+
+    // Sync to AI in background
+    const chunk = `[Tin tức: ${news.title}] Nội dung: ${news.content}`;
+    this.aiSyncService.syncItem('NEWS', news.id, chunk);
+
+    return news;
   }
 
-  remove(id: number) {
-    return this.prisma.news.delete({
+  async remove(id: number) {
+    const news = await this.prisma.news.delete({
       where: { id },
     });
+
+    // Delete from AI vector db
+    this.aiSyncService.deleteItem('NEWS', id);
+
+    return news;
   }
 }

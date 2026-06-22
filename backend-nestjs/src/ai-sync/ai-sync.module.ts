@@ -8,5 +8,6 @@ import { PrismaService } from '../prisma/prisma.service';
   imports: [HttpModule],
   providers: [AiSyncService, PrismaService],
   controllers: [AiSyncController],
+  exports: [AiSyncService],
 })
 export class AiSyncModule {}
