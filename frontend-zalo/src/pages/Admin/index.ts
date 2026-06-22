@@ -1,0 +1,14 @@
+﻿export { default as AdminAppointments } from "./AdminAppointments";
+export { default as AdminBidding } from "./AdminBidding";
+export { default as AdminCitizens } from "./AdminCitizens";
+export { default as AdminDashboard } from "./AdminDashboard";
+export { default as AdminDocuments } from "./AdminDocuments";
+export { default as AdminFeedbacks } from "./AdminFeedbacks";
+export { default as AdminFormTemplates } from "./AdminFormTemplates";
+export { default as AdminImport } from "./AdminImport";
+export { default as AdminInvestment } from "./AdminInvestment";
+export { default as AdminLogin } from "./AdminLogin";
+export { default as AdminNews } from "./AdminNews";
+export { default as AdminPlanning } from "./AdminPlanning";
+export { default as AdminProcedures } from "./AdminProcedures";
+export { default as AdminWorkSchedule } from "./AdminWorkSchedule";

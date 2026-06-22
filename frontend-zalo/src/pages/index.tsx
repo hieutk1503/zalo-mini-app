@@ -70,6 +70,22 @@ import { EventDetailPage, EventsListPage } from "./Events";
 import { AccountPage } from "./Account";
 import { MyAppointmentsPage } from "./MyAppointments";
 import { FormsPage } from "./Forms";
+import {
+    AdminLogin,
+    AdminDashboard,
+    AdminNews,
+    AdminAppointments,
+    AdminBidding,
+    AdminCitizens,
+    AdminDocuments,
+    AdminFeedbacks,
+    AdminFormTemplates,
+    AdminImport,
+    AdminInvestment,
+    AdminPlanning,
+    AdminProcedures,
+    AdminWorkSchedule
+} from "./Admin";
 
 const Routes: React.FC = () => (
     <ZMPRouter>
@@ -216,6 +232,22 @@ const Routes: React.FC = () => (
             {/* Sự kiện (danh sách + chi tiết) */}
             <Route path="/events" element={<EventsListPage />} />
             <Route path="/events/:id" element={<EventDetailPage />} />
+
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/news" element={<AdminNews />} />
+            <Route path="/admin/appointments" element={<AdminAppointments />} />
+            <Route path="/admin/bidding" element={<AdminBidding />} />
+            <Route path="/admin/citizens" element={<AdminCitizens />} />
+            <Route path="/admin/documents" element={<AdminDocuments />} />
+            <Route path="/admin/feedbacks" element={<AdminFeedbacks />} />
+            <Route path="/admin/form-templates" element={<AdminFormTemplates />} />
+            <Route path="/admin/import" element={<AdminImport />} />
+            <Route path="/admin/investment" element={<AdminInvestment />} />
+            <Route path="/admin/planning" element={<AdminPlanning />} />
+            <Route path="/admin/procedures" element={<AdminProcedures />} />
+            <Route path="/admin/work-schedule" element={<AdminWorkSchedule />} />
         </AnimationRoutes>
     </ZMPRouter>
 );
