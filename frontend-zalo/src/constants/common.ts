@@ -2,9 +2,9 @@ export const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const MINI_APP_ID =
     window.APP_ID || (import.meta.env.VITE_MINI_APP_ID as string);
 export const API = {
-    GET_ORGANIZATION: "/get_organization_api",
+    GET_ORGANIZATION: "/organization",
     SEARCH_PROFILES: "/search_profiles_api",
-    GET_ARTICLES: "/get_articles_api",
+    GET_ARTICLES: "/news",
     FEEDBACK: "/feedback_api",
     FEEDBACK_TYPES: "/feedback_types_api",
     INFORMATION_GUIDE: "/information_guide_api",
@@ -12,9 +12,9 @@ export const API = {
     CREATE_SCHEDULE: "/create_schedule_api",
     GET_SCHEDULE: "/get_schedule_api",
     GET_SCHEDULES: "/schedules_api",
-    WEATHER: "/weather_api",
+    WEATHER: "/weather",
     HOME_SECTIONS: "/home-sections",
-    EVENTS: "/events_api",
+    EVENTS: "/events",
     EVENT_DETAIL: "/events_api/:id",
     // Module dịch vụ công mở rộng
     PROCEDURES: "/procedures_api",
