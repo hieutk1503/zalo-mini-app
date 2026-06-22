@@ -21,6 +21,7 @@ import { SurveyModule } from './survey/survey.module';
 import { OrganizationModule } from './organization/organization.module';
 import { WeatherModule } from './weather/weather.module';
 import { EventsModule } from './events/events.module';
+import { HomeSectionsModule } from './home-sections/home-sections.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { EventsModule } from './events/events.module';
     OrganizationModule,
     WeatherModule,
     EventsModule,
+    HomeSectionsModule,
     ProceduresModule,
     ChatModule,
     AppointmentsModule,
