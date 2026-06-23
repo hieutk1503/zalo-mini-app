@@ -84,8 +84,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         reader.readAsDataURL(file);
     };
 
-    const remove = (idx: number) =>
-        onChange(files.filter((_, i) => i !== idx));
+    const remove = (idx: number) => onChange(files.filter((_, i) => i !== idx));
 
     return (
         <Box>

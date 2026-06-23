@@ -164,6 +164,7 @@ export type Procedure = {
     id: string;
     code: string;
     name: string;
+    description?: string;
     category: string;
     agency?: string;
     fee?: string;
@@ -347,11 +348,7 @@ export type SurveyAnswer = {
 };
 
 /** Dự án đầu tư công */
-export type ProjectStatus =
-    | "preparing"
-    | "ongoing"
-    | "completed"
-    | "suspended";
+export type ProjectStatus = "preparing" | "ongoing" | "completed" | "suspended";
 
 export type Project = {
     id: string;
@@ -676,11 +673,7 @@ export type QuickNotifications = {
  * P1 vận hành khu phố — Cuộc họp & Nhóm cộng đồng
  * ===================================================================== */
 
-export type MeetingStatus =
-    | "scheduled"
-    | "ongoing"
-    | "finished"
-    | "cancelled";
+export type MeetingStatus = "scheduled" | "ongoing" | "finished" | "cancelled";
 
 export type ConfirmStatus = "pending" | "confirmed" | "declined";
 

@@ -2,11 +2,7 @@
  * Danh mục lựa chọn cho module Cư dân / Hộ dân.
  * Đây là dữ liệu cấu hình MẪU (mock) — thực tế lấy từ backend theo địa bàn.
  */
-import {
-    Gender,
-    HouseholdType,
-    ResidenceType,
-} from "@dts";
+import { Gender, HouseholdType, ResidenceType } from "@dts";
 
 export interface Option<T = string> {
     value: T;

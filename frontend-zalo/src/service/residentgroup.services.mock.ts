@@ -329,11 +329,7 @@ export const getApprovalRequests = async (
     }
     if (keyword) {
         list = list.filter(a =>
-            matchKeyword(keyword, [
-                a.targetName,
-                a.requesterName,
-                a.summary,
-            ]),
+            matchKeyword(keyword, [a.targetName, a.requesterName, a.summary]),
         );
     }
     const { slice, ...meta } = paginate(list, page, limit);

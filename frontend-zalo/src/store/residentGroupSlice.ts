@@ -119,7 +119,11 @@ const residentGroupSlice: StateCreator<
             append,
         } = args;
         try {
-            set(state => ({ ...state, gettingResidents: true, residentsError: false }));
+            set(state => ({
+                ...state,
+                gettingResidents: true,
+                residentsError: false,
+            }));
             const result = await api.getResidents({
                 organizationId,
                 page,

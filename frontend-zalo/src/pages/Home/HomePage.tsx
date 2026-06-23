@@ -40,17 +40,82 @@ const formatDateTime = (d: Date) =>
 
 // Layout mặc định khi backend chưa cấu hình (fallback an toàn, không vỡ giao diện).
 const DEFAULT_SECTIONS: HomeSection[] = [
-    { id: "hero", key: "hero", order: 1, enabled: true, title: "CHÍNH QUYỀN SỐ", color1: "#C8102E", color2: "#7A0C16" },
-    { id: "stats", key: "stats", order: 2, enabled: true, color1: "#C8102E", color2: "#A4161A" },
+    {
+        id: "hero",
+        key: "hero",
+        order: 1,
+        enabled: true,
+        title: "CHÍNH QUYỀN SỐ",
+        color1: "#C8102E",
+        color2: "#7A0C16",
+    },
+    {
+        id: "stats",
+        key: "stats",
+        order: 2,
+        enabled: true,
+        color1: "#C8102E",
+        color2: "#A4161A",
+    },
     { id: "statsDss", key: "statsDss", order: 3, enabled: true },
-    { id: "explore", key: "explore", order: 4, enabled: true, title: "Du lịch địa phương", subtitle: "Trải nghiệm thiên nhiên, văn hóa và con người", link: "/news", color1: "#C8102E", color2: "#7A0C16" },
-    { id: "newsList", key: "newsList", order: 4.5, enabled: false, title: "Tin tức mới" },
-    { id: "events", key: "events", order: 4.7, enabled: true, title: "Sự kiện sắp diễn ra" },
+    {
+        id: "explore",
+        key: "explore",
+        order: 4,
+        enabled: true,
+        title: "Du lịch địa phương",
+        subtitle: "Trải nghiệm thiên nhiên, văn hóa và con người",
+        link: "/news",
+        color1: "#C8102E",
+        color2: "#7A0C16",
+    },
+    {
+        id: "newsList",
+        key: "newsList",
+        order: 4.5,
+        enabled: false,
+        title: "Tin tức mới",
+    },
+    {
+        id: "events",
+        key: "events",
+        order: 4.7,
+        enabled: true,
+        title: "Sự kiện sắp diễn ra",
+    },
     { id: "oa", key: "oa", order: 5, enabled: true },
-    { id: "citizenGrid", key: "citizenGrid", order: 6, enabled: true, title: "Dành cho công dân" },
-    { id: "khuphoGrid", key: "khuphoGrid", order: 7, enabled: true, title: "Quản lý khu phố" },
-    { id: "businessGrid", key: "businessGrid", order: 8, enabled: true, title: "Dành cho doanh nghiệp, tổ chức" },
-    { id: "featured", key: "featured", order: 9, enabled: true, title: "Tin tức Chuyển Đổi Số", subtitle: "TIN NỔI BẬT", link: "/news", color1: "#7A0C16", color2: "#C8102E" },
+    {
+        id: "citizenGrid",
+        key: "citizenGrid",
+        order: 6,
+        enabled: true,
+        title: "Dành cho công dân",
+    },
+    {
+        id: "khuphoGrid",
+        key: "khuphoGrid",
+        order: 7,
+        enabled: true,
+        title: "Quản lý khu phố",
+    },
+    {
+        id: "businessGrid",
+        key: "businessGrid",
+        order: 8,
+        enabled: true,
+        title: "Dành cho doanh nghiệp, tổ chức",
+    },
+    {
+        id: "featured",
+        key: "featured",
+        order: 9,
+        enabled: true,
+        title: "Tin tức Chuyển Đổi Số",
+        subtitle: "TIN NỔI BẬT",
+        link: "/news",
+        color1: "#7A0C16",
+        color2: "#C8102E",
+    },
 ];
 
 const HomePage: FC = () => {
@@ -95,11 +160,12 @@ const HomePage: FC = () => {
             ? org.population.toLocaleString("vi-VN")
             : org.population || "14.390";
     const area = org.area || "67,68 km²";
-    const weather = weatherInfo || org.weather || {
-        emoji: "⛈️",
-        temp: "30°C",
-        condition: "Giông bão",
-    };
+    const weather = weatherInfo ||
+        org.weather || {
+            emoji: "⛈️",
+            temp: "30°C",
+            condition: "Giông bão",
+        };
     const oa = (org.officialAccounts && org.officialAccounts[0]) || null;
 
     const onFollow = () => {
@@ -114,7 +180,9 @@ const HomePage: FC = () => {
                   .filter(
                       s => s.enabled !== false && String(s.enabled) !== "false",
                   )
-                  .sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0))
+                  .sort(
+                      (a, b) => (Number(a.order) || 0) - (Number(b.order) || 0),
+                  )
             : DEFAULT_SECTIONS;
 
     const renderSection = (s: HomeSection) => {

@@ -66,7 +66,9 @@ const fmtRange = (start?: string, end?: string) => {
     if (!start) return "";
     const s = new Date(start);
     if (Number.isNaN(s.getTime())) return "";
-    const date = `${pad2(s.getDate())}/${pad2(s.getMonth() + 1)}/${s.getFullYear()}`;
+    const date = `${pad2(s.getDate())}/${pad2(
+        s.getMonth() + 1,
+    )}/${s.getFullYear()}`;
     const st = `${pad2(s.getHours())}:${pad2(s.getMinutes())}`;
     const e = end ? new Date(end) : null;
     const et =
@@ -118,13 +120,19 @@ const EventDetailPage: React.FC = () => {
     return (
         <PageLayout title="Sự kiện" id="event-detail-page">
             <Box p={4} tw="bg-ui_bg">
-                {event.imageUrl && <Cover src={event.imageUrl} alt={event.title} />}
+                {event.imageUrl && (
+                    <Cover src={event.imageUrl} alt={event.title} />
+                )}
                 <Text.Title size="small" tw="text-text_1">
                     {event.title}
                 </Text.Title>
                 {timeText && <InfoRow>🕒 {timeText}</InfoRow>}
                 {event.location && <InfoRow>📍 {event.location}</InfoRow>}
-                <Body dangerouslySetInnerHTML={{ __html: toHtml(event.description) }} />
+                <Body
+                    dangerouslySetInnerHTML={{
+                        __html: toHtml(event.description),
+                    }}
+                />
                 {event.link && (
                     <Text
                         size="small"

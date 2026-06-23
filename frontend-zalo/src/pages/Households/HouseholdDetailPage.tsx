@@ -78,24 +78,21 @@ const HouseholdDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { openSnackbar } = useSnackbar();
 
-    const [
-        household,
-        loading,
-        getHouseholdDetail,
-        addHouseholdMember,
-        saving,
-    ] = useStore(state => [
-        state.householdDetail,
-        state.gettingHouseholdDetail,
-        state.getHouseholdDetail,
-        state.addHouseholdMember,
-        state.savingHousehold,
-    ]);
+    const [household, loading, getHouseholdDetail, addHouseholdMember, saving] =
+        useStore(state => [
+            state.householdDetail,
+            state.gettingHouseholdDetail,
+            state.getHouseholdDetail,
+            state.addHouseholdMember,
+            state.savingHousehold,
+        ]);
 
     const [showAdd, setShowAdd] = useState(false);
     const [gender, setGender] = useState<Gender | undefined>();
     const [relation, setRelation] = useState<string | undefined>();
-    const [residenceType, setResidenceType] = useState<ResidenceType | undefined>();
+    const [residenceType, setResidenceType] = useState<
+        ResidenceType | undefined
+    >();
     const [mDob, setMDob] = useState("");
 
     const {
@@ -203,10 +200,7 @@ const HouseholdDetailPage: React.FC = () => {
                 <SectionCard title="Thông tin hộ">
                     <InfoRow label="Mã hộ" value={household.code} />
                     <InfoRow label="Chủ hộ" value={household.headName} />
-                    <InfoRow
-                        label="Địa chỉ"
-                        value={household.addressDetail}
-                    />
+                    <InfoRow label="Địa chỉ" value={household.addressDetail} />
                     <InfoRow
                         label="Tổ dân phố"
                         value={household.neighborhoodGroup}
@@ -245,9 +239,8 @@ const HouseholdDetailPage: React.FC = () => {
                                     <StatusBadge status={m.status} />
                                 </Box>
                                 <Text size="small" tw="text-text_2 mt-0.5">
-                                    {m.relationToHead} ·{" "}
-                                    {genderLabel(m.gender)} · CCCD:{" "}
-                                    {maskCitizenId(m.citizenId)}
+                                    {m.relationToHead} · {genderLabel(m.gender)}{" "}
+                                    · CCCD: {maskCitizenId(m.citizenId)}
                                 </Text>
                             </MemberRow>
                         ))}
@@ -257,13 +250,17 @@ const HouseholdDetailPage: React.FC = () => {
                                 <Input
                                     label="Họ và tên *"
                                     placeholder="Nhập họ và tên"
-                                    status={errors?.fullName ? "error" : "default"}
+                                    status={
+                                        errors?.fullName ? "error" : "default"
+                                    }
                                     errorText={
                                         errors?.fullName
                                             ? "Họ và tên không được để trống"
                                             : ""
                                     }
-                                    {...register("fullName", { required: true })}
+                                    {...register("fullName", {
+                                        required: true,
+                                    })}
                                 />
                                 <Box mt={3}>
                                     <Input
@@ -281,7 +278,9 @@ const HouseholdDetailPage: React.FC = () => {
                                         }
                                         {...register("citizenId", {
                                             validate: v =>
-                                                !v || isValidCitizenId(v) || false,
+                                                !v ||
+                                                isValidCitizenId(v) ||
+                                                false,
                                         })}
                                     />
                                 </Box>
@@ -317,7 +316,11 @@ const HouseholdDetailPage: React.FC = () => {
                                         onChange={v => setRelation(v as string)}
                                     >
                                         {RELATION_OPTIONS.map(r => (
-                                            <Option key={r} value={r} title={r} />
+                                            <Option
+                                                key={r}
+                                                value={r}
+                                                title={r}
+                                            />
                                         ))}
                                     </Select>
                                 </Box>
@@ -357,7 +360,10 @@ const HouseholdDetailPage: React.FC = () => {
                         <SectionCard title="Gia đình văn hóa">
                             {household.cultureTitles.map(c => (
                                 <Row key={c.id}>
-                                    <Text size="small" tw="text-text_1 flex-1 pr-2">
+                                    <Text
+                                        size="small"
+                                        tw="text-text_1 flex-1 pr-2"
+                                    >
                                         {c.year} · {c.title}
                                     </Text>
                                     <Text size="xxSmall" tw="text-text_2">

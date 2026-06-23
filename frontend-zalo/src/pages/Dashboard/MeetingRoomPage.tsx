@@ -19,8 +19,8 @@ const MeetingRoomPage: React.FC = () => (
                 </Text>
                 <Text size="small" tw="text-text_2 mt-2">
                     Đây là nghiệp vụ điều hành trên Web DSS. Trên Mini App, cư
-                    dân/tổ trưởng dùng module Cuộc họp khu phố (tạo họp, xác nhận
-                    tham gia, xem kết luận).
+                    dân/tổ trưởng dùng module Cuộc họp khu phố (tạo họp, xác
+                    nhận tham gia, xem kết luận).
                 </Text>
                 <Box
                     mt={3}

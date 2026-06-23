@@ -131,7 +131,10 @@ export const removeVietnameseTones = (str: string): string => {
 /**
  * So khớp từ khoá có dấu / không dấu trong một danh sách trường văn bản.
  */
-export const matchKeyword = (keyword: string, fields: (string | undefined)[]) => {
+export const matchKeyword = (
+    keyword: string,
+    fields: (string | undefined)[],
+) => {
     const normalizedKeyword = removeVietnameseTones(keyword.trim());
     if (!normalizedKeyword) {
         return true;

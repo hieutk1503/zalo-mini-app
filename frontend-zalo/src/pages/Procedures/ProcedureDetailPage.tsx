@@ -66,6 +66,11 @@ const ProcedureDetailPage: React.FC = () => {
                     <Text.Title size="normal" tw="text-text_1 mt-1">
                         {detail?.name}
                     </Text.Title>
+                    {detail?.description && (
+                        <Text size="normal" tw="text-text_2 mt-2 whitespace-pre-line">
+                            {detail.description}
+                        </Text>
+                    )}
                     <Box mt={3}>
                         <Field label="Lĩnh vực" value={detail?.category} />
                         <Field
@@ -102,13 +107,10 @@ const ProcedureDetailPage: React.FC = () => {
                                 key={formId}
                                 tw="flex flex-row items-center justify-between py-2 border-t border-devider_1"
                                 onClick={() =>
-                                    navigate(
-                                        `${ROUTES.DOCUMENTS}/${formId}`,
-                                        {
-                                            animate: true,
-                                            direction: "forward",
-                                        },
-                                    )
+                                    navigate(`${ROUTES.DOCUMENTS}/${formId}`, {
+                                        animate: true,
+                                        direction: "forward",
+                                    })
                                 }
                             >
                                 <Text tw="text-main">Xem mẫu {formId}</Text>
@@ -124,7 +126,9 @@ const ProcedureDetailPage: React.FC = () => {
                             fullWidth
                             suffixIcon={<Icon icon="zi-arrow-right" />}
                             onClick={() =>
-                                openWebView(detail.onlineSubmissionUrl as string)
+                                openWebView(
+                                    detail.onlineSubmissionUrl as string,
+                                )
                             }
                         >
                             Nộp hồ sơ trực tuyến

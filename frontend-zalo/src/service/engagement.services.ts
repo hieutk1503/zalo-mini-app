@@ -113,7 +113,12 @@ export const getContestDetail = async (params: {
     organizationId?: string;
 }): Promise<Contest | null> => {
     const url = generatePath(API.CONTEST_DETAIL, { id: params.id });
-    return request<Contest>("GET", url, {}, withOrgHeader(params.organizationId));
+    return request<Contest>(
+        "GET",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export const submitContest = async (params: {

@@ -4,12 +4,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
 import PageLayout from "@components/layout/PageLayout";
-import {
-    DataList,
-    FilterBar,
-    MetaBadge,
-    StatusTabs,
-} from "@components/common";
+import { DataList, FilterBar, MetaBadge, StatusTabs } from "@components/common";
 import { useStore } from "@store";
 import { ROUTES } from "@constants/common";
 import { SURVEY_STATUS_META } from "@constants/engagement";
@@ -95,7 +90,9 @@ const SurveysPage: React.FC = () => {
                                 <Text tw="text-text_1 font-medium flex-1 pr-2">
                                     {s.title}
                                 </Text>
-                                <MetaBadge meta={SURVEY_STATUS_META[s.status]} />
+                                <MetaBadge
+                                    meta={SURVEY_STATUS_META[s.status]}
+                                />
                             </Box>
                             {s.description && (
                                 <Text size="small" tw="text-text_2 mt-1">
@@ -107,7 +104,9 @@ const SurveysPage: React.FC = () => {
                                     {s.questions?.length || 0} câu ·{" "}
                                     {s.participantCount ?? 0} lượt
                                 </Text>
-                                {s.participated && <DoneTag>Đã tham gia</DoneTag>}
+                                {s.participated && (
+                                    <DoneTag>Đã tham gia</DoneTag>
+                                )}
                             </Box>
                         </Item>
                     )}

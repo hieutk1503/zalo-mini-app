@@ -41,7 +41,8 @@ const displayToIso = (value?: string) => {
     return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
 };
 
-const isValidDob = (value: string) => /^\d{2}\/\d{2}\/\d{4}$/.test(value.trim());
+const isValidDob = (value: string) =>
+    /^\d{2}\/\d{2}\/\d{4}$/.test(value.trim());
 
 const ResidentFormPage: React.FC = () => {
     const navigate = useNavigate();
@@ -49,17 +50,14 @@ const ResidentFormPage: React.FC = () => {
     const isEdit = !!id;
     const { openSnackbar } = useSnackbar();
 
-    const [
-        residentDetail,
-        getResidentDetail,
-        saveResident,
-        saving,
-    ] = useStore(state => [
-        state.residentDetail,
-        state.getResidentDetail,
-        state.saveResident,
-        state.savingResident,
-    ]);
+    const [residentDetail, getResidentDetail, saveResident, saving] = useStore(
+        state => [
+            state.residentDetail,
+            state.getResidentDetail,
+            state.saveResident,
+            state.savingResident,
+        ],
+    );
 
     const [gender, setGender] = useState<Gender | undefined>();
     const [group, setGroup] = useState<string | undefined>();

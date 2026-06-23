@@ -370,7 +370,12 @@
                 "content": "Quý vị đánh giá thế nào về sự thuận tiện khi sử dụng Mini App?",
                 "type": "single_choice",
                 "required": true,
-                "options": ["Rất thuận tiện", "Thuận tiện", "Bình thường", "Khó sử dụng"]
+                "options": [
+                    "Rất thuận tiện",
+                    "Thuận tiện",
+                    "Bình thường",
+                    "Khó sử dụng"
+                ]
             },
             {
                 "id": "q4",

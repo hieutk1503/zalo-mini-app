@@ -130,7 +130,10 @@
                     "points": 10,
                     "multiple": true,
                     "options": [
-                        { "id": "o1", "content": "Sử dụng rượu bia khi lái xe" },
+                        {
+                            "id": "o1",
+                            "content": "Sử dụng rượu bia khi lái xe"
+                        },
                         { "id": "o2", "content": "Đội mũ bảo hiểm" },
                         { "id": "o3", "content": "Vượt đèn đỏ" },
                         { "id": "o4", "content": "Đi đúng làn đường" }

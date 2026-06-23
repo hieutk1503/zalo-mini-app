@@ -43,17 +43,34 @@ export interface GetProceduresParams {
     category?: string;
 }
 
+const mapProcedure = (apiProc: any): Procedure => ({
+    id: String(apiProc.id),
+    code: apiProc.code,
+    name: apiProc.title || "",
+    description: apiProc.description,
+    category: apiProc.category || "Tất cả",
+    fee: apiProc.fee,
+    processingTime: apiProc.duration,
+    processSteps: apiProc.process_steps,
+});
+
 export const getProcedures = async (
     params: GetProceduresParams = {},
 ): Promise<Procedures> => {
     const { organizationId, page = 0, limit = 10, keyword, category } = params;
-    const data = await request<Procedures>(
+    const data = await request<any[]>(
         "GET",
         API.PROCEDURES,
         { page, pageSize: limit, keyword, category },
         withOrgHeader(organizationId),
     );
-    return data;
+    const procedures = (data || []).map(mapProcedure);
+    return {
+        procedures,
+        total: procedures.length,
+        page,
+        currentPageSize: procedures.length,
+    };
 };
 
 export const getProcedureDetail = async (params: {
@@ -61,7 +78,13 @@ export const getProcedureDetail = async (params: {
     organizationId?: string;
 }): Promise<Procedure | null> => {
     const url = generatePath(API.PROCEDURE_DETAIL, { id: params.id });
-    return request<Procedure>("GET", url, {}, withOrgHeader(params.organizationId));
+    const data = await request<any>(
+        "GET",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
+    return data ? mapProcedure(data) : null;
 };
 
 /* ----------------------- Kho văn bản & mẫu đơn, tờ khai ----------------------- */
@@ -173,14 +196,24 @@ export const getLegalDocumentDetail = async (params: {
 export const getHomeStats = async (
     params: { organizationId?: string } = {},
 ): Promise<HomeStats> =>
-    request<HomeStats>("GET", API.HOME_STATS, {}, withOrgHeader(params.organizationId));
+    request<HomeStats>(
+        "GET",
+        API.HOME_STATS,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 
 /* ------------------------------ Đường dây nóng ------------------------------ */
 
 export const getHotlines = async (
     params: { organizationId?: string } = {},
 ): Promise<Hotline[]> =>
-    request<Hotline[]>("GET", API.HOTLINES, {}, withOrgHeader(params.organizationId));
+    request<Hotline[]>(
+        "GET",
+        API.HOTLINES,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 
 /* ----------------------- Tiện ích / liên kết dịch vụ ----------------------- */
 
@@ -249,7 +282,12 @@ export const getWorkScheduleEvents = async (
 export const getActiveSurvey = async (
     params: { organizationId?: string } = {},
 ): Promise<Survey | null> =>
-    request<Survey>("GET", API.SURVEY, {}, withOrgHeader(params.organizationId));
+    request<Survey>(
+        "GET",
+        API.SURVEY,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 
 export interface SubmitSurveyParams {
     organizationId?: string;

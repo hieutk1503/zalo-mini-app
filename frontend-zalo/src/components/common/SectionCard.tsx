@@ -48,7 +48,11 @@ const SectionCard: React.FC<SectionCardProps> = ({
                     </Text.Title>
                 )}
                 {actionLabel && (
-                    <button type="button" onClick={onAction} tw="text-main text-sm">
+                    <button
+                        type="button"
+                        onClick={onAction}
+                        tw="text-main text-sm"
+                    >
                         {actionLabel}
                     </button>
                 )}

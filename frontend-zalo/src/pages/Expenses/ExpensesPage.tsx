@@ -103,7 +103,9 @@ const ExpensesPage: React.FC = () => {
                                 <Text tw="text-text_1 font-medium flex-1 pr-2">
                                     {e.name}
                                 </Text>
-                                <MetaBadge meta={EXPENSE_STATUS_META[e.status]} />
+                                <MetaBadge
+                                    meta={EXPENSE_STATUS_META[e.status]}
+                                />
                             </Box>
                             <Text size="small" tw="text-text_2 mt-1">
                                 {e.purpose}
@@ -115,7 +117,10 @@ const ExpensesPage: React.FC = () => {
                                         ? ` · ${e.neighborhoodGroup}`
                                         : ""}
                                 </Text>
-                                <Text size="xxSmall" tw="text-danger font-medium">
+                                <Text
+                                    size="xxSmall"
+                                    tw="text-danger font-medium"
+                                >
                                     {formatVnd(e.amount)}
                                 </Text>
                             </Box>

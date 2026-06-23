@@ -150,11 +150,7 @@ export const getCommunityGroups = async (
             matchKeyword(keyword, [g.name, g.description, g.topic]),
         );
     }
-    const { slice, ...meta } = paginate(
-        list.map(withMemberCount),
-        page,
-        limit,
-    );
+    const { slice, ...meta } = paginate(list.map(withMemberCount), page, limit);
     return delay({ groups: slice, ...meta });
 };
 

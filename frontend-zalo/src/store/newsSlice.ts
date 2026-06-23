@@ -115,7 +115,11 @@ const newsSlice: StateCreator<
             set(state => ({ ...state, gettingNewsComments: false }));
         }
     },
-    postNewsComment: async (id: string, content: string, authorName?: string) => {
+    postNewsComment: async (
+        id: string,
+        content: string,
+        authorName?: string,
+    ) => {
         const organizationId = get().organization?.id;
         try {
             set(state => ({ ...state, postingComment: true }));

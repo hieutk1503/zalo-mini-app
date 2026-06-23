@@ -72,7 +72,10 @@ const FormsPage: React.FC = () => {
                             <FileBadge>{item.fileType || "FILE"}</FileBadge>
                             <Box tw="flex-1">
                                 {item.documentNo && (
-                                    <Text size="small" tw="text-main font-medium">
+                                    <Text
+                                        size="small"
+                                        tw="text-main font-medium"
+                                    >
                                         {item.documentNo}
                                     </Text>
                                 )}

@@ -90,24 +90,61 @@ interface AccountRow {
     inDevelopment?: boolean;
 }
 const ROWS: AccountRow[] = [
-    { key: "feedbacks", label: "Phản ánh - Kiến nghị đã gửi", emoji: "📝", bg: "#E8F0FE", path: "/feedbacks" },
-    { key: "my-appointments", label: "Lịch hẹn của tôi", emoji: "🗒️", bg: "#E6F7EC", path: "/my-appointments" },
-    { key: "service-hub", label: "Tiện ích & liên kết dịch vụ", emoji: "🧩", bg: "#E6F7EC", path: "/service-hub" },
-    { key: "dashboard", label: "Tổng quan khu phố", emoji: "📈", bg: "#FFF4E0", path: "/dashboard" },
-    { key: "about", label: "Giới thiệu ứng dụng", emoji: "⭐", bg: "#FDE8E8", inDevelopment: true },
+    {
+        key: "feedbacks",
+        label: "Phản ánh - Kiến nghị đã gửi",
+        emoji: "📝",
+        bg: "#E8F0FE",
+        path: "/feedbacks",
+    },
+    {
+        key: "my-appointments",
+        label: "Lịch hẹn của tôi",
+        emoji: "🗒️",
+        bg: "#E6F7EC",
+        path: "/my-appointments",
+    },
+    {
+        key: "service-hub",
+        label: "Tiện ích & liên kết dịch vụ",
+        emoji: "🧩",
+        bg: "#E6F7EC",
+        path: "/service-hub",
+    },
+    {
+        key: "dashboard",
+        label: "Tổng quan khu phố",
+        emoji: "📈",
+        bg: "#FFF4E0",
+        path: "/dashboard",
+    },
+    {
+        key: "about",
+        label: "Giới thiệu ứng dụng",
+        emoji: "⭐",
+        bg: "#FDE8E8",
+        inDevelopment: true,
+    },
 ];
 
 const AccountPage: FC = () => {
     const navigate = useNavigate();
     const user = useStore(s => s.user);
-    const name = (user && (user as any).name) || "Người dùng";
+    const name = user?.name || "Người dùng";
+    const avatar = user?.avatar || "";
 
     return (
         <PageBg id="account-page">
             <Header>
                 <HeaderTitle>Cá nhân</HeaderTitle>
                 <ProfileRow>
-                    <Avatar>👤</Avatar>
+                    {avatar ? (
+                        <Avatar style={{ overflow: "hidden" }}>
+                            <img src={avatar} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        </Avatar>
+                    ) : (
+                        <Avatar>👤</Avatar>
+                    )}
                     <NameText>{name}</NameText>
                 </ProfileRow>
             </Header>

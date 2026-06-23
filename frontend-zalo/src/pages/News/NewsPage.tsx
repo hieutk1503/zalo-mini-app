@@ -84,7 +84,11 @@ const NewsPage: React.FC = () => {
                 .filter(a => (category ? a.category === category : true))
                 .filter(a =>
                     keyword
-                        ? matchKeyword(keyword, [a.title, a.summary, a.category])
+                        ? matchKeyword(keyword, [
+                              a.title,
+                              a.summary,
+                              a.category,
+                          ])
                         : true,
                 ),
         [all, category, keyword],

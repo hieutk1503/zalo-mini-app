@@ -194,17 +194,82 @@ export interface GetWorkScheduleResponse {
 
 export const getHomeSections = async (): Promise<any[]> =>
     delay([
-        { id: "hs-hero", key: "hero", order: 1, enabled: true, title: "CHÍNH QUYỀN SỐ", color1: "#C8102E", color2: "#7A0C16" },
-        { id: "hs-stats", key: "stats", order: 2, enabled: true, color1: "#C8102E", color2: "#A4161A" },
+        {
+            id: "hs-hero",
+            key: "hero",
+            order: 1,
+            enabled: true,
+            title: "CHÍNH QUYỀN SỐ",
+            color1: "#C8102E",
+            color2: "#7A0C16",
+        },
+        {
+            id: "hs-stats",
+            key: "stats",
+            order: 2,
+            enabled: true,
+            color1: "#C8102E",
+            color2: "#A4161A",
+        },
         { id: "hs-statsdss", key: "statsDss", order: 3, enabled: true },
-        { id: "hs-explore", key: "explore", order: 4, enabled: true, title: "Du lịch địa phương", subtitle: "Trải nghiệm thiên nhiên, văn hóa và con người", link: "/news", color1: "#C8102E", color2: "#7A0C16" },
-        { id: "hs-newslist", key: "newsList", order: 4.5, enabled: false, title: "Tin tức mới" },
-        { id: "hs-events", key: "events", order: 4.7, enabled: true, title: "Sự kiện sắp diễn ra" },
+        {
+            id: "hs-explore",
+            key: "explore",
+            order: 4,
+            enabled: true,
+            title: "Du lịch địa phương",
+            subtitle: "Trải nghiệm thiên nhiên, văn hóa và con người",
+            link: "/news",
+            color1: "#C8102E",
+            color2: "#7A0C16",
+        },
+        {
+            id: "hs-newslist",
+            key: "newsList",
+            order: 4.5,
+            enabled: false,
+            title: "Tin tức mới",
+        },
+        {
+            id: "hs-events",
+            key: "events",
+            order: 4.7,
+            enabled: true,
+            title: "Sự kiện sắp diễn ra",
+        },
         { id: "hs-oa", key: "oa", order: 5, enabled: true },
-        { id: "hs-citizen", key: "citizenGrid", order: 6, enabled: true, title: "Dành cho công dân" },
-        { id: "hs-khupho", key: "khuphoGrid", order: 7, enabled: true, title: "Quản lý khu phố" },
-        { id: "hs-business", key: "businessGrid", order: 8, enabled: true, title: "Dành cho doanh nghiệp, tổ chức" },
-        { id: "hs-featured", key: "featured", order: 9, enabled: true, title: "Tin tức Chuyển Đổi Số", subtitle: "TIN NỔI BẬT", link: "/news", color1: "#7A0C16", color2: "#C8102E" },
+        {
+            id: "hs-citizen",
+            key: "citizenGrid",
+            order: 6,
+            enabled: true,
+            title: "Dành cho công dân",
+        },
+        {
+            id: "hs-khupho",
+            key: "khuphoGrid",
+            order: 7,
+            enabled: true,
+            title: "Quản lý khu phố",
+        },
+        {
+            id: "hs-business",
+            key: "businessGrid",
+            order: 8,
+            enabled: true,
+            title: "Dành cho doanh nghiệp, tổ chức",
+        },
+        {
+            id: "hs-featured",
+            key: "featured",
+            order: 9,
+            enabled: true,
+            title: "Tin tức Chuyển Đổi Số",
+            subtitle: "TIN NỔI BẬT",
+            link: "/news",
+            color1: "#7A0C16",
+            color2: "#C8102E",
+        },
     ]);
 
 export const getEvents = async (): Promise<EventItem[]> =>
@@ -245,7 +310,12 @@ export const getWeather = async (): Promise<{
 } | null> =>
     new Promise(resolve => {
         setTimeout(
-            () => resolve({ temp: "30°C", condition: "Mây rải rác", emoji: "⛅" }),
+            () =>
+                resolve({
+                    temp: "30°C",
+                    condition: "Mây rải rác",
+                    emoji: "⛅",
+                }),
             200,
         );
     });

@@ -127,17 +127,16 @@ const MyAppointmentsPage: React.FC = () => {
                                     </Text>
                                 </Row>
                             )}
-                            {String(s.status) === "rejected" &&
-                                s.rejectedInfo && (
-                                    <Box tw="mt-2">
-                                        <Text
-                                            size="small"
-                                            style={{ color: "#DC2626" }}
-                                        >
-                                            Lý do từ chối: {s.rejectedInfo}
-                                        </Text>
-                                    </Box>
-                                )}
+                            {String(s.status) === "rejected" && s.rejectedInfo && (
+                                <Box tw="mt-2">
+                                    <Text
+                                        size="small"
+                                        style={{ color: "#DC2626" }}
+                                    >
+                                        Lý do từ chối: {s.rejectedInfo}
+                                    </Text>
+                                </Box>
+                            )}
                         </Card>
                     );
                 })}

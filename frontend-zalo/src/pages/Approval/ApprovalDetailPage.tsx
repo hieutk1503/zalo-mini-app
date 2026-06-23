@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-    Box,
-    Button,
-    Text,
-    useNavigate,
-    useParams,
-    useSnackbar,
-} from "zmp-ui";
+import { Box, Button, Text, useNavigate, useParams, useSnackbar } from "zmp-ui";
 import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
@@ -101,7 +94,10 @@ const ApprovalDetailPage: React.FC = () => {
     const onReject = async () => {
         if (!id) return;
         if (!reason.trim()) {
-            openSnackbar({ type: "warning", text: "Vui lòng nhập lý do từ chối" });
+            openSnackbar({
+                type: "warning",
+                text: "Vui lòng nhập lý do từ chối",
+            });
             return;
         }
         const ok = await rejectRequest(id, reason.trim());
@@ -191,7 +187,9 @@ const ApprovalDetailPage: React.FC = () => {
                         }
                     >
                         Xem chi tiết{" "}
-                        {request.targetType === "resident" ? "cư dân" : "hộ dân"}
+                        {request.targetType === "resident"
+                            ? "cư dân"
+                            : "hộ dân"}
                     </Button>
                 </Box>
 

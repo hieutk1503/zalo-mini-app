@@ -4,12 +4,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
 import PageLayout from "@components/layout/PageLayout";
-import {
-    DataList,
-    FilterBar,
-    MetaBadge,
-    StatusTabs,
-} from "@components/common";
+import { DataList, FilterBar, MetaBadge, StatusTabs } from "@components/common";
 import { useStore } from "@store";
 import { ROUTES } from "@constants/common";
 import { CONTEST_STATUS_META } from "@constants/engagement";
@@ -94,7 +89,9 @@ const ContestsPage: React.FC = () => {
                                 <Text tw="text-text_1 font-medium flex-1 pr-2">
                                     {c.title}
                                 </Text>
-                                <MetaBadge meta={CONTEST_STATUS_META[c.status]} />
+                                <MetaBadge
+                                    meta={CONTEST_STATUS_META[c.status]}
+                                />
                             </Box>
                             {c.description && (
                                 <Text size="small" tw="text-text_2 mt-1">
@@ -109,7 +106,9 @@ const ContestsPage: React.FC = () => {
                                         : ""}{" "}
                                     · {c.participantCount ?? 0} lượt
                                 </Text>
-                                {c.participated && <DoneTag>Đã tham gia</DoneTag>}
+                                {c.participated && (
+                                    <DoneTag>Đã tham gia</DoneTag>
+                                )}
                             </Box>
                         </Item>
                     )}

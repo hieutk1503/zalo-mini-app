@@ -100,6 +100,11 @@ const ProceduresPage: React.FC = () => {
                             <Text tw="text-text_1 font-medium mt-1">
                                 {item.name}
                             </Text>
+                            {item.description && (
+                                <Text size="small" tw="text-text_2 mt-1 line-clamp-2">
+                                    {item.description}
+                                </Text>
+                            )}
                             <Text size="small" tw="text-text_2 mt-1">
                                 {item.category}
                                 {item.agency ? ` · ${item.agency}` : ""}

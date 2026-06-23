@@ -34,12 +34,13 @@ const Lbl = styled.div`
 
 export type BottomTab = "home" | "chat" | "contact" | "account";
 
-const ITEMS: { key: BottomTab; label: string; emoji: string; path: string }[] = [
-    { key: "home", label: "Trang chủ", emoji: "🏠", path: "/" },
-    { key: "chat", label: "Chat OA", emoji: "💬", path: "/chatbot" },
-    { key: "contact", label: "Liên hệ", emoji: "📞", path: "/hotlines" },
-    { key: "account", label: "Cá nhân", emoji: "👤", path: "/account" },
-];
+const ITEMS: { key: BottomTab; label: string; emoji: string; path: string }[] =
+    [
+        { key: "home", label: "Trang chủ", emoji: "🏠", path: "/" },
+        { key: "chat", label: "Chat OA", emoji: "💬", path: "/chatbot" },
+        { key: "contact", label: "Liên hệ", emoji: "📞", path: "/hotlines" },
+        { key: "account", label: "Cá nhân", emoji: "👤", path: "/account" },
+    ];
 
 const BottomNav: FC<{ active: BottomTab }> = ({ active }) => {
     const navigate = useNavigate();

@@ -77,8 +77,7 @@ const ApprovalPage: React.FC<ApprovalPageProps> = ({ targetType }) => {
         [all, targetType, status, keyword],
     );
 
-    const title =
-        targetType === "resident" ? "Duyệt cư dân" : "Duyệt hộ dân";
+    const title = targetType === "resident" ? "Duyệt cư dân" : "Duyệt hộ dân";
 
     return (
         <PageLayout title={title} id="approval-page">

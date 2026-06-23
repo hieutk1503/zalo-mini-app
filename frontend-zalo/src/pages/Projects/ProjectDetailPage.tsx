@@ -68,7 +68,9 @@ const ProjectDetailPage: React.FC = () => {
                       ? formatDate(detail.startDate, "dd/mm/yyyy")
                       : "—"
               } → ${
-                  detail?.endDate ? formatDate(detail.endDate, "dd/mm/yyyy") : "—"
+                  detail?.endDate
+                      ? formatDate(detail.endDate, "dd/mm/yyyy")
+                      : "—"
               }`
             : undefined;
 

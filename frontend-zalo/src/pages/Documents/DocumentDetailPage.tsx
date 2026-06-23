@@ -74,7 +74,10 @@ const DocumentDetailPage: React.FC = () => {
                             label="Ngày ban hành"
                             value={
                                 detail?.issuedDate
-                                    ? formatDate(detail.issuedDate, "dd/mm/yyyy")
+                                    ? formatDate(
+                                          detail.issuedDate,
+                                          "dd/mm/yyyy",
+                                      )
                                     : undefined
                             }
                         />
@@ -92,7 +95,9 @@ const DocumentDetailPage: React.FC = () => {
                         <Button
                             fullWidth
                             suffixIcon={<Icon icon="zi-download" />}
-                            onClick={() => openWebView(detail.fileUrl as string)}
+                            onClick={() =>
+                                openWebView(detail.fileUrl as string)
+                            }
                         >
                             Xem / Tải văn bản
                         </Button>

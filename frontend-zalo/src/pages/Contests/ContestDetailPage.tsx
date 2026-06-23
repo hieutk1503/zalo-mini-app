@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-    Box,
-    Button,
-    Text,
-    useNavigate,
-    useParams,
-    useSnackbar,
-} from "zmp-ui";
+import { Box, Button, Text, useNavigate, useParams, useSnackbar } from "zmp-ui";
 import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
@@ -177,7 +170,8 @@ const ContestDetailPage: React.FC = () => {
                         <Box tw="flex flex-row justify-around mt-3 text-center">
                             <Box>
                                 <Text tw="text-text_1 font-semibold">
-                                    {result.correctCount}/{result.totalQuestions}
+                                    {result.correctCount}/
+                                    {result.totalQuestions}
                                 </Text>
                                 <Text size="xxSmall" tw="text-text_2">
                                     Câu đúng
@@ -223,7 +217,10 @@ const ContestDetailPage: React.FC = () => {
                                         >
                                             #{r.rank}
                                         </Text>
-                                        <Text size="small" tw="text-text_1 ml-2">
+                                        <Text
+                                            size="small"
+                                            tw="text-text_1 ml-2"
+                                        >
                                             {r.name}
                                         </Text>
                                     </Box>
@@ -245,7 +242,10 @@ const ContestDetailPage: React.FC = () => {
                                     {qi + 1}. {q.content}
                                 </Text>
                                 {q.multiple && (
-                                    <Text size="xxSmall" tw="text-text_3 mt-0.5">
+                                    <Text
+                                        size="xxSmall"
+                                        tw="text-text_3 mt-0.5"
+                                    >
                                         (Chọn nhiều đáp án)
                                     </Text>
                                 )}

@@ -39,7 +39,9 @@ const allProcedures = db.procedures as unknown as Procedure[];
 const allDocuments = (db.documents as unknown as PublicDocument[]).map(d => ({
     ...d,
     type: d.type as PublicDocumentType,
-    issuedDate: d.issuedDate ? new Date(d.issuedDate as unknown as string) : undefined,
+    issuedDate: d.issuedDate
+        ? new Date(d.issuedDate as unknown as string)
+        : undefined,
 }));
 
 const allLegalDocuments = (

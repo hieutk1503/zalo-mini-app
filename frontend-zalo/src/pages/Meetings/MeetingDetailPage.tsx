@@ -12,12 +12,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
 import PageLayout from "@components/layout/PageLayout";
-import {
-    EmptyState,
-    MetaBadge,
-    SectionCard,
-    TextArea,
-} from "@components";
+import { EmptyState, MetaBadge, SectionCard, TextArea } from "@components";
 import { useStore } from "@store";
 import {
     CONFIRM_STATUS_META,
@@ -174,12 +169,17 @@ const MeetingDetailPage: React.FC = () => {
                         >
                             {meeting.participants.map(p => (
                                 <Row key={p.id}>
-                                    <Text size="small" tw="text-text_1 flex-1 pr-2">
+                                    <Text
+                                        size="small"
+                                        tw="text-text_1 flex-1 pr-2"
+                                    >
                                         {p.name}
                                     </Text>
                                     <MetaBadge
                                         small
-                                        meta={CONFIRM_STATUS_META[p.confirmStatus]}
+                                        meta={
+                                            CONFIRM_STATUS_META[p.confirmStatus]
+                                        }
                                     />
                                 </Row>
                             ))}
@@ -194,7 +194,10 @@ const MeetingDetailPage: React.FC = () => {
                                 <Row key={d.id}>
                                     <Box tw="flex flex-row items-center flex-1">
                                         <Icon icon="zi-file" size={16} />
-                                        <Text size="small" tw="text-text_1 ml-2">
+                                        <Text
+                                            size="small"
+                                            tw="text-text_1 ml-2"
+                                        >
                                             {d.name}
                                         </Text>
                                     </Box>
@@ -220,7 +223,10 @@ const MeetingDetailPage: React.FC = () => {
                             <Text size="small" tw="text-text_2 mr-2">
                                 Trạng thái của bạn:
                             </Text>
-                            <MetaBadge small meta={CONFIRM_STATUS_META[myStatus]} />
+                            <MetaBadge
+                                small
+                                meta={CONFIRM_STATUS_META[myStatus]}
+                            />
                         </Box>
 
                         {declining ? (

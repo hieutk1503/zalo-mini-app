@@ -4,12 +4,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
 import PageLayout from "@components/layout/PageLayout";
-import {
-    DataList,
-    FilterBar,
-    MetaBadge,
-    StatusTabs,
-} from "@components/common";
+import { DataList, FilterBar, MetaBadge, StatusTabs } from "@components/common";
 import { useStore } from "@store";
 import { ROUTES } from "@constants/common";
 import { INCOME_STATUS_META, formatVnd } from "@constants/finance";
@@ -62,9 +57,7 @@ const IncomePage: React.FC = () => {
             all
                 .filter(c => (status ? c.status === status : true))
                 .filter(c =>
-                    keyword
-                        ? matchKeyword(keyword, [c.name, c.feeType])
-                        : true,
+                    keyword ? matchKeyword(keyword, [c.name, c.feeType]) : true,
                 ),
         [all, status, keyword],
     );
@@ -117,7 +110,9 @@ const IncomePage: React.FC = () => {
                                 <Text tw="text-text_1 font-medium flex-1 pr-2">
                                     {c.name}
                                 </Text>
-                                <MetaBadge meta={INCOME_STATUS_META[c.status]} />
+                                <MetaBadge
+                                    meta={INCOME_STATUS_META[c.status]}
+                                />
                             </Box>
                             <Text size="small" tw="text-text_2 mt-1">
                                 {c.feeType}
@@ -130,7 +125,10 @@ const IncomePage: React.FC = () => {
                                     Đã đóng {c.paidCount ?? 0}/
                                     {c.totalHouseholds ?? 0} hộ
                                 </Text>
-                                <Text size="xxSmall" tw="text-success font-medium">
+                                <Text
+                                    size="xxSmall"
+                                    tw="text-success font-medium"
+                                >
                                     {formatVnd(c.collectedAmount)}
                                 </Text>
                             </Box>

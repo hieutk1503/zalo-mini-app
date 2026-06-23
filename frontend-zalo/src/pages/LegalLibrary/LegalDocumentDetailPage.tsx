@@ -103,7 +103,10 @@ const LegalDocumentDetailPage: React.FC = () => {
                             label="Ngày ban hành"
                             value={
                                 detail?.issuedDate
-                                    ? formatDate(detail.issuedDate, "dd/mm/yyyy")
+                                    ? formatDate(
+                                          detail.issuedDate,
+                                          "dd/mm/yyyy",
+                                      )
                                     : undefined
                             }
                         />
@@ -146,8 +149,8 @@ const LegalDocumentDetailPage: React.FC = () => {
 
                 <Note>
                     <Text size="small" tw="text-amber-800">
-                        Nội dung diễn giải và tóm tắt chỉ mang tính tham khảo. Vui
-                        lòng đối chiếu với văn bản gốc khi áp dụng.
+                        Nội dung diễn giải và tóm tắt chỉ mang tính tham khảo.
+                        Vui lòng đối chiếu với văn bản gốc khi áp dụng.
                     </Text>
                 </Note>
 
@@ -156,7 +159,9 @@ const LegalDocumentDetailPage: React.FC = () => {
                         <Button
                             fullWidth
                             suffixIcon={<Icon icon="zi-download" />}
-                            onClick={() => openWebView(detail.fileUrl as string)}
+                            onClick={() =>
+                                openWebView(detail.fileUrl as string)
+                            }
                         >
                             Xem / Tải văn bản gốc
                         </Button>

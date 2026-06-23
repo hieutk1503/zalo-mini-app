@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from typing import List, Optional, Dict
 import ollama
-from ollama import Client
+from ollama import Client, AsyncClient
 import json
 import uuid
 import os
@@ -15,6 +15,7 @@ router = APIRouter()
 
 OLLAMA_HOST = os.getenv('OLLAMA_HOST', 'http://localhost:11434')
 ollama_client = Client(host=OLLAMA_HOST)
+ollama_async_client = AsyncClient(host=OLLAMA_HOST)
 
 class Message(BaseModel):
     role: str
@@ -118,15 +119,15 @@ async def chat_with_rag(req: ChatRequest, request: Request):
 
             full_answer = ""
             try:
-                # GỌI STREAM
-                final_response_stream = ollama_client.chat(
+                # GỌI STREAM (ASYNC)
+                final_response_stream = await ollama_async_client.chat(
                     model='qwen2.5:3b', 
                     messages=messages, 
                     options={"temperature": 0.1}, 
                     stream=True
                 )
                 
-                for chunk in final_response_stream:
+                async for chunk in final_response_stream:
                     if await request.is_disconnected():
                         break
                     text_chunk = chunk['message']['content']

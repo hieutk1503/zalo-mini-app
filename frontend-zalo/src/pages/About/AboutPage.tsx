@@ -73,8 +73,8 @@ const AboutPage: React.FC = () => {
 
                 <Card>
                     <Text size="small" tw="text-text_2">
-                        Thông tin lịch sử hình thành, cơ cấu tổ chức và cán bộ chủ
-                        chốt được cập nhật bởi quản trị viên của địa phương.
+                        Thông tin lịch sử hình thành, cơ cấu tổ chức và cán bộ
+                        chủ chốt được cập nhật bởi quản trị viên của địa phương.
                     </Text>
                 </Card>
             </Box>

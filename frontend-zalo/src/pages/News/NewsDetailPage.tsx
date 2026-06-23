@@ -69,8 +69,7 @@ const Avatar = styled.div`
 const viDate = (value?: string) =>
     value ? value.split("-").reverse().join("/") : "—";
 
-const initial = (name: string) =>
-    (name || "?").trim().charAt(0).toUpperCase();
+const initial = (name: string) => (name || "?").trim().charAt(0).toUpperCase();
 
 // Nội dung soạn từ Admin có thể là HTML (editor) hoặc văn bản thuần (xuống dòng).
 const toHtml = (raw?: string) => {
@@ -174,7 +173,9 @@ const NewsDetailPage: React.FC = () => {
                         : ""}
                 </Text>
                 <ArticleBody
-                    dangerouslySetInnerHTML={{ __html: toHtml(article.content) }}
+                    dangerouslySetInnerHTML={{
+                        __html: toHtml(article.content),
+                    }}
                 />
                 {article.sourceUrl && (
                     <Text
@@ -188,7 +189,10 @@ const NewsDetailPage: React.FC = () => {
                 )}
             </Box>
 
-            <Box px={4} style={{ paddingBottom: article.allowComment ? 96 : 24 }}>
+            <Box
+                px={4}
+                style={{ paddingBottom: article.allowComment ? 96 : 24 }}
+            >
                 <SectionCard title={`Bình luận (${list.length})`}>
                     {gettingComments && (
                         <Text size="small" tw="text-text_2">
@@ -206,7 +210,10 @@ const NewsDetailPage: React.FC = () => {
                                 <Avatar>{initial(c.authorName)}</Avatar>
                                 <Box tw="flex-1 ml-3">
                                     <Box tw="flex flex-row items-center justify-between">
-                                        <Text size="small" tw="text-text_1 font-medium">
+                                        <Text
+                                            size="small"
+                                            tw="text-text_1 font-medium"
+                                        >
                                             {c.authorName}
                                         </Text>
                                         <Text size="xxSmall" tw="text-text_3">

@@ -60,19 +60,15 @@ const IncomeDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { openSnackbar } = useSnackbar();
 
-    const [
-        campaign,
-        loading,
-        getDetail,
-        updatePayment,
-        updating,
-    ] = useStore(state => [
-        state.incomeCampaignDetail,
-        state.gettingIncomeCampaignDetail,
-        state.getIncomeCampaignDetail,
-        state.updatePaymentStatus,
-        state.updatingPayment,
-    ]);
+    const [campaign, loading, getDetail, updatePayment, updating] = useStore(
+        state => [
+            state.incomeCampaignDetail,
+            state.gettingIncomeCampaignDetail,
+            state.getIncomeCampaignDetail,
+            state.updatePaymentStatus,
+            state.updatingPayment,
+        ],
+    );
 
     const [editingId, setEditingId] = useState<string | null>(null);
     const [partial, setPartial] = useState("");
@@ -145,9 +141,9 @@ const IncomeDetailPage: React.FC = () => {
                 <SectionCard title="Tổng quan">
                     <StatRow
                         label="Đã thu / Dự kiến"
-                        value={`${formatVnd(campaign.collectedAmount)} / ${formatVnd(
-                            campaign.expectedTotal,
-                        )}`}
+                        value={`${formatVnd(
+                            campaign.collectedAmount,
+                        )} / ${formatVnd(campaign.expectedTotal)}`}
                     />
                     <StatRow
                         label="Số hộ đã đóng"
@@ -178,12 +174,18 @@ const IncomeDetailPage: React.FC = () => {
                             <Row key={h.id}>
                                 <Box tw="flex flex-row items-start justify-between">
                                     <Box tw="flex-1 pr-2">
-                                        <Text size="small" tw="text-text_1 font-medium">
+                                        <Text
+                                            size="small"
+                                            tw="text-text_1 font-medium"
+                                        >
                                             {h.householdName}
                                         </Text>
-                                        <Text size="xxSmall" tw="text-text_2 mt-0.5">
-                                            Phải đóng {formatVnd(h.amountDue)} · Đã
-                                            đóng {formatVnd(h.amountPaid)}
+                                        <Text
+                                            size="xxSmall"
+                                            tw="text-text_2 mt-0.5"
+                                        >
+                                            Phải đóng {formatVnd(h.amountDue)} ·
+                                            Đã đóng {formatVnd(h.amountPaid)}
                                         </Text>
                                     </Box>
                                     <MetaBadge
@@ -196,11 +198,15 @@ const IncomeDetailPage: React.FC = () => {
                                         type="button"
                                         onClick={() =>
                                             setEditingId(
-                                                editingId === h.id ? null : h.id,
+                                                editingId === h.id
+                                                    ? null
+                                                    : h.id,
                                             )
                                         }
                                     >
-                                        {editingId === h.id ? "Đóng" : "Cập nhật"}
+                                        {editingId === h.id
+                                            ? "Đóng"
+                                            : "Cập nhật"}
                                     </LinkBtn>
                                 </Box>
 

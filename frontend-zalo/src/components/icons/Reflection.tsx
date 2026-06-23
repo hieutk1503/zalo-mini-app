@@ -13,10 +13,7 @@ const ReflectionIcon: React.FC<any> = () => (
             fill="#046DD6"
             d="M4 4h16a2 2 0 012 2v9a2 2 0 01-2 2H9l-5 4V6a2 2 0 012-2z"
         />
-        <path
-            fill="#fff"
-            d="M11 6.5h2v5h-2v-5zm0 6.5h2v2h-2v-2z"
-        />
+        <path fill="#fff" d="M11 6.5h2v5h-2v-5zm0 6.5h2v2h-2v-2z" />
     </svg>
 );
 

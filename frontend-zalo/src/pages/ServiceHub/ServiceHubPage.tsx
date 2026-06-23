@@ -121,10 +121,7 @@ const ServiceHubPage: React.FC = () => {
                     <Box key={g.group} mt={gi === 0 ? 0 : 3}>
                         <SectionCard title={g.group}>
                             {g.links.map(link => (
-                                <Row
-                                    key={link.id}
-                                    onClick={() => onOpen(link)}
-                                >
+                                <Row key={link.id} onClick={() => onOpen(link)}>
                                     <IconWrap>
                                         <Icon
                                             icon="zi-link"
@@ -133,7 +130,10 @@ const ServiceHubPage: React.FC = () => {
                                         />
                                     </IconWrap>
                                     <Box tw="flex-1 pr-2">
-                                        <Text size="small" tw="text-text_1 font-medium">
+                                        <Text
+                                            size="small"
+                                            tw="text-text_1 font-medium"
+                                        >
                                             {link.title}
                                         </Text>
                                         {link.description && (
@@ -157,8 +157,8 @@ const ServiceHubPage: React.FC = () => {
                 ))}
 
                 <Text size="xxSmall" tw="text-text_3 mt-3 text-center">
-                    Ưu tiên mở ứng dụng nếu đã cài; nếu chưa, mở bằng trình duyệt
-                    trong Zalo.
+                    Ưu tiên mở ứng dụng nếu đã cài; nếu chưa, mở bằng trình
+                    duyệt trong Zalo.
                 </Text>
             </Box>
         </PageLayout>

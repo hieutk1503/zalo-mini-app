@@ -1,11 +1,7 @@
 /**
  * Nhãn, meta và tiện ích định dạng tiền cho module Quản lý thu/chi.
  */
-import {
-    ExpenseStatus,
-    IncomeCampaignStatus,
-    PaymentStatus,
-} from "@dts";
+import { ExpenseStatus, IncomeCampaignStatus, PaymentStatus } from "@dts";
 import { BadgeMeta } from "./status";
 
 export const INCOME_STATUS_META: Record<IncomeCampaignStatus, BadgeMeta> = {

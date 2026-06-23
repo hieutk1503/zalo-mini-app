@@ -12,10 +12,7 @@ const MeetingIcon: React.FC<any> = () => (
         <rect x="3" y="5" width="18" height="16" rx="2" fill="#8ABEFF" />
         <rect x="3" y="5" width="18" height="4" rx="2" fill="#046DD6" />
         <path fill="#046DD6" d="M7 3h2v4H7zM15 3h2v4h-2z" />
-        <path
-            fill="#fff"
-            d="M7 12h4v3H7zm0 0"
-        />
+        <path fill="#fff" d="M7 12h4v3H7zm0 0" />
     </svg>
 );
 

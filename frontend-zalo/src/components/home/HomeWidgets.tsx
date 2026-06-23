@@ -288,7 +288,11 @@ export interface OAFollowCardProps {
     logoUrl?: string;
     onFollow?: () => void;
 }
-export const OAFollowCard: FC<OAFollowCardProps> = ({ name, logoUrl, onFollow }) => (
+export const OAFollowCard: FC<OAFollowCardProps> = ({
+    name,
+    logoUrl,
+    onFollow,
+}) => (
     <OACard>
         <OALogo src={logoUrl || Logo} alt="oa" />
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -319,9 +323,9 @@ const Heading = styled.div`
         border-radius: 2px;
     }
 `;
-export const SectionHeading: FC<{ children: React.ReactNode }> = ({ children }) => (
-    <Heading>{children}</Heading>
-);
+export const SectionHeading: FC<{ children: React.ReactNode }> = ({
+    children,
+}) => <Heading>{children}</Heading>;
 
 /* ============================ Tile grid ============================ */
 const Grid = styled.div`
@@ -375,7 +379,9 @@ export const TileGrid: FC<{ items: HomeTile[] }> = ({ items }) => {
                         navigate(it.path);
                     }}
                 >
-                    <TileIcon $bg={PASTELS[idx % PASTELS.length]}>{it.emoji}</TileIcon>
+                    <TileIcon $bg={PASTELS[idx % PASTELS.length]}>
+                        {it.emoji}
+                    </TileIcon>
                     <TileLabel>{it.label}</TileLabel>
                 </Tile>
             ))}
@@ -450,7 +456,9 @@ export const FeaturedBanner: FC<FeaturedBannerProps> = ({
                 <FeaturedTitle>{title}</FeaturedTitle>
             </div>
         </div>
-        <RoundArrow style={{ position: "static", transform: "none" }}>→</RoundArrow>
+        <RoundArrow style={{ position: "static", transform: "none" }}>
+            →
+        </RoundArrow>
     </Featured>
 );
 
@@ -677,17 +685,15 @@ export interface SliderProps {
 }
 export const Slider: FC<SliderProps> = ({ images, onClick }) => (
     <SliderRow>
-        {(images || [])
-            .filter(Boolean)
-            .map((src, i) => (
-                <SlideImg
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={i}
-                    src={src}
-                    alt={`slide-${i}`}
-                    onClick={onClick}
-                />
-            ))}
+        {(images || []).filter(Boolean).map((src, i) => (
+            <SlideImg
+                // eslint-disable-next-line react/no-array-index-key
+                key={i}
+                src={src}
+                alt={`slide-${i}`}
+                onClick={onClick}
+            />
+        ))}
     </SliderRow>
 );
 
@@ -730,7 +736,11 @@ export interface VideoBlockProps {
     imageUrl?: string;
     onPlay?: () => void;
 }
-export const VideoBlock: FC<VideoBlockProps> = ({ title, imageUrl, onPlay }) => (
+export const VideoBlock: FC<VideoBlockProps> = ({
+    title,
+    imageUrl,
+    onPlay,
+}) => (
     <VideoCard onClick={onPlay}>
         {imageUrl ? (
             <VideoPoster src={imageUrl} alt={title || "video"} />
@@ -819,7 +829,8 @@ export interface EventsProps {
 }
 const evParts = (iso?: string) => {
     const d = iso ? new Date(iso) : null;
-    if (!d || Number.isNaN(d.getTime())) return { day: "--", mon: "", time: "" };
+    if (!d || Number.isNaN(d.getTime()))
+        return { day: "--", mon: "", time: "" };
     const p2 = (n: number) => String(n).padStart(2, "0");
     return {
         day: p2(d.getDate()),

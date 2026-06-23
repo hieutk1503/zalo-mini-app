@@ -58,7 +58,9 @@ const SurveyPage: React.FC = () => {
             return;
         }
         const missing = survey.questions.find(
-            q => q.required && (answers[q.id] === undefined || answers[q.id] === ""),
+            q =>
+                q.required &&
+                (answers[q.id] === undefined || answers[q.id] === ""),
         );
         if (missing) {
             openSnackbar({
@@ -173,7 +175,11 @@ const SurveyPage: React.FC = () => {
                     </Card>
                 ))}
                 <Box mt={2}>
-                    <Button fullWidth loading={submitting} onClick={handleSubmit}>
+                    <Button
+                        fullWidth
+                        loading={submitting}
+                        onClick={handleSubmit}
+                    >
                         Gửi khảo sát
                     </Button>
                 </Box>

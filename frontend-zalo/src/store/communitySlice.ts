@@ -112,7 +112,10 @@ const communitySlice: StateCreator<
                 gettingReflectionDetail: true,
                 reflectionDetail: undefined,
             }));
-            const detail = await api.getReflectionDetail({ id, organizationId });
+            const detail = await api.getReflectionDetail({
+                id,
+                organizationId,
+            });
             set(state => ({ ...state, reflectionDetail: detail || null }));
         } catch (err) {
             set(state => ({ ...state, reflectionDetail: null }));
@@ -124,7 +127,11 @@ const communitySlice: StateCreator<
         const organizationId = get().organization?.id;
         try {
             set(state => ({ ...state, processingReflection: true }));
-            const ok = await api.receiveReflection({ id, note, organizationId });
+            const ok = await api.receiveReflection({
+                id,
+                note,
+                organizationId,
+            });
             if (ok) {
                 await get().getReflectionDetail(id);
             }
@@ -155,7 +162,11 @@ const communitySlice: StateCreator<
         const organizationId = get().organization?.id;
         try {
             set(state => ({ ...state, processingReflection: true }));
-            const ok = await api.completeReflection({ id, note, organizationId });
+            const ok = await api.completeReflection({
+                id,
+                note,
+                organizationId,
+            });
             if (ok) {
                 await get().getReflectionDetail(id);
             }

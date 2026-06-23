@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { AnimationRoutes, ZMPRouter, Page } from "zmp-ui";
+import { AnimationRoutes, ZMPRouter, Page, Header } from "zmp-ui";
 
 import {
     FeedbackPage,
@@ -16,10 +16,7 @@ import { SearchPage } from "./Search";
 import { ProfilePage } from "./Profile";
 import { ProceduresPage, ProcedureDetailPage } from "./Procedures";
 import { DocumentsPage, DocumentDetailPage } from "./Documents";
-import {
-    LegalLibraryPage,
-    LegalDocumentDetailPage,
-} from "./LegalLibrary";
+import { LegalLibraryPage, LegalDocumentDetailPage } from "./LegalLibrary";
 import { AboutPage } from "./About";
 import { HotlinesPage } from "./Hotlines";
 import { LocationPage } from "./Location";
@@ -41,15 +38,8 @@ import {
 } from "./Households";
 import { ApprovalPage, ApprovalDetailPage } from "./Approval";
 import { ReflectionsPage, ReflectionDetailPage } from "./Reflections";
-import {
-    NotificationsPage,
-    NotificationDetailPage,
-} from "./Notifications";
-import {
-    MeetingsPage,
-    MeetingDetailPage,
-    MeetingFormPage,
-} from "./Meetings";
+import { NotificationsPage, NotificationDetailPage } from "./Notifications";
+import { MeetingsPage, MeetingDetailPage, MeetingFormPage } from "./Meetings";
 import {
     CommunityGroupsPage,
     CommunityGroupDetailPage,
@@ -60,11 +50,7 @@ import { ContestsPage, ContestDetailPage } from "./Contests";
 import { IncomePage, IncomeDetailPage, IncomeFormPage } from "./Income";
 import { ExpensesPage, ExpenseDetailPage, ExpenseFormPage } from "./Expenses";
 import { ServiceHubPage } from "./ServiceHub";
-import {
-    DashboardPage,
-    ReportEntryPage,
-    MeetingRoomPage,
-} from "./Dashboard";
+import { DashboardPage, ReportEntryPage, MeetingRoomPage } from "./Dashboard";
 import { NewsPage, NewsDetailPage } from "./News";
 import { EventDetailPage, EventsListPage } from "./Events";
 import { AccountPage } from "./Account";
@@ -84,14 +70,17 @@ import {
     AdminInvestment,
     AdminPlanning,
     AdminProcedures,
-    AdminWorkSchedule
+    AdminWorkSchedule,
 } from "./Admin";
 
 // Wrapper for legacy admin pages to render correctly inside ZMP Router
 const AdminWrapper = ({ children }: { children: React.ReactNode }) => (
-    <Page className="bg-[#f3f4f6] h-full w-full overflow-y-auto">
-        <div className="p-4 sm:p-6 w-full max-w-[1200px] mx-auto min-h-full">
-            {children}
+    <Page className="bg-[#f3f4f6] flex flex-col h-screen">
+        <Header title="Quản trị" showBackIcon />
+        <div className="flex-1 overflow-y-auto">
+            <div className="p-4 sm:p-6 w-full max-w-[1200px] mx-auto min-h-full">
+                {children}
+            </div>
         </div>
     </Page>
 );
@@ -139,7 +128,7 @@ const Routes: React.FC = () => (
             <Route path="/location" element={<LocationPage />} />
             <Route path="/work-schedule" element={<WorkSchedulePage />} />
             <Route path="/survey" element={<SurveyPage />} />
-            <Route path="/chatbot" element={<AdminWrapper><ChatbotPage /></AdminWrapper>} />
+            <Route path="/chatbot" element={<ChatbotPage />} />
             <Route path="/planning" element={<PlanningPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/:id" element={<ProjectDetailPage />} />
@@ -177,10 +166,7 @@ const Routes: React.FC = () => (
 
             {/* Phản ánh nâng cao (xử lý) */}
             <Route path="/reflections" element={<ReflectionsPage />} />
-            <Route
-                path="/reflections/:id"
-                element={<ReflectionDetailPage />}
-            />
+            <Route path="/reflections/:id" element={<ReflectionDetailPage />} />
 
             {/* Thông báo nhanh */}
             <Route path="/notifications" element={<NotificationsPage />} />
@@ -195,10 +181,7 @@ const Routes: React.FC = () => (
             <Route path="/meetings/:id" element={<MeetingDetailPage />} />
 
             {/* Nhóm cộng đồng */}
-            <Route
-                path="/community-groups"
-                element={<CommunityGroupsPage />}
-            />
+            <Route path="/community-groups" element={<CommunityGroupsPage />} />
             <Route
                 path="/community-groups/create"
                 element={<CommunityGroupFormPage />}
@@ -243,20 +226,118 @@ const Routes: React.FC = () => (
             <Route path="/events/:id" element={<EventDetailPage />} />
 
             {/* Admin Routes */}
-            <Route path="/admin" element={<AdminWrapper><AdminLogin /></AdminWrapper>} />
-            <Route path="/admin/dashboard" element={<AdminWrapper><AdminDashboard /></AdminWrapper>} />
-            <Route path="/admin/news" element={<AdminWrapper><AdminNews /></AdminWrapper>} />
-            <Route path="/admin/appointments" element={<AdminWrapper><AdminAppointments /></AdminWrapper>} />
-            <Route path="/admin/bidding" element={<AdminWrapper><AdminBidding /></AdminWrapper>} />
-            <Route path="/admin/citizens" element={<AdminWrapper><AdminCitizens /></AdminWrapper>} />
-            <Route path="/admin/documents" element={<AdminWrapper><AdminDocuments /></AdminWrapper>} />
-            <Route path="/admin/feedbacks" element={<AdminWrapper><AdminFeedbacks /></AdminWrapper>} />
-            <Route path="/admin/form-templates" element={<AdminWrapper><AdminFormTemplates /></AdminWrapper>} />
-            <Route path="/admin/import" element={<AdminWrapper><AdminImport /></AdminWrapper>} />
-            <Route path="/admin/investment" element={<AdminWrapper><AdminInvestment /></AdminWrapper>} />
-            <Route path="/admin/planning" element={<AdminWrapper><AdminPlanning /></AdminWrapper>} />
-            <Route path="/admin/procedures" element={<AdminWrapper><AdminProcedures /></AdminWrapper>} />
-            <Route path="/admin/work-schedule" element={<AdminWrapper><AdminWorkSchedule /></AdminWrapper>} />
+            <Route
+                path="/admin"
+                element={
+                    <AdminWrapper>
+                        <AdminLogin />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/dashboard"
+                element={
+                    <AdminWrapper>
+                        <AdminDashboard />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/news"
+                element={
+                    <AdminWrapper>
+                        <AdminNews />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/appointments"
+                element={
+                    <AdminWrapper>
+                        <AdminAppointments />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/bidding"
+                element={
+                    <AdminWrapper>
+                        <AdminBidding />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/citizens"
+                element={
+                    <AdminWrapper>
+                        <AdminCitizens />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/documents"
+                element={
+                    <AdminWrapper>
+                        <AdminDocuments />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/feedbacks"
+                element={
+                    <AdminWrapper>
+                        <AdminFeedbacks />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/form-templates"
+                element={
+                    <AdminWrapper>
+                        <AdminFormTemplates />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/import"
+                element={
+                    <AdminWrapper>
+                        <AdminImport />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/investment"
+                element={
+                    <AdminWrapper>
+                        <AdminInvestment />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/planning"
+                element={
+                    <AdminWrapper>
+                        <AdminPlanning />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/procedures"
+                element={
+                    <AdminWrapper>
+                        <AdminProcedures />
+                    </AdminWrapper>
+                }
+            />
+            <Route
+                path="/admin/work-schedule"
+                element={
+                    <AdminWrapper>
+                        <AdminWorkSchedule />
+                    </AdminWrapper>
+                }
+            />
         </AnimationRoutes>
     </ZMPRouter>
 );

@@ -11,9 +11,9 @@ describe("getProcedures (mock)", () => {
     it("lọc theo từ khoá không dấu", async () => {
         const res = await getProcedures({ keyword: "khai sinh" });
         expect(res.procedures.length).toBeGreaterThan(0);
-        expect(
-            res.procedures.some(p => p.name.includes("khai sinh")),
-        ).toBe(true);
+        expect(res.procedures.some(p => p.name.includes("khai sinh"))).toBe(
+            true,
+        );
     });
     it("lọc theo lĩnh vực", async () => {
         const res = await getProcedures({ category: "Chứng thực" });

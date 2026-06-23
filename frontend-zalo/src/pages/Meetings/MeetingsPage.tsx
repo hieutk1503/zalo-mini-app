@@ -4,12 +4,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
 import PageLayout from "@components/layout/PageLayout";
-import {
-    DataList,
-    FilterBar,
-    MetaBadge,
-    StatusTabs,
-} from "@components/common";
+import { DataList, FilterBar, MetaBadge, StatusTabs } from "@components/common";
 import { useStore } from "@store";
 import { ROUTES } from "@constants/common";
 import { MEETING_STATUS_META } from "@constants/neighborhood";
@@ -64,7 +59,11 @@ const MeetingsPage: React.FC = () => {
                 .filter(m => (status ? m.status === status : true))
                 .filter(m =>
                     keyword
-                        ? matchKeyword(keyword, [m.title, m.content, m.location])
+                        ? matchKeyword(keyword, [
+                              m.title,
+                              m.content,
+                              m.location,
+                          ])
                         : true,
                 ),
         [all, status, keyword],
@@ -101,7 +100,9 @@ const MeetingsPage: React.FC = () => {
                                 <Text tw="text-text_1 font-medium flex-1 pr-2">
                                     {m.title}
                                 </Text>
-                                <MetaBadge meta={MEETING_STATUS_META[m.status]} />
+                                <MetaBadge
+                                    meta={MEETING_STATUS_META[m.status]}
+                                />
                             </Box>
                             <MetaRow>
                                 <Icon icon="zi-clock-1" size={14} />

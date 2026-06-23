@@ -4,12 +4,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
 import PageLayout from "@components/layout/PageLayout";
-import {
-    DataList,
-    FilterBar,
-    MetaBadge,
-    StatusTabs,
-} from "@components/common";
+import { DataList, FilterBar, MetaBadge, StatusTabs } from "@components/common";
 import { useStore } from "@store";
 import { ROUTES } from "@constants/common";
 import { GROUP_STATUS_META } from "@constants/neighborhood";
@@ -56,7 +51,11 @@ const CommunityGroupsPage: React.FC = () => {
                 .filter(g => (status ? g.status === status : true))
                 .filter(g =>
                     keyword
-                        ? matchKeyword(keyword, [g.name, g.description, g.topic])
+                        ? matchKeyword(keyword, [
+                              g.name,
+                              g.description,
+                              g.topic,
+                          ])
                         : true,
                 ),
         [all, status, keyword],

@@ -3,12 +3,7 @@
  * In-memory để bình luận mới tồn tại trong phiên.
  * Nguồn dữ liệu GIẢ: @mock/news.json.
  */
-import {
-    NewsArticle,
-    NewsArticles,
-    NewsComment,
-    NewsCategory,
-} from "@dts";
+import { NewsArticle, NewsArticles, NewsComment, NewsCategory } from "@dts";
 import db from "@mock/news.json";
 import { matchKeyword } from "@utils/string";
 import { NEWS_CATEGORIES } from "@constants/common";
@@ -72,11 +67,7 @@ export const getNewsComments = async (params: {
     id: string;
     organizationId?: string;
 }): Promise<NewsComment[]> =>
-    delay(
-        clone(
-            comments.filter(c => c.articleId === params.id && !c.hidden),
-        ),
-    );
+    delay(clone(comments.filter(c => c.articleId === params.id && !c.hidden)));
 
 export const getNewsCategories = async (): Promise<NewsCategory[]> =>
     delay(

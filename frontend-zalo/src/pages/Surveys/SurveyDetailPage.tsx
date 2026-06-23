@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-    Box,
-    Button,
-    Text,
-    useNavigate,
-    useParams,
-    useSnackbar,
-} from "zmp-ui";
+import { Box, Button, Text, useNavigate, useParams, useSnackbar } from "zmp-ui";
 import styled from "styled-components";
 import tw from "twin.macro";
 import "styled-components/macro";
@@ -36,7 +29,9 @@ const RatingRow = styled.div`
 const RatingBtn = styled.button<{ $active: boolean }>`
     ${tw`flex-1 py-2 rounded-lg border text-sm`}
     ${({ $active }) =>
-        $active ? tw`border-main bg-main text-white` : tw`border-ng_20 bg-white`}
+        $active
+            ? tw`border-main bg-main text-white`
+            : tw`border-ng_20 bg-white`}
 `;
 
 const Bar = styled.div`
@@ -52,23 +47,16 @@ const SurveyDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { openSnackbar } = useSnackbar();
 
-    const [
-        survey,
-        loading,
-        getDetail,
-        submit,
-        getResults,
-        result,
-        submitting,
-    ] = useStore(state => [
-        state.surveyCampaignDetail,
-        state.gettingSurveyCampaignDetail,
-        state.getSurveyCampaignDetail,
-        state.submitSurveyCampaign,
-        state.getSurveyCampaignResults,
-        state.surveyResult,
-        state.submittingSurveyCampaign,
-    ]);
+    const [survey, loading, getDetail, submit, getResults, result, submitting] =
+        useStore(state => [
+            state.surveyCampaignDetail,
+            state.gettingSurveyCampaignDetail,
+            state.getSurveyCampaignDetail,
+            state.submitSurveyCampaign,
+            state.getSurveyCampaignResults,
+            state.surveyResult,
+            state.submittingSurveyCampaign,
+        ]);
 
     const [answers, setAnswers] = useState<Record<string, any>>({});
     const [submitted, setSubmitted] = useState(false);
@@ -85,7 +73,12 @@ const SurveyDetailPage: React.FC = () => {
 
     // Nếu đã tham gia và cho xem kết quả -> tải kết quả ngay.
     useEffect(() => {
-        if (survey && survey.id === id && survey.participated && survey.showResult) {
+        if (
+            survey &&
+            survey.id === id &&
+            survey.participated &&
+            survey.showResult
+        ) {
             getResults(survey.id);
             setShowResult(true);
         }
@@ -194,16 +187,24 @@ const SurveyDetailPage: React.FC = () => {
                                 {q.options?.map(o => (
                                     <Box key={o.value} mt={2}>
                                         <Box tw="flex flex-row justify-between">
-                                            <Text size="xxSmall" tw="text-text_2">
+                                            <Text
+                                                size="xxSmall"
+                                                tw="text-text_2"
+                                            >
                                                 {o.value}
                                             </Text>
-                                            <Text size="xxSmall" tw="text-text_2">
+                                            <Text
+                                                size="xxSmall"
+                                                tw="text-text_2"
+                                            >
                                                 {o.percent}% ({o.count})
                                             </Text>
                                         </Box>
                                         <Bar>
                                             <BarFill
-                                                style={{ width: `${o.percent}%` }}
+                                                style={{
+                                                    width: `${o.percent}%`,
+                                                }}
                                             />
                                         </Bar>
                                     </Box>
@@ -214,7 +215,7 @@ const SurveyDetailPage: React.FC = () => {
                                     </Text>
                                 )}
                                 {q.type === "text" &&
-                                    q.textAnswers?.map((t) => (
+                                    q.textAnswers?.map(t => (
                                         <Text
                                             key={t}
                                             size="xxSmall"
@@ -300,7 +301,9 @@ const SurveyDetailPage: React.FC = () => {
                                                 <RatingBtn
                                                     key={n}
                                                     type="button"
-                                                    $active={answers[q.id] === n}
+                                                    $active={
+                                                        answers[q.id] === n
+                                                    }
                                                     onClick={() =>
                                                         setSingle(
                                                             q.id,

@@ -49,7 +49,8 @@ const PlanningPage: React.FC = () => {
             <Box p={4}>
                 <Text size="small" tw="text-text_2 mb-3 block">
                     Thông tin quy hoạch sử dụng đất, quy hoạch xây dựng trên địa
-                    bàn. Nhấn vào bản đồ để xem chi tiết hoặc mở bản đồ trực tuyến.
+                    bàn. Nhấn vào bản đồ để xem chi tiết hoặc mở bản đồ trực
+                    tuyến.
                 </Text>
 
                 {!loading && data.length === 0 ? (
@@ -61,16 +62,18 @@ const PlanningPage: React.FC = () => {
                                 <MapImage
                                     src={item.imageUrl}
                                     alt={item.title}
-                                    onClick={() => openWebView(item.imageUrl as string)}
+                                    onClick={() =>
+                                        openWebView(item.imageUrl as string)
+                                    }
                                 />
                             )}
                             <Box
                                 tw="flex flex-row items-start"
                                 onClick={() =>
-                                    navigate(
-                                        `${ROUTES.DOCUMENTS}/${item.id}`,
-                                        { animate: true, direction: "forward" },
-                                    )
+                                    navigate(`${ROUTES.DOCUMENTS}/${item.id}`, {
+                                        animate: true,
+                                        direction: "forward",
+                                    })
                                 }
                             >
                                 <FileBadge>{item.fileType || "FILE"}</FileBadge>

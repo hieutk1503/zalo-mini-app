@@ -44,17 +44,13 @@ const ResidentDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { openSnackbar } = useSnackbar();
 
-    const [
-        resident,
-        loading,
-        getResidentDetail,
-        submitResidentApproval,
-    ] = useStore(state => [
-        state.residentDetail,
-        state.gettingResidentDetail,
-        state.getResidentDetail,
-        state.submitResidentApproval,
-    ]);
+    const [resident, loading, getResidentDetail, submitResidentApproval] =
+        useStore(state => [
+            state.residentDetail,
+            state.gettingResidentDetail,
+            state.getResidentDetail,
+            state.submitResidentApproval,
+        ]);
 
     useEffect(() => {
         if (id) {
@@ -141,10 +137,7 @@ const ResidentDetailPage: React.FC = () => {
                     <InfoRow label="Email" value={resident.email} />
                     <InfoRow label="Dân tộc" value={resident.ethnicity} />
                     <InfoRow label="Tôn giáo" value={resident.religion} />
-                    <InfoRow
-                        label="Quốc tịch"
-                        value={resident.nationality}
-                    />
+                    <InfoRow label="Quốc tịch" value={resident.nationality} />
                 </SectionCard>
 
                 <Box mt={3}>
@@ -165,7 +158,10 @@ const ResidentDetailPage: React.FC = () => {
                             label="Tổ dân phố"
                             value={resident.neighborhoodGroup}
                         />
-                        <InfoRow label="Hộ dân" value={resident.householdCode} />
+                        <InfoRow
+                            label="Hộ dân"
+                            value={resident.householdCode}
+                        />
                         <InfoRow
                             label="Quan hệ với chủ hộ"
                             value={resident.relationToHead}
@@ -196,7 +192,10 @@ const ResidentDetailPage: React.FC = () => {
                         <SectionCard title="Khen thưởng">
                             {resident.rewards.map(rw => (
                                 <Row key={rw.id}>
-                                    <Text size="small" tw="text-text_1 flex-1 pr-2">
+                                    <Text
+                                        size="small"
+                                        tw="text-text_1 flex-1 pr-2"
+                                    >
                                         {rw.title}
                                         {rw.level ? ` · ${rw.level}` : ""}
                                     </Text>
@@ -213,10 +212,13 @@ const ResidentDetailPage: React.FC = () => {
                     <Button
                         variant="secondary"
                         onClick={() =>
-                            navigate(`${ROUTES.RESIDENTS}/${resident.id}/edit`, {
-                                animate: true,
-                                direction: "forward",
-                            })
+                            navigate(
+                                `${ROUTES.RESIDENTS}/${resident.id}/edit`,
+                                {
+                                    animate: true,
+                                    direction: "forward",
+                                },
+                            )
                         }
                         tw="flex-1"
                     >

@@ -45,7 +45,12 @@ export const getMeetingDetail = async (params: {
     organizationId?: string;
 }): Promise<Meeting | null> => {
     const url = generatePath(API.MEETING_DETAIL, { id: params.id });
-    return request<Meeting>("GET", url, {}, withOrgHeader(params.organizationId));
+    return request<Meeting>(
+        "GET",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export interface SaveMeetingParams {
@@ -67,8 +72,15 @@ export const confirmMeeting = async (params: {
     id: string;
     organizationId?: string;
 }): Promise<boolean> => {
-    const url = `${generatePath(API.MEETING_DETAIL, { id: params.id })}/confirm`;
-    return request<boolean>("POST", url, {}, withOrgHeader(params.organizationId));
+    const url = `${generatePath(API.MEETING_DETAIL, {
+        id: params.id,
+    })}/confirm`;
+    return request<boolean>(
+        "POST",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export const declineMeeting = async (params: {

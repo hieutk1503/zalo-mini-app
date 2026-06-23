@@ -52,9 +52,7 @@ const OrdinalNumberCard = forwardRef<HTMLDivElement, OrdinalNumberCardProps>(
                                 <FieldName $nowrap="true">
                                     Mã phiếu hẹn:
                                 </FieldName>
-                                <ValueText $rowdisplay="true">
-                                    {code}
-                                </ValueText>
+                                <ValueText $rowdisplay="true">{code}</ValueText>
                             </RowDisplay>
                         </Box>
                     )}
@@ -122,9 +120,7 @@ const OrdinalNumberCard = forwardRef<HTMLDivElement, OrdinalNumberCardProps>(
                     </Box>
                     <Box mt={4}>
                         <RowDisplay>
-                            <FieldName $nowrap="true">
-                                Thời gian hẹn:
-                            </FieldName>
+                            <FieldName $nowrap="true">Thời gian hẹn:</FieldName>
                             <ValueText $rowdisplay="true">
                                 {appointmentTime
                                     ? `${appointmentTime} - ${formatedDate}`

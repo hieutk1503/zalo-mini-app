@@ -7,11 +7,7 @@ import debounce from "lodash.debounce";
 import PageLayout from "@components/layout/PageLayout";
 import { EmptyDataContainer } from "@components/common";
 import { useStore } from "@store";
-import {
-    ROUTES,
-    LEGAL_FIELDS,
-    LEGAL_STATUS_LABEL,
-} from "@constants/common";
+import { ROUTES, LEGAL_FIELDS, LEGAL_STATUS_LABEL } from "@constants/common";
 import { formatDate } from "@utils/date-time";
 
 const Chip = styled.button<{ $active: boolean }>`
@@ -120,14 +116,16 @@ const LegalLibraryPage: React.FC = () => {
                         <Item
                             key={item.id}
                             onClick={() =>
-                                navigate(
-                                    `${ROUTES.LEGAL_LIBRARY}/${item.id}`,
-                                    { animate: true, direction: "forward" },
-                                )
+                                navigate(`${ROUTES.LEGAL_LIBRARY}/${item.id}`, {
+                                    animate: true,
+                                    direction: "forward",
+                                })
                             }
                         >
                             <Box tw="flex flex-row items-center mb-1">
-                                <TypeBadge>{item.docType || "Văn bản"}</TypeBadge>
+                                <TypeBadge>
+                                    {item.docType || "Văn bản"}
+                                </TypeBadge>
                                 {item.status && (
                                     <StatusBadge $status={item.status}>
                                         {LEGAL_STATUS_LABEL[item.status]}

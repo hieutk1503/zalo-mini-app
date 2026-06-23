@@ -64,7 +64,10 @@ const IncomeFormPage: React.FC = () => {
             neighborhoodGroup: group,
             amountPerHousehold: Number(data.amountPerHousehold) || 0,
             startDate: displayToIso(startDate),
-            endDate: endDate && isValidDate(endDate) ? displayToIso(endDate) : undefined,
+            endDate:
+                endDate && isValidDate(endDate)
+                    ? displayToIso(endDate)
+                    : undefined,
             status: "active",
             households: [],
         });
@@ -88,7 +91,9 @@ const IncomeFormPage: React.FC = () => {
                         placeholder="VD: Quỹ vệ sinh môi trường Q3"
                         status={errors?.name ? "error" : "default"}
                         errorText={
-                            errors?.name ? "Tên đợt thu không được để trống" : ""
+                            errors?.name
+                                ? "Tên đợt thu không được để trống"
+                                : ""
                         }
                         {...register("name", { required: true })}
                     />

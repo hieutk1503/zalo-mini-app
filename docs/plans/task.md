@@ -1,13 +1,19 @@
-| Task ID | Description | Status | Verification |
-|---------|-------------|--------|--------------|
-| 1-19 | Previous UI/UX and AI integration work | done | Previous work |
-| 20 | Task 1: Create worktree for realtime-ai-sync | done | Worktree removed |
-| 21 | Task 2: Update AI Service API (Upsert/Delete) | done | endpoints updated |
-| 22 | Task 3: Update AiSyncService in NestJS | done | Methods exposed |
-| 23 | Task 4: Hook NewsService to AiSyncService | done | Verified |
-| 24 | Task 5: Final Verification | done | Built and Merged |
-| 25 | Task 1: Create worktree for frontend-migration | done | Worktree created |
-| 26 | Task 2: Replace Base Template | done | Files copied and deps installed |
-| 27 | Task 3: Port Admin Pages | done | Admin files ported and routing set |
-| 28 | Task 4: Integrate AI Chatbot | done | Replaced with original chatbot |
-| 29 | Task 5: Connect News API | done | Integrated with NestJS |
+# Stabilization & Zalo Integration Plan Tasks
+
+## Phase 1: Bug Fixes & API Sync (Low Risk)
+- `[x]` **Task 1: Fix ESLint errors in ChatbotPage.tsx**
+- `[x]` **Task 2: Sync all remaining `_api` paths in common.ts**
+- `[x]` **Task 3: Add missing static backend endpoints**
+
+## Phase 2: Zalo Authentication (Medium Risk)
+- `[x]` **Task 4: Integrate Zalo Auth into app startup**
+- `[x]` **Task 5: Backend Zalo token verification**
+
+## Phase 3: Production Readiness (Low Risk)
+- `[x]` **Task 6: Production environment config**
+- `[x]` **Task 7: CORS & Security hardening**
+
+## Phase 4: Chatbot Real-time Streaming
+- `[x]` **Task 8: Backend Streaming Service**
+- `[x]` **Task 9: Backend Streaming Controller**
+- `[x]` **Task 10: Frontend Streaming Client**

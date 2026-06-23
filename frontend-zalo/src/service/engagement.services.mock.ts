@@ -65,7 +65,9 @@ export const getSurveyCampaigns = async (
         list = list.filter(s => s.status === status);
     }
     if (keyword) {
-        list = list.filter(s => matchKeyword(keyword, [s.title, s.description]));
+        list = list.filter(s =>
+            matchKeyword(keyword, [s.title, s.description]),
+        );
     }
     const { slice, ...meta } = paginate(list.map(withSurveyCount), page, limit);
     return delay({ surveys: slice, ...meta });
@@ -94,7 +96,12 @@ const computeSurveyResult = (survey: SurveyCampaign): SurveyResult => {
                     percent: Math.round((count / total) * 100),
                 };
             });
-            return { questionId: q.id, content: q.content, type: q.type, options };
+            return {
+                questionId: q.id,
+                content: q.content,
+                type: q.type,
+                options,
+            };
         }
         if (q.type === "rating") {
             return {
@@ -157,7 +164,9 @@ export const getContests = async (
         list = list.filter(c => c.status === status);
     }
     if (keyword) {
-        list = list.filter(c => matchKeyword(keyword, [c.title, c.description]));
+        list = list.filter(c =>
+            matchKeyword(keyword, [c.title, c.description]),
+        );
     }
     const { slice, ...meta } = paginate(list, page, limit);
     return delay({ contests: slice, ...meta });
@@ -214,5 +223,4 @@ export const submitContest = async (params: {
 export const getContestRanking = async (params: {
     id: string;
     organizationId?: string;
-}): Promise<ContestRankingEntry[]> =>
-    delay(clone(rankings[params.id] || []));
+}): Promise<ContestRankingEntry[]> => delay(clone(rankings[params.id] || []));

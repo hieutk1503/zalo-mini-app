@@ -14,8 +14,8 @@ const ReportEntryPage: React.FC = () => (
             <SectionCard title="Chức năng thuộc Web Admin / DSS">
                 <Text size="small" tw="text-text_2">
                     Nhập liệu báo cáo theo kỳ (thủ công, import Excel, lấy từ kỳ
-                    trước), lịch sử báo cáo và đính kèm tài liệu là nghiệp vụ của
-                    cán bộ/chuyên viên trên Web DSS.
+                    trước), lịch sử báo cáo và đính kèm tài liệu là nghiệp vụ
+                    của cán bộ/chuyên viên trên Web DSS.
                 </Text>
                 <Text size="small" tw="text-text_2 mt-2">
                     Theo định hướng, phần này được xây trên web quản trị, không

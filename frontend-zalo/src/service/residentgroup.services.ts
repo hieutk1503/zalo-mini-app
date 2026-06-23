@@ -51,7 +51,12 @@ export const getResidentDetail = async (params: {
     organizationId?: string;
 }): Promise<Resident | null> => {
     const url = generatePath(API.RESIDENT_DETAIL, { id: params.id });
-    return request<Resident>("GET", url, {}, withOrgHeader(params.organizationId));
+    return request<Resident>(
+        "GET",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export interface SaveResidentParams {
@@ -89,15 +94,27 @@ export const submitResidentApproval = async (params: {
     const url = `${generatePath(API.RESIDENT_DETAIL, {
         id: params.id,
     })}/submit-approval`;
-    return request<boolean>("POST", url, {}, withOrgHeader(params.organizationId));
+    return request<boolean>(
+        "POST",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export const approveResident = async (params: {
     id: string;
     organizationId?: string;
 }): Promise<boolean> => {
-    const url = `${generatePath(API.RESIDENT_DETAIL, { id: params.id })}/approve`;
-    return request<boolean>("POST", url, {}, withOrgHeader(params.organizationId));
+    const url = `${generatePath(API.RESIDENT_DETAIL, {
+        id: params.id,
+    })}/approve`;
+    return request<boolean>(
+        "POST",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export const rejectResident = async (params: {
@@ -105,7 +122,9 @@ export const rejectResident = async (params: {
     reason: string;
     organizationId?: string;
 }): Promise<boolean> => {
-    const url = `${generatePath(API.RESIDENT_DETAIL, { id: params.id })}/reject`;
+    const url = `${generatePath(API.RESIDENT_DETAIL, {
+        id: params.id,
+    })}/reject`;
     return request<boolean>(
         "POST",
         url,
@@ -142,7 +161,12 @@ export const getHouseholdDetail = async (params: {
     organizationId?: string;
 }): Promise<Household | null> => {
     const url = generatePath(API.HOUSEHOLD_DETAIL, { id: params.id });
-    return request<Household>("GET", url, {}, withOrgHeader(params.organizationId));
+    return request<Household>(
+        "GET",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export interface SaveHouseholdParams {
@@ -191,8 +215,15 @@ export const approveHousehold = async (params: {
     id: string;
     organizationId?: string;
 }): Promise<boolean> => {
-    const url = `${generatePath(API.HOUSEHOLD_DETAIL, { id: params.id })}/approve`;
-    return request<boolean>("POST", url, {}, withOrgHeader(params.organizationId));
+    const url = `${generatePath(API.HOUSEHOLD_DETAIL, {
+        id: params.id,
+    })}/approve`;
+    return request<boolean>(
+        "POST",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export const rejectHousehold = async (params: {
@@ -200,7 +231,9 @@ export const rejectHousehold = async (params: {
     reason: string;
     organizationId?: string;
 }): Promise<boolean> => {
-    const url = `${generatePath(API.HOUSEHOLD_DETAIL, { id: params.id })}/reject`;
+    const url = `${generatePath(API.HOUSEHOLD_DETAIL, {
+        id: params.id,
+    })}/reject`;
     return request<boolean>(
         "POST",
         url,
@@ -252,7 +285,12 @@ export const approveRequest = async (params: {
     const url = `${generatePath(API.APPROVAL_REQUEST_DETAIL, {
         id: params.id,
     })}/approve`;
-    return request<boolean>("POST", url, {}, withOrgHeader(params.organizationId));
+    return request<boolean>(
+        "POST",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export const rejectRequest = async (params: {

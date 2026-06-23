@@ -91,7 +91,10 @@ const NotificationDetailPage: React.FC = () => {
                             Đối tượng: {notification.neighborhoodGroup}
                         </Text>
                     )}
-                    <Text tw="text-text_1 mt-3" style={{ whiteSpace: "pre-line" }}>
+                    <Text
+                        tw="text-text_1 mt-3"
+                        style={{ whiteSpace: "pre-line" }}
+                    >
                         {notification.content}
                     </Text>
                 </SectionCard>

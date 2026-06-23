@@ -30,9 +30,7 @@
                     "reason": "Bận công tác xa"
                 }
             ],
-            "documents": [
-                { "id": "md-001", "name": "Báo cáo quý II.pdf" }
-            ],
+            "documents": [{ "id": "md-001", "name": "Báo cáo quý II.pdf" }],
             "createdAt": "2024-06-10"
         },
         {
@@ -92,7 +90,11 @@
             "creatorName": "Nguyễn Văn An",
             "createdAt": "2024-03-01",
             "members": [
-                { "id": "gm-001", "name": "Nguyễn Văn An", "role": "Nhóm trưởng" },
+                {
+                    "id": "gm-001",
+                    "name": "Nguyễn Văn An",
+                    "role": "Nhóm trưởng"
+                },
                 { "id": "gm-002", "name": "Trần Thị Bình" }
             ]
         },
@@ -118,7 +120,11 @@
             "creatorName": "Phạm Văn Dũng",
             "createdAt": "2024-02-20",
             "members": [
-                { "id": "gm-020", "name": "Phạm Văn Dũng", "role": "Nhóm trưởng" }
+                {
+                    "id": "gm-020",
+                    "name": "Phạm Văn Dũng",
+                    "role": "Nhóm trưởng"
+                }
             ]
         }
     ]

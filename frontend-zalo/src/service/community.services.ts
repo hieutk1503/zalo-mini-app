@@ -44,7 +44,12 @@ export const getReflectionDetail = async (params: {
     organizationId?: string;
 }): Promise<Reflection | null> => {
     const url = generatePath(API.REFLECTION_DETAIL, { id: params.id });
-    return request<Reflection>("GET", url, {}, withOrgHeader(params.organizationId));
+    return request<Reflection>(
+        "GET",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };
 
 export const receiveReflection = async (params: {
@@ -52,7 +57,9 @@ export const receiveReflection = async (params: {
     note?: string;
     organizationId?: string;
 }): Promise<boolean> => {
-    const url = `${generatePath(API.REFLECTION_DETAIL, { id: params.id })}/receive`;
+    const url = `${generatePath(API.REFLECTION_DETAIL, {
+        id: params.id,
+    })}/receive`;
     return request<boolean>(
         "POST",
         url,
@@ -67,7 +74,9 @@ export const forwardReflection = async (params: {
     note?: string;
     organizationId?: string;
 }): Promise<boolean> => {
-    const url = `${generatePath(API.REFLECTION_DETAIL, { id: params.id })}/forward`;
+    const url = `${generatePath(API.REFLECTION_DETAIL, {
+        id: params.id,
+    })}/forward`;
     return request<boolean>(
         "POST",
         url,
@@ -81,7 +90,9 @@ export const completeReflection = async (params: {
     note: string;
     organizationId?: string;
 }): Promise<boolean> => {
-    const url = `${generatePath(API.REFLECTION_DETAIL, { id: params.id })}/complete`;
+    const url = `${generatePath(API.REFLECTION_DETAIL, {
+        id: params.id,
+    })}/complete`;
     return request<boolean>(
         "POST",
         url,
@@ -132,5 +143,10 @@ export const markNotificationRead = async (params: {
     const url = `${generatePath(API.QUICK_NOTIFICATION_DETAIL, {
         id: params.id,
     })}/read`;
-    return request<boolean>("POST", url, {}, withOrgHeader(params.organizationId));
+    return request<boolean>(
+        "POST",
+        url,
+        {},
+        withOrgHeader(params.organizationId),
+    );
 };

@@ -60,12 +60,7 @@ export const getReflections = async (
     }
     if (keyword) {
         list = list.filter(r =>
-            matchKeyword(keyword, [
-                r.code,
-                r.title,
-                r.typeName,
-                r.senderName,
-            ]),
+            matchKeyword(keyword, [r.code, r.title, r.typeName, r.senderName]),
         );
     }
     const { slice, ...meta } = paginate(list, page, limit);

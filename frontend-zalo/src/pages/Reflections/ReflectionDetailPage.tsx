@@ -14,10 +14,7 @@ import "styled-components/macro";
 import PageLayout from "@components/layout/PageLayout";
 import { EmptyState, SectionCard, StatusBadge, TextArea } from "@components";
 import { useStore } from "@store";
-import {
-    FORWARD_UNITS,
-    REFLECTION_STATUS_LABEL,
-} from "@constants/reflection";
+import { FORWARD_UNITS, REFLECTION_STATUS_LABEL } from "@constants/reflection";
 import { ReflectionLogAction } from "@dts";
 import { maskPhoneNumber } from "@utils/string";
 
@@ -143,7 +140,10 @@ const ReflectionDetailPage: React.FC = () => {
     const onForward = async () => {
         if (!id) return;
         if (!unit) {
-            openSnackbar({ type: "warning", text: "Vui lòng chọn đơn vị chuyển" });
+            openSnackbar({
+                type: "warning",
+                text: "Vui lòng chọn đơn vị chuyển",
+            });
             return;
         }
         const ok = await forwardReflection(id, unit, note.trim() || undefined);
@@ -154,7 +154,10 @@ const ReflectionDetailPage: React.FC = () => {
     const onComplete = async () => {
         if (!id) return;
         if (!note.trim()) {
-            openSnackbar({ type: "warning", text: "Vui lòng nhập nội dung xử lý" });
+            openSnackbar({
+                type: "warning",
+                text: "Vui lòng nhập nội dung xử lý",
+            });
             return;
         }
         const ok = await completeReflection(id, note.trim());
@@ -164,7 +167,10 @@ const ReflectionDetailPage: React.FC = () => {
 
     if (loading) {
         return (
-            <PageLayout title="Chi tiết phản ánh" id="reflection-detail-loading">
+            <PageLayout
+                title="Chi tiết phản ánh"
+                id="reflection-detail-loading"
+            >
                 <Box p={4}>
                     <LoadingBlock />
                 </Box>
@@ -244,16 +250,25 @@ const ReflectionDetailPage: React.FC = () => {
                         <SectionCard title="Lịch sử xử lý">
                             {reflection.logs.map(log => (
                                 <TimelineItem key={log.id}>
-                                    <Text size="small" tw="text-text_1 font-medium">
+                                    <Text
+                                        size="small"
+                                        tw="text-text_1 font-medium"
+                                    >
                                         {LOG_LABEL[log.action]}
                                         {log.toUnit ? ` → ${log.toUnit}` : ""}
                                     </Text>
                                     {log.note && (
-                                        <Text size="small" tw="text-text_2 mt-0.5">
+                                        <Text
+                                            size="small"
+                                            tw="text-text_2 mt-0.5"
+                                        >
                                             {log.note}
                                         </Text>
                                     )}
-                                    <Text size="xxSmall" tw="text-text_3 mt-0.5">
+                                    <Text
+                                        size="xxSmall"
+                                        tw="text-text_3 mt-0.5"
+                                    >
                                         {log.byName || ""} · {viDate(log.at)}
                                     </Text>
                                 </TimelineItem>
