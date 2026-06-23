@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
+import * as bcrypt from 'bcrypt';
 
 const connectionString = process.env.DATABASE_URL || 'postgresql://root:password@127.0.0.1:5433/tu_lan_smart?schema=public';
 const pool = new Pool({ connectionString });
@@ -8,9 +9,37 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('Bắt đầu bơm dữ liệu Demo thông minh (Append Only)...');
+  console.log('Bắt đầu bơm dữ liệu Demo toàn diện (Append Only)...');
 
-  // 1. TẠO THỦ TỤC HÀNH CHÍNH
+  // --- 1. ADMIN & CITIZEN ---
+  const passwordHash = await bcrypt.hash('admin123', 10);
+  let admin = await prisma.admin.findUnique({ where: { email: 'admin@demo.com' } });
+  if (!admin) {
+    admin = await prisma.admin.create({
+      data: {
+        email: 'admin@demo.com',
+        password_hash: passwordHash,
+        full_name: '[Demo] Quản trị viên',
+        role: 'ADMIN',
+      }
+    });
+    console.log(`[+] Đã thêm Admin: ${admin.full_name}`);
+  }
+
+  let citizen = await prisma.citizen.findUnique({ where: { zalo_id: 'ZALO_DEMO_001' } });
+  if (!citizen) {
+    citizen = await prisma.citizen.create({
+      data: {
+        zalo_id: 'ZALO_DEMO_001',
+        full_name: '[Demo] Nguyễn Văn Công Dân',
+        phone: '0987654321',
+        cccd: '012345678912',
+      }
+    });
+    console.log(`[+] Đã thêm Công dân: ${citizen.full_name}`);
+  }
+
+  // --- 2. THỦ TỤC HÀNH CHÍNH & BIỂU MẪU ---
   const procedures = [
     {
       code: 'DEMO-TTHC-001',
@@ -27,89 +56,174 @@ async function main() {
       duration: '1 ngày làm việc',
       fee: 'Miễn phí',
       process_steps: '1. Tờ khai đăng ký kết hôn\n2. Giấy xác nhận tình trạng hôn nhân\n3. CCCD của cả nam và nữ',
-    },
-    {
-      code: 'DEMO-TTHC-003',
-      title: '[Demo] Thủ tục Cấp giấy chứng nhận quyền sử dụng đất (Sổ đỏ)',
-      description: 'Trình tự, thủ tục cấp giấy chứng nhận quyền sử dụng đất lần đầu cho hộ gia đình, cá nhân.',
-      duration: '30 ngày làm việc',
-      fee: 'Theo quy định của nhà nước (tùy diện tích)',
-      process_steps: '1. Đơn đăng ký cấp Sổ đỏ\n2. Giấy tờ chứng minh quyền sử dụng đất\n3. Chứng từ hoàn thành nghĩa vụ tài chính',
     }
   ];
 
+  let firstProcedureId = null;
   for (const proc of procedures) {
-    const existing = await prisma.administrativeProcedure.findUnique({
-      where: { code: proc.code }
-    });
+    let existing = await prisma.administrativeProcedure.findUnique({ where: { code: proc.code } });
     if (!existing) {
-      await prisma.administrativeProcedure.create({ data: proc });
-      console.log(`[+] Đã thêm: ${proc.title}`);
-    } else {
-      console.log(`[-] Bỏ qua (đã tồn tại): ${proc.title}`);
+      existing = await prisma.administrativeProcedure.create({ data: proc });
+      console.log(`[+] Đã thêm Thủ tục: ${proc.title}`);
+    }
+    if (!firstProcedureId) firstProcedureId = existing.id;
+  }
+
+  // Thêm Form Template cho Thủ tục đầu tiên
+  if (firstProcedureId) {
+    const existingForm = await prisma.formTemplate.findFirst({ where: { procedure_id: firstProcedureId } });
+    if (!existingForm) {
+      await prisma.formTemplate.create({
+        data: {
+          name: '[Demo] Mẫu tờ khai CCCD 2026',
+          file_url: 'https://example.com/form-cccd.pdf',
+          procedure_id: firstProcedureId
+        }
+      });
+      console.log(`[+] Đã thêm Biểu mẫu thủ tục`);
     }
   }
 
-  // 2. TẠO TIN TỨC (NEWS)
+  // --- 3. TIN TỨC (NEWS) ---
   const newsList = [
     {
       title: '[Demo] Khai mạc Đại hội Thể dục Thể thao toàn xã lần thứ X',
-      content: 'Sáng nay, tại sân vận động trung tâm, Đại hội Thể dục Thể thao toàn xã lần thứ X chính thức được khai mạc với sự tham gia của hơn 500 vận động viên đến từ 12 thôn, bản. Đại hội bao gồm các môn thi đấu: Bóng đá, Bóng chuyền hơi, Cầu lông và Kéo co. Đây là hoạt động thường niên nhằm nâng cao tinh thần rèn luyện sức khỏe của bà con nhân dân.',
+      content: 'Sáng nay, tại sân vận động trung tâm, Đại hội Thể dục Thể thao toàn xã lần thứ X chính thức được khai mạc với sự tham gia của hơn 500 vận động viên đến từ 12 thôn, bản.',
       thumbnail: 'https://placehold.co/600x400/png?text=Dai+Hoi+The+Thao',
-    },
-    {
-      title: '[Demo] Thông báo Lịch cắt điện luân phiên tuần tới',
-      content: 'Điện lực thông báo lịch cắt điện luân phiên tuần tới từ ngày 15 đến ngày 20 để phục vụ công tác bảo trì đường dây trung thế. Cụ thể: Thôn A mất điện sáng thứ 2, Thôn B mất điện chiều thứ 3. Kính mong bà con chủ động sắp xếp sinh hoạt và sản xuất.',
-      thumbnail: 'https://placehold.co/600x400/png?text=Thong+Bao+Cat+Dien',
-    },
-    {
-      title: '[Demo] Hội nghị tập huấn công tác phòng cháy chữa cháy năm 2026',
-      content: 'Công an phối hợp cùng chính quyền địa phương vừa tổ chức buổi tập huấn kỹ năng Phòng cháy chữa cháy (PCCC) cho các hộ kinh doanh và người dân trên địa bàn. Qua buổi tập huấn, người dân đã nắm được cách sử dụng bình chữa cháy mini và kỹ năng thoát hiểm khi có hỏa hoạn xảy ra.',
-      thumbnail: 'https://placehold.co/600x400/png?text=Tap+Huan+PCCC',
     }
   ];
 
   for (const news of newsList) {
-    const existing = await prisma.news.findFirst({
-      where: { title: news.title }
-    });
+    const existing = await prisma.news.findFirst({ where: { title: news.title } });
     if (!existing) {
       await prisma.news.create({ data: news });
-      console.log(`[+] Đã thêm: ${news.title}`);
-    } else {
-      console.log(`[-] Bỏ qua (đã tồn tại): ${news.title}`);
+      console.log(`[+] Đã thêm Tin tức: ${news.title}`);
     }
   }
 
-  // 3. TẠO VĂN BẢN (DOCUMENTS)
+  // --- 4. VĂN BẢN (DOCUMENTS) ---
   const documents = [
     {
       document_no: 'DEMO-VB-1102',
-      abstract: '[Demo] Quyết định phê duyệt kế hoạch sử dụng đất năm 2026. Căn cứ Luật Tổ chức chính quyền địa phương, nay ban hành quyết định phê duyệt kế hoạch sử dụng đất chi tiết năm 2026 cho các hạng mục công trình công cộng và dân sinh.',
+      abstract: '[Demo] Quyết định phê duyệt kế hoạch sử dụng đất năm 2026.',
       type: 'Quyết định',
       file_url: 'https://example.com/demo.pdf',
-    },
-    {
-      document_no: 'DEMO-VB-1103',
-      abstract: '[Demo] Kế hoạch triển khai tiêm vắc xin cho trẻ em. Trạm y tế xin thông báo kế hoạch tiêm chủng các loại vắc xin (Sởi, Rubella, Bạch hầu) cho trẻ em dưới 5 tuổi vào đợt 1 tháng 7 năm 2026.',
-      type: 'Kế hoạch',
-      file_url: 'https://example.com/demo2.pdf',
     }
   ];
 
   for (const doc of documents) {
-    const existing = await prisma.document.findUnique({
-      where: { document_no: doc.document_no }
-    });
+    const existing = await prisma.document.findUnique({ where: { document_no: doc.document_no } });
     if (!existing) {
       await prisma.document.create({ data: doc });
-      console.log(`[+] Đã thêm: ${doc.abstract.substring(0, 40)}...`);
-    } else {
-      console.log(`[-] Bỏ qua (đã tồn tại): ${doc.abstract.substring(0, 40)}...`);
+      console.log(`[+] Đã thêm Văn bản: ${doc.document_no}`);
     }
   }
 
-  console.log('✅ Hoàn tất bơm dữ liệu Demo thông minh!');
+  // --- 5. LỊCH HẸN (APPOINTMENT) & PHẢN ÁNH (FEEDBACK) ---
+  const existingAppt = await prisma.appointment.findUnique({ where: { ticket_number: 'DEMO-TICKET-01' } });
+  if (!existingAppt) {
+    await prisma.appointment.create({
+      data: {
+        ticket_number: 'DEMO-TICKET-01',
+        citizen_id: citizen.id,
+        appointment_date: new Date('2026-07-01T08:00:00Z'),
+        time_slot: '08:00 - 09:00',
+        content: '[Demo] Hẹn làm thủ tục chứng thực chữ ký',
+        status: 'PENDING'
+      }
+    });
+    console.log(`[+] Đã thêm Lịch hẹn: DEMO-TICKET-01`);
+  }
+
+  const existingFeedback = await prisma.feedback.findFirst({ where: { content: { contains: '[Demo]' } } });
+  if (!existingFeedback) {
+    await prisma.feedback.create({
+      data: {
+        citizen_id: citizen.id,
+        content: '[Demo] Đèn đường tại ngã tư xóm 3 bị hỏng đã 1 tuần nay, gây nguy hiểm cho người tham gia giao thông.',
+        image_urls: 'https://placehold.co/400x300/png?text=Den+Duong+Hong',
+        status: 'PROCESSING',
+        location: 'Ngã tư xóm 3',
+        admin_reply: 'UBND đã tiếp nhận và cử cán bộ điện lực xuống khắc phục trong hôm nay.'
+      }
+    });
+    console.log(`[+] Đã thêm Phản ánh hiện trường`);
+  }
+
+  // --- 6. QUY HOẠCH (PLANNING) ---
+  const existingPlanning = await prisma.planning.findFirst({ where: { title: { contains: '[Demo]' } } });
+  if (!existingPlanning) {
+    await prisma.planning.create({
+      data: {
+        title: '[Demo] Quy hoạch khu công nghiệp mới giai đoạn 2026-2030',
+        content: 'Bản đồ quy hoạch chi tiết 1/500 khu công nghiệp xanh phía Nam. Dự kiến tạo ra 5000 việc làm cho người lao động.',
+        image: 'https://placehold.co/800x600/png?text=Ban+Do+Quy+Hoach',
+        file_url: 'https://example.com/quyhoach.pdf'
+      }
+    });
+    console.log(`[+] Đã thêm Quy hoạch`);
+  }
+
+  // --- 7. DỰ ÁN ĐẦU TƯ (INVESTMENT PROJECT) ---
+  const existingProject = await prisma.investmentProject.findFirst({ where: { project_name: { contains: '[Demo]' } } });
+  if (!existingProject) {
+    await prisma.investmentProject.create({
+      data: {
+        project_name: '[Demo] Nâng cấp đường trục chính liên xã',
+        description: 'Dự án trải nhựa 5km đường trục chính, lắp đặt hệ thống cống thoát nước và đèn chiếu sáng.',
+        status: 'Đang triển khai',
+        start_date: new Date('2026-01-01'),
+        end_date: new Date('2026-12-31'),
+        budget: 15000000000, // 15 tỷ
+      }
+    });
+    console.log(`[+] Đã thêm Dự án đầu tư`);
+  }
+
+  // --- 8. ĐẤU THẦU (BIDDING) ---
+  const existingBidding = await prisma.bidding.findFirst({ where: { package_name: { contains: '[Demo]' } } });
+  if (!existingBidding) {
+    await prisma.bidding.create({
+      data: {
+        package_name: '[Demo] Mua sắm trang thiết bị y tế cho Trạm Y tế',
+        price: 500000000, // 500 triệu
+        start_date: new Date('2026-06-01'),
+        end_date: new Date('2026-06-30'),
+        requirements_file: 'https://example.com/hoso-dauthau.pdf'
+      }
+    });
+    console.log(`[+] Đã thêm Gói thầu`);
+  }
+
+  // --- 9. LỊCH LÀM VIỆC (WORK SCHEDULE) ---
+  const existingSchedule = await prisma.workSchedule.findFirst({ where: { title: { contains: '[Demo]' } } });
+  if (!existingSchedule) {
+    await prisma.workSchedule.create({
+      data: {
+        title: '[Demo] Họp giao ban Thường trực HĐND - UBND',
+        event_date: new Date('2026-06-25'),
+        time: '08:00',
+        location: 'Phòng họp số 1',
+        attendees: 'Chủ tịch, các Phó Chủ tịch, Trưởng các ban ngành'
+      }
+    });
+    console.log(`[+] Đã thêm Lịch làm việc`);
+  }
+
+  // --- 10. KHẢO SÁT (SURVEY) ---
+  const existingSurvey = await prisma.survey.findFirst({ where: { comment: { contains: '[Demo]' } } });
+  if (!existingSurvey) {
+    await prisma.survey.create({
+      data: {
+        rating: 5,
+        comment: '[Demo] Thái độ phục vụ của cán bộ một cửa rất nhiệt tình.',
+        user_zalo_id: citizen.zalo_id
+      }
+    });
+    console.log(`[+] Đã thêm Đánh giá khảo sát`);
+  }
+
+  console.log('✅ Hoàn tất bơm dữ liệu TOÀN DIỆN!');
 }
 
 main()

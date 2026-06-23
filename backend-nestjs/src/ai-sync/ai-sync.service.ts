@@ -52,6 +52,36 @@ export class AiSyncService {
       await this.syncItem('DOCUMENT', doc.id, chunk);
     }
 
+    // 5. Đồng bộ Quy hoạch
+    const plannings = await this.prisma.planning.findMany();
+    for (const item of plannings) {
+      const chunk = `[Quy hoạch] ${item.title}: ${item.content}`;
+      await this.syncItem('PLANNING', item.id, chunk);
+    }
+
+    // 6. Đồng bộ Dự án đầu tư
+    const projects = await this.prisma.investmentProject.findMany();
+    for (const item of projects) {
+      const chunk = `[Dự án đầu tư] ${item.project_name}: ${item.description} - Trạng thái: ${item.status} - Ngân sách: ${item.budget} VNĐ`;
+      await this.syncItem('INVESTMENT_PROJECT', item.id, chunk);
+    }
+
+    // 7. Đồng bộ Đấu thầu
+    const biddings = await this.prisma.bidding.findMany();
+    for (const item of biddings) {
+      const chunk = `[Đấu thầu] Tên gói thầu: ${item.package_name} - Giá: ${item.price} VNĐ`;
+      await this.syncItem('BIDDING', item.id, chunk);
+    }
+
+    // 8. Đồng bộ Lịch làm việc
+    const schedules = await this.prisma.workSchedule.findMany();
+    for (const item of schedules) {
+      // Đảm bảo không bị lỗi nếu event_date null dù schema báo không null
+      const dateStr = item.event_date ? item.event_date.toLocaleDateString('vi-VN') : '';
+      const chunk = `[Lịch làm việc] ${item.title} - Thời gian: ${item.time || ''} ngày ${dateStr} - Địa điểm: ${item.location || ''} - Thành phần: ${item.attendees || ''}`;
+      await this.syncItem('WORK_SCHEDULE', item.id, chunk);
+    }
+
     this.logger.log('Hoàn thành đồng bộ toàn bộ dữ liệu.');
     return { status: 'success', message: 'Sync completed successfully' };
   }
