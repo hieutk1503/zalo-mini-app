@@ -36,7 +36,7 @@ def search_database(query: str):
         SELECT source_type, source_id, content_chunk 
         FROM "KnowledgeVector" 
         ORDER BY embedding <=> %s::vector 
-        LIMIT 3
+        LIMIT 5
         """,
         (str(query_embedding),)
     )
