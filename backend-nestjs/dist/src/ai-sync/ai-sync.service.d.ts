@@ -10,5 +10,6 @@ export declare class AiSyncService {
         status: string;
         message: string;
     }>;
-    private sendToAi;
+    syncItem(sourceType: string, sourceId: number, contentChunk: string): Promise<void>;
+    deleteItem(sourceType: string, sourceId: number): Promise<void>;
 }

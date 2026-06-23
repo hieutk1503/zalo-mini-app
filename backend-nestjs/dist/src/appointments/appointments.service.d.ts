@@ -23,8 +23,8 @@ export declare class AppointmentsService {
     getMyAppointments(citizenId: number): Promise<({
         citizen: {
             id: number;
-            full_name: string | null;
             created_at: Date;
+            full_name: string | null;
             phone: string | null;
             cccd: string | null;
             zalo_id: string;
@@ -43,8 +43,8 @@ export declare class AppointmentsService {
     getAllForAdmin(): Promise<({
         citizen: {
             id: number;
-            full_name: string | null;
             created_at: Date;
+            full_name: string | null;
             phone: string | null;
             cccd: string | null;
             zalo_id: string;

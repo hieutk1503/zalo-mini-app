@@ -1,11 +1,12 @@
 import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common';
 import { FeedbacksService } from './feedbacks.service';
 import { SoftAuthGuard } from '../auth/soft-auth.guard';
+import { ZaloAuthGuard } from '../auth/zalo-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import type { Citizen } from '@prisma/client';
 
 @Controller('feedbacks')
-@UseGuards(SoftAuthGuard)
+@UseGuards(ZaloAuthGuard, SoftAuthGuard)
 export class FeedbacksController {
   constructor(private readonly feedbacksService: FeedbacksService) {}
 

@@ -16,6 +16,7 @@ exports.AppointmentsController = void 0;
 const common_1 = require("@nestjs/common");
 const appointments_service_1 = require("./appointments.service");
 const soft_auth_guard_1 = require("../auth/soft-auth.guard");
+const zalo_auth_guard_1 = require("../auth/zalo-auth.guard");
 const current_user_decorator_1 = require("../auth/current-user.decorator");
 let AppointmentsController = class AppointmentsController {
     appointmentsService;
@@ -32,7 +33,7 @@ let AppointmentsController = class AppointmentsController {
 exports.AppointmentsController = AppointmentsController;
 __decorate([
     (0, common_1.Post)(),
-    (0, common_1.UseGuards)(soft_auth_guard_1.SoftAuthGuard),
+    (0, common_1.UseGuards)(zalo_auth_guard_1.ZaloAuthGuard, soft_auth_guard_1.SoftAuthGuard),
     __param(0, (0, current_user_decorator_1.CurrentUser)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -41,7 +42,7 @@ __decorate([
 ], AppointmentsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.UseGuards)(soft_auth_guard_1.SoftAuthGuard),
+    (0, common_1.UseGuards)(zalo_auth_guard_1.ZaloAuthGuard, soft_auth_guard_1.SoftAuthGuard),
     __param(0, (0, current_user_decorator_1.CurrentUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

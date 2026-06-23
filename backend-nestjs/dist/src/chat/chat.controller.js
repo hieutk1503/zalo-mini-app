@@ -20,8 +20,17 @@ let ChatController = class ChatController {
     constructor(chatService) {
         this.chatService = chatService;
     }
-    async queryChat(query, history) {
-        return this.chatService.askAi(query, history);
+    async queryChat(query, history, res) {
+        try {
+            const stream = await this.chatService.askAiStream(query, history);
+            res.setHeader('Content-Type', 'text/event-stream');
+            res.setHeader('Cache-Control', 'no-cache');
+            res.setHeader('Connection', 'keep-alive');
+            stream.pipe(res);
+        }
+        catch (error) {
+            res.status(500).json({ message: 'Lỗi khi kết nối với AI Service' });
+        }
     }
 };
 exports.ChatController = ChatController;
@@ -29,8 +38,9 @@ __decorate([
     (0, common_1.Post)('query'),
     __param(0, (0, common_1.Body)('query')),
     __param(1, (0, common_1.Body)('history')),
+    __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Array]),
+    __metadata("design:paramtypes", [String, Array, Object]),
     __metadata("design:returntype", Promise)
 ], ChatController.prototype, "queryChat", null);
 exports.ChatController = ChatController = __decorate([

@@ -4,13 +4,18 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { env } from './config/env';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  app.use(helmet());
+
   app.enableCors({
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: env.nodeEnv === 'production'
+      ? ['https://your-zalo-domain.com']
+      : true,
+    credentials: true,
   });
 
   app.useStaticAssets(join(process.cwd(), env.uploadDir), {
@@ -20,3 +25,5 @@ async function bootstrap() {
   await app.listen(env.port);
 }
 void bootstrap();
+
+

@@ -16,6 +16,7 @@ exports.FeedbacksController = void 0;
 const common_1 = require("@nestjs/common");
 const feedbacks_service_1 = require("./feedbacks.service");
 const soft_auth_guard_1 = require("../auth/soft-auth.guard");
+const zalo_auth_guard_1 = require("../auth/zalo-auth.guard");
 const current_user_decorator_1 = require("../auth/current-user.decorator");
 let FeedbacksController = class FeedbacksController {
     feedbacksService;
@@ -47,7 +48,7 @@ __decorate([
 ], FeedbacksController.prototype, "findAll", null);
 exports.FeedbacksController = FeedbacksController = __decorate([
     (0, common_1.Controller)('feedbacks'),
-    (0, common_1.UseGuards)(soft_auth_guard_1.SoftAuthGuard),
+    (0, common_1.UseGuards)(zalo_auth_guard_1.ZaloAuthGuard, soft_auth_guard_1.SoftAuthGuard),
     __metadata("design:paramtypes", [feedbacks_service_1.FeedbacksService])
 ], FeedbacksController);
 //# sourceMappingURL=feedbacks.controller.js.map

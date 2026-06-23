@@ -20,6 +20,7 @@ exports.AiSyncModule = AiSyncModule = __decorate([
         imports: [axios_1.HttpModule],
         providers: [ai_sync_service_1.AiSyncService, prisma_service_1.PrismaService],
         controllers: [ai_sync_controller_1.AiSyncController],
+        exports: [ai_sync_service_1.AiSyncService],
     })
 ], AiSyncModule);
 //# sourceMappingURL=ai-sync.module.js.map

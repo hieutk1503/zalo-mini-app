@@ -1,6 +1,7 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { Readable } from 'stream';
 import { env } from '../config/env';
 
 @Injectable()
@@ -9,19 +10,23 @@ export class ChatService {
 
   constructor(private readonly httpService: HttpService) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async askAi(query: string, history?: any[]) {
+  async askAiStream(query: string, history?: any[]): Promise<Readable> {
     try {
       const response = await firstValueFrom(
-        this.httpService.post(`${this.aiServiceUrl}/api/chat/query`, { 
-          query,
-          history: history || []
-        }),
+        this.httpService.post(
+          `${this.aiServiceUrl}/api/chat/query`,
+          {
+            query,
+            history: history || [],
+          },
+          { responseType: 'stream' },
+        ),
       );
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return response.data;
+
+      return response.data as Readable;
     } catch {
       throw new HttpException('Lỗi khi kết nối với AI Service', 500);
     }
   }
 }
+

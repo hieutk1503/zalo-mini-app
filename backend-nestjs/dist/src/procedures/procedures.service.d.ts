@@ -7,7 +7,6 @@ export declare class ProceduresService {
     private getImportValue;
     findAll(q?: string): Promise<{
         id: number;
-        created_at: Date;
         code: string;
         title: string;
         description: string | null;
@@ -15,10 +14,10 @@ export declare class ProceduresService {
         duration: string | null;
         process_steps: string | null;
         is_active: boolean;
+        created_at: Date;
     }[]>;
     findOne(id: number): import("@prisma/client").Prisma.Prisma__AdministrativeProcedureClient<{
         id: number;
-        created_at: Date;
         code: string;
         title: string;
         description: string | null;
@@ -26,10 +25,10 @@ export declare class ProceduresService {
         duration: string | null;
         process_steps: string | null;
         is_active: boolean;
+        created_at: Date;
     } | null, null, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     create(data: any): import("@prisma/client").Prisma.Prisma__AdministrativeProcedureClient<{
         id: number;
-        created_at: Date;
         code: string;
         title: string;
         description: string | null;
@@ -37,10 +36,10 @@ export declare class ProceduresService {
         duration: string | null;
         process_steps: string | null;
         is_active: boolean;
+        created_at: Date;
     }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     update(id: number, data: any): import("@prisma/client").Prisma.Prisma__AdministrativeProcedureClient<{
         id: number;
-        created_at: Date;
         code: string;
         title: string;
         description: string | null;
@@ -48,10 +47,10 @@ export declare class ProceduresService {
         duration: string | null;
         process_steps: string | null;
         is_active: boolean;
+        created_at: Date;
     }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     remove(id: number): import("@prisma/client").Prisma.Prisma__AdministrativeProcedureClient<{
         id: number;
-        created_at: Date;
         code: string;
         title: string;
         description: string | null;
@@ -59,6 +58,7 @@ export declare class ProceduresService {
         duration: string | null;
         process_steps: string | null;
         is_active: boolean;
+        created_at: Date;
     }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     previewImport(buffer: Buffer): Promise<{
         newCount: number;

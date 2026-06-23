@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const axios_1 = require("@nestjs/axios");
 const prisma_module_1 = require("../prisma/prisma.module");
 const soft_auth_guard_1 = require("./soft-auth.guard");
+const zalo_auth_guard_1 = require("./zalo-auth.guard");
 const zalo_auth_service_1 = require("./zalo-auth.service");
 let AuthModule = class AuthModule {
 };
@@ -18,8 +19,8 @@ exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [prisma_module_1.PrismaModule, axios_1.HttpModule],
-        providers: [zalo_auth_service_1.ZaloAuthService, soft_auth_guard_1.SoftAuthGuard],
-        exports: [soft_auth_guard_1.SoftAuthGuard, zalo_auth_service_1.ZaloAuthService],
+        providers: [zalo_auth_service_1.ZaloAuthService, soft_auth_guard_1.SoftAuthGuard, zalo_auth_guard_1.ZaloAuthGuard],
+        exports: [soft_auth_guard_1.SoftAuthGuard, zalo_auth_guard_1.ZaloAuthGuard, zalo_auth_service_1.ZaloAuthService],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

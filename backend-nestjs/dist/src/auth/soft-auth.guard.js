@@ -25,7 +25,8 @@ let SoftAuthGuard = class SoftAuthGuard {
         const request = context
             .switchToHttp()
             .getRequest();
-        const accessToken = request.headers['x-zalo-access-token'];
+        const accessToken = request.headers['x-zalo-access-token'] ||
+            request.headers.authorization?.replace('Bearer ', '');
         if (accessToken && this.zaloAuthService.isConfigured()) {
             const profile = await this.zaloAuthService.verifyAccessToken(accessToken);
             const citizen = await this.upsertCitizen(profile.id, profile.name?.trim() || 'Công dân Zalo', undefined, profile.picture?.data?.url);

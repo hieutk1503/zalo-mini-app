@@ -40,22 +40,22 @@ let AiSyncService = AiSyncService_1 = class AiSyncService {
         });
         for (const proc of procedures) {
             const chunk = `[Thủ tục: ${proc.code}] ${proc.title} - ${proc.description || ''} - Lệ phí: ${proc.fee || 'Không'} - Thời gian: ${proc.duration || 'Không'}`;
-            await this.sendToAi('PROCEDURE', proc.id, chunk);
+            await this.syncItem('PROCEDURE', proc.id, chunk);
         }
         const news = await this.prisma.news.findMany();
         for (const item of news) {
             const chunk = `[Tin tức: ${item.title}] Nội dung: ${item.content}`;
-            await this.sendToAi('NEWS', item.id, chunk);
+            await this.syncItem('NEWS', item.id, chunk);
         }
         const docs = await this.prisma.document.findMany();
         for (const doc of docs) {
             const chunk = `[Văn bản: ${doc.document_no}] Trích yếu: ${doc.abstract}`;
-            await this.sendToAi('DOCUMENT', doc.id, chunk);
+            await this.syncItem('DOCUMENT', doc.id, chunk);
         }
         this.logger.log('Hoàn thành đồng bộ toàn bộ dữ liệu.');
         return { status: 'success', message: 'Sync completed successfully' };
     }
-    async sendToAi(sourceType, sourceId, contentChunk) {
+    async syncItem(sourceType, sourceId, contentChunk) {
         try {
             await (0, rxjs_1.lastValueFrom)(this.httpService.post(`${this.AI_SERVICE_URL}/api/embeddings/sync`, {
                 source_type: sourceType,
@@ -66,6 +66,15 @@ let AiSyncService = AiSyncService_1 = class AiSyncService {
         }
         catch (error) {
             this.logger.error(`Lỗi khi sync ${sourceType} ID ${sourceId}`, error);
+        }
+    }
+    async deleteItem(sourceType, sourceId) {
+        try {
+            await (0, rxjs_1.lastValueFrom)(this.httpService.delete(`${this.AI_SERVICE_URL}/api/embeddings/sync/${sourceType}/${sourceId}`));
+            this.logger.debug(`Deleted AI vector for ${sourceType} ID ${sourceId}`);
+        }
+        catch (error) {
+            this.logger.error(`Lỗi khi delete ${sourceType} ID ${sourceId}`, error);
         }
     }
 };

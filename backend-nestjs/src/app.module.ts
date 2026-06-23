@@ -22,6 +22,7 @@ import { OrganizationModule } from './organization/organization.module';
 import { WeatherModule } from './weather/weather.module';
 import { EventsModule } from './events/events.module';
 import { HomeSectionsModule } from './home-sections/home-sections.module';
+import { StaticDataModule } from './static-data/static-data.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { HomeSectionsModule } from './home-sections/home-sections.module';
     WorkScheduleModule,
     FormTemplateModule,
     SurveyModule,
+    StaticDataModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -10,8 +10,8 @@ export declare class AdminDashboardController {
         recentAppointments: ({
             citizen: {
                 id: number;
-                full_name: string | null;
                 created_at: Date;
+                full_name: string | null;
                 phone: string | null;
                 cccd: string | null;
                 zalo_id: string;

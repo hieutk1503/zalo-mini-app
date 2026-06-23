@@ -27,6 +27,11 @@ const bidding_module_1 = require("./bidding/bidding.module");
 const work_schedule_module_1 = require("./work-schedule/work-schedule.module");
 const form_template_module_1 = require("./form-template/form-template.module");
 const survey_module_1 = require("./survey/survey.module");
+const organization_module_1 = require("./organization/organization.module");
+const weather_module_1 = require("./weather/weather.module");
+const events_module_1 = require("./events/events.module");
+const home_sections_module_1 = require("./home-sections/home-sections.module");
+const static_data_module_1 = require("./static-data/static-data.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -34,6 +39,10 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             prisma_module_1.PrismaModule,
+            organization_module_1.OrganizationModule,
+            weather_module_1.WeatherModule,
+            events_module_1.EventsModule,
+            home_sections_module_1.HomeSectionsModule,
             procedures_module_1.ProceduresModule,
             chat_module_1.ChatModule,
             appointments_module_1.AppointmentsModule,
@@ -50,6 +59,7 @@ exports.AppModule = AppModule = __decorate([
             work_schedule_module_1.WorkScheduleModule,
             form_template_module_1.FormTemplateModule,
             survey_module_1.SurveyModule,
+            static_data_module_1.StaticDataModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

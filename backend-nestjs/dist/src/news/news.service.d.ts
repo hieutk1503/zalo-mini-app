@@ -1,7 +1,9 @@
 import { PrismaService } from '../prisma/prisma.service';
+import { AiSyncService } from '../ai-sync/ai-sync.service';
 export declare class NewsService {
     private prisma;
-    constructor(prisma: PrismaService);
+    private aiSyncService;
+    constructor(prisma: PrismaService, aiSyncService: AiSyncService);
     findAll(): import("@prisma/client").Prisma.PrismaPromise<{
         id: number;
         title: string;
@@ -16,25 +18,25 @@ export declare class NewsService {
         thumbnail: string | null;
         published_at: Date;
     } | null, null, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
-    create(data: any): import("@prisma/client").Prisma.Prisma__NewsClient<{
+    create(data: any): Promise<{
         id: number;
         title: string;
         content: string;
         thumbnail: string | null;
         published_at: Date;
-    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
-    update(id: number, data: any): import("@prisma/client").Prisma.Prisma__NewsClient<{
+    }>;
+    update(id: number, data: any): Promise<{
         id: number;
         title: string;
         content: string;
         thumbnail: string | null;
         published_at: Date;
-    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
-    remove(id: number): import("@prisma/client").Prisma.Prisma__NewsClient<{
+    }>;
+    remove(id: number): Promise<{
         id: number;
         title: string;
         content: string;
         thumbnail: string | null;
         published_at: Date;
-    }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
+    }>;
 }

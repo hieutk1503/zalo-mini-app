@@ -12,10 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NewsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const ai_sync_service_1 = require("../ai-sync/ai-sync.service");
 let NewsService = class NewsService {
     prisma;
-    constructor(prisma) {
+    aiSyncService;
+    constructor(prisma, aiSyncService) {
         this.prisma = prisma;
+        this.aiSyncService = aiSyncService;
     }
     findAll() {
         return this.prisma.news.findMany({
@@ -28,17 +31,20 @@ let NewsService = class NewsService {
             where: { id },
         });
     }
-    create(data) {
-        return this.prisma.news.create({
+    async create(data) {
+        const news = await this.prisma.news.create({
             data: {
                 title: data.title,
                 content: data.content,
                 thumbnail: data.thumbnail,
             },
         });
+        const chunk = `[Tin tức: ${news.title}] Nội dung: ${news.content}`;
+        this.aiSyncService.syncItem('NEWS', news.id, chunk);
+        return news;
     }
-    update(id, data) {
-        return this.prisma.news.update({
+    async update(id, data) {
+        const news = await this.prisma.news.update({
             where: { id },
             data: {
                 title: data.title,
@@ -46,16 +52,22 @@ let NewsService = class NewsService {
                 thumbnail: data.thumbnail,
             },
         });
+        const chunk = `[Tin tức: ${news.title}] Nội dung: ${news.content}`;
+        this.aiSyncService.syncItem('NEWS', news.id, chunk);
+        return news;
     }
-    remove(id) {
-        return this.prisma.news.delete({
+    async remove(id) {
+        const news = await this.prisma.news.delete({
             where: { id },
         });
+        this.aiSyncService.deleteItem('NEWS', id);
+        return news;
     }
 };
 exports.NewsService = NewsService;
 exports.NewsService = NewsService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        ai_sync_service_1.AiSyncService])
 ], NewsService);
 //# sourceMappingURL=news.service.js.map

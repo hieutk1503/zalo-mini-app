@@ -4,8 +4,8 @@ export declare class WorkScheduleService {
     constructor(prisma: PrismaService);
     create(createDto: any): import("@prisma/client").Prisma.Prisma__WorkScheduleClient<{
         id: number;
-        created_at: Date;
         title: string;
+        created_at: Date;
         location: string | null;
         event_date: Date;
         time: string | null;
@@ -13,8 +13,8 @@ export declare class WorkScheduleService {
     }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     findAll(): import("@prisma/client").Prisma.PrismaPromise<{
         id: number;
-        created_at: Date;
         title: string;
+        created_at: Date;
         location: string | null;
         event_date: Date;
         time: string | null;
@@ -22,8 +22,8 @@ export declare class WorkScheduleService {
     }[]>;
     findOne(id: number): import("@prisma/client").Prisma.Prisma__WorkScheduleClient<{
         id: number;
-        created_at: Date;
         title: string;
+        created_at: Date;
         location: string | null;
         event_date: Date;
         time: string | null;
@@ -31,8 +31,8 @@ export declare class WorkScheduleService {
     } | null, null, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     update(id: number, updateDto: any): import("@prisma/client").Prisma.Prisma__WorkScheduleClient<{
         id: number;
-        created_at: Date;
         title: string;
+        created_at: Date;
         location: string | null;
         event_date: Date;
         time: string | null;
@@ -40,8 +40,8 @@ export declare class WorkScheduleService {
     }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     remove(id: number): import("@prisma/client").Prisma.Prisma__WorkScheduleClient<{
         id: number;
-        created_at: Date;
         title: string;
+        created_at: Date;
         location: string | null;
         event_date: Date;
         time: string | null;

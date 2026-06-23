@@ -10,11 +10,13 @@ exports.NewsModule = void 0;
 const common_1 = require("@nestjs/common");
 const news_service_1 = require("./news.service");
 const news_controller_1 = require("./news.controller");
+const ai_sync_module_1 = require("../ai-sync/ai-sync.module");
 let NewsModule = class NewsModule {
 };
 exports.NewsModule = NewsModule;
 exports.NewsModule = NewsModule = __decorate([
     (0, common_1.Module)({
+        imports: [ai_sync_module_1.AiSyncModule],
         providers: [news_service_1.NewsService],
         controllers: [news_controller_1.NewsController],
     })

@@ -21,9 +21,9 @@ export class SoftAuthGuard implements CanActivate {
     const request = context
       .switchToHttp()
       .getRequest<Request & { user?: Citizen }>();
-    const accessToken = request.headers['x-zalo-access-token'] as
-      | string
-      | undefined;
+    const accessToken =
+      (request.headers['x-zalo-access-token'] as string | undefined) ||
+      request.headers.authorization?.replace('Bearer ', '');
 
     if (accessToken && this.zaloAuthService.isConfigured()) {
       const profile = await this.zaloAuthService.verifyAccessToken(accessToken);

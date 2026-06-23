@@ -6,8 +6,8 @@ export declare class InvestmentController {
     constructor(investmentService: InvestmentService);
     create(createInvestmentDto: CreateInvestmentDto): import("@prisma/client").Prisma.Prisma__InvestmentProjectClient<{
         id: number;
-        created_at: Date;
         description: string;
+        created_at: Date;
         status: string;
         project_name: string;
         start_date: Date | null;
@@ -16,8 +16,8 @@ export declare class InvestmentController {
     }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     findAll(): import("@prisma/client").Prisma.PrismaPromise<{
         id: number;
-        created_at: Date;
         description: string;
+        created_at: Date;
         status: string;
         project_name: string;
         start_date: Date | null;
@@ -26,8 +26,8 @@ export declare class InvestmentController {
     }[]>;
     findOne(id: string): import("@prisma/client").Prisma.Prisma__InvestmentProjectClient<{
         id: number;
-        created_at: Date;
         description: string;
+        created_at: Date;
         status: string;
         project_name: string;
         start_date: Date | null;
@@ -36,8 +36,8 @@ export declare class InvestmentController {
     } | null, null, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     update(id: string, updateInvestmentDto: UpdateInvestmentDto): import("@prisma/client").Prisma.Prisma__InvestmentProjectClient<{
         id: number;
-        created_at: Date;
         description: string;
+        created_at: Date;
         status: string;
         project_name: string;
         start_date: Date | null;
@@ -46,8 +46,8 @@ export declare class InvestmentController {
     }, never, import("@prisma/client/runtime/client").DefaultArgs, import("@prisma/client").Prisma.PrismaClientOptions>;
     remove(id: string): import("@prisma/client").Prisma.Prisma__InvestmentProjectClient<{
         id: number;
-        created_at: Date;
         description: string;
+        created_at: Date;
         status: string;
         project_name: string;
         start_date: Date | null;
