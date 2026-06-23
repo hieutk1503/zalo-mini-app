@@ -13,8 +13,21 @@ export class NewsController {
   }
 
   @Get()
-  findAll() {
-    return this.newsService.findAll();
+  async findAll() {
+    const news = await this.newsService.findAll();
+    return {
+      current: 1,
+      pageSize: 10,
+      total: news.length,
+      data: news.map(item => ({
+        id: item.id,
+        title: item.title,
+        thumb: item.thumbnail,
+        createdAt: item.published_at.getTime(),
+        desc: item.content,
+        link: '',
+      }))
+    };
   }
 
   @Get(':id')

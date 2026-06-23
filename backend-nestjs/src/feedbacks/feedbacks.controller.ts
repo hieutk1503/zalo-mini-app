@@ -14,13 +14,36 @@ export class FeedbacksController {
   async create(
     @CurrentUser() user: Citizen,
     @Body()
-    data: { content: string; imageUrls?: string; location?: string },
+    data: { content: string; imageUrls?: string | string[]; location?: string; title?: string; feedbackTypeId?: number },
   ) {
-    return this.feedbacksService.createFeedback(user.id, data);
+    const imagesStr = Array.isArray(data.imageUrls)
+      ? data.imageUrls.join(',')
+      : data.imageUrls;
+
+    return this.feedbacksService.createFeedback(user.id, {
+      ...data,
+      imageUrls: imagesStr,
+    });
   }
 
   @Get()
   async findAll(@CurrentUser() user: Citizen) {
-    return this.feedbacksService.getMyFeedbacks(user.id);
+    const feedbacks = await this.feedbacksService.getMyFeedbacks(user.id);
+    
+    return {
+      current: 1,
+      pageSize: 10,
+      total: feedbacks.length,
+      data: feedbacks.map(f => ({
+        id: f.id,
+        title: 'Phản ánh #' + f.id,
+        content: f.content,
+        response: f.admin_reply,
+        creationTime: f.created_at.getTime(),
+        responseTime: f.created_at.getTime(),
+        type: f.status,
+        imageUrls: f.image_urls ? f.image_urls.split(',') : [],
+      }))
+    };
   }
 }

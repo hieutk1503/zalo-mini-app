@@ -8,8 +8,18 @@ export class ProceduresController {
   constructor(private readonly proceduresService: ProceduresService) {}
 
   @Get()
-  findAll(@Query('q') q?: string) {
-    return this.proceduresService.findAll(q);
+  async findAll(@Query('q') q?: string) {
+    const items = await this.proceduresService.findAll(q);
+    return {
+      current: 1,
+      pageSize: 10,
+      total: items.length,
+      data: items.map(p => ({
+        id: p.id,
+        question: p.title,
+        answer: p.description || p.process_steps || '',
+      }))
+    };
   }
 
   @Get(':id')

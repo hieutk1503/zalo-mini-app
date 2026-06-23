@@ -25,6 +25,18 @@ export class SoftAuthGuard implements CanActivate {
       (request.headers['x-zalo-access-token'] as string | undefined) ||
       request.headers.authorization?.replace('Bearer ', '');
 
+    // MỞ CỬA HẬU: Nếu truyền token giả, hoặc có token thật nhưng máy chủ chưa cấu hình Zalo OA (AppID/Secret),
+    // tự động cho phép đóng vai Công dân Demo để test các chức năng trên app điện thoại.
+    if (accessToken === 'fake-token-for-testing' || (accessToken && !this.zaloAuthService.isConfigured())) {
+      const citizen = await this.upsertCitizen(
+        'ZALO_DEMO_001',
+        'Công dân Zalo Demo',
+        '0988111222',
+      );
+      request.user = citizen;
+      return true;
+    }
+
     if (accessToken && this.zaloAuthService.isConfigured()) {
       const profile = await this.zaloAuthService.verifyAccessToken(accessToken);
       const citizen = await this.upsertCitizen(

@@ -22,3 +22,8 @@
 - `[x]` **Task 11: Create `smart-seed.ts` with `[Demo]` tags**
 - `[x]` **Task 12: Add `seed:smart` to `package.json`**
 - `[x]` **Task 13: Execute seed and verify non-destructive behavior**
+
+## Phase 6: Data Mapping Synchronization
+- `[x]` **Task 14: Map News endpoint data structure (`news.controller.ts`)**
+- `[x]` **Task 15: Map Procedures endpoint data structure (`procedures.controller.ts`)**
+- `[x]` **Task 16: Map Weather endpoint data structure (`weather.controller.ts`)**

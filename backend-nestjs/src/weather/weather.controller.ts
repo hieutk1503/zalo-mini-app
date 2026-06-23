@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class WeatherController {
   @Get()
   getWeather() {
-    return { temperature: 32, location: "Đắk Lắk", icon: "01d" };
+    return { temp: "32", condition: "Nắng", emoji: "☀️" };
   }
 }

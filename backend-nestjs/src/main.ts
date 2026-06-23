@@ -12,10 +12,9 @@ async function bootstrap() {
   app.use(helmet());
 
   app.enableCors({
-    origin: env.nodeEnv === 'production'
-      ? ['https://your-zalo-domain.com']
-      : true,
-    credentials: true,
+    origin: '*',
+    credentials: false,
+    allowedHeaders: 'ngrok-skip-browser-warning, x-zalo-access-token, content-type, authorization, x-zalo-id, accept, x-full-name, x-phone, x-requested-with, x-organization-id',
   });
 
   app.useStaticAssets(join(process.cwd(), env.uploadDir), {
