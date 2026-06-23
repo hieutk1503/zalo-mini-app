@@ -17,3 +17,8 @@
 - `[x]` **Task 8: Backend Streaming Service**
 - `[x]` **Task 9: Backend Streaming Controller**
 - `[x]` **Task 10: Frontend Streaming Client**
+
+## Phase 5: Smart Data Seeding
+- `[x]` **Task 11: Create `smart-seed.ts` with `[Demo]` tags**
+- `[x]` **Task 12: Add `seed:smart` to `package.json`**
+- `[x]` **Task 13: Execute seed and verify non-destructive behavior**

@@ -18,9 +18,34 @@ export class ChatController {
       res.setHeader('Content-Type', 'text/event-stream');
       res.setHeader('Cache-Control', 'no-cache');
       res.setHeader('Connection', 'keep-alive');
-      stream.pipe(res);
+      
+      // Ép gửi Headers ngay lập tức để Zalo App biết đã kết nối thành công (Tắt dấu ...)
+      res.flushHeaders();
+
+      // Nhận chữ nào từ Python là nhả thẳng ra Zalo chữ đó (Không gom cục)
+      stream.on('data', (chunk) => {
+        res.write(chunk);
+        // Nếu có thư viện compression, cần gọi flush(). Ở đây mặc định của Node sẽ tự đẩy.
+        if (typeof (res as any).flush === 'function') {
+          (res as any).flush();
+        }
+      });
+
+      stream.on('end', () => {
+        res.end();
+      });
+
+      stream.on('error', (err) => {
+        console.error('Stream error:', err);
+        res.end();
+      });
+
     } catch (error) {
-      res.status(500).json({ message: 'Lỗi khi kết nối với AI Service' });
+      if (!res.headersSent) {
+        res.status(500).json({ message: 'Lỗi khi kết nối với AI Service' });
+      } else {
+        res.end();
+      }
     }
   }
 }

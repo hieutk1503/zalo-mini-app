@@ -45,7 +45,8 @@ def search_database(query: str):
     conn.close()
     
     raw_docs = [row["content_chunk"] for row in rows]
-    context = compress_context(query, raw_docs, max_sentences=5)
+    # Dùng nguyên vẹn toàn bộ đoạn văn bản (không nén/cắt xén) để giữ nguyên được danh sách tên, các ý liền mạch
+    context = "\n\n---\n\n".join(raw_docs)
     
     suggested_action = None
     if rows and rows[0]["source_type"] == "PROCEDURE":
@@ -78,13 +79,18 @@ async def chat_with_rag(req: ChatRequest, request: Request):
         async def event_generator():
             # If CACHE HIT
             if cached:
-                yield {
-                    "event": "message",
-                    "data": json.dumps({
-                        "chunk": cached["answer"],
-                        "action": cached["suggested_action"]
-                    }, ensure_ascii=False)
-                }
+                import asyncio
+                words = cached["answer"].split(" ")
+                for i, word in enumerate(words):
+                    chunk_text = word + (" " if i < len(words) - 1 else "")
+                    yield {
+                        "event": "message",
+                        "data": json.dumps({
+                            "chunk": chunk_text,
+                            "action": cached["suggested_action"] if i == len(words) - 1 else None
+                        }, ensure_ascii=False)
+                    }
+                    await asyncio.sleep(0.01) # Fake typing effect for cache
                 yield {"event": "done", "data": "[DONE]"}
                 return
             
